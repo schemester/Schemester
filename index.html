@@ -1,1556 +1,1085 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Schemester — Plan. Book. Celebrate.</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 385'><rect width='300' height='385' rx='55' fill='%237C3AED'/><path fill='white' d='M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z'/></svg>">
-  <style>
-    /* ============================================================
-       DESIGN TOKENS
-    ============================================================ */
-    :root {
-      --p:        #7C3AED;
-      --p-light:  #A78BFA;
-      --p-dark:   #5B21B6;
-      --accent:   #F59E0B;
-      --success:  #10B981;
-      --danger:   #EF4444;
-      --bg:       #07070F;
-      --bg2:      #0F0F1A;
-      --card:     #161622;
-      --hover:    #1E1E30;
-      --border:   rgba(124,58,237,.18);
-      --t1:       #F1F5F9;
-      --t2:       #94A3B8;
-      --t3:       #64748B;
-      --r-grd:    linear-gradient(135deg,#7C3AED,#C026D3);
-      --a-grd:    linear-gradient(135deg,#F59E0B,#EF4444);
-      --g-grd:    linear-gradient(135deg,#10B981,#3B82F6);
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schemester — Plan. Book. Celebrate.</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 385'><rect width='300' height='385' rx='55' fill='%23bc7ffc'/><path fill='white' d='M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z'/></svg>">
 
-    /* ============================================================
-       RESET / BASE
-    ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system,'SF Pro Display',BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-      background: var(--bg);
-      color: var(--t1);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-    ::selection { background: rgba(124,58,237,.35); color: #fff; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: rgba(124,58,237,.3); border-radius: 3px; }
-    a { text-decoration: none; color: inherit; }
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    /* ============================================================
-       UTILITIES
-    ============================================================ */
-    .grad-text {
-      background: linear-gradient(135deg,#A78BFA 0%,#F59E0B 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .grad-text-warm {
-      background: linear-gradient(135deg,#F59E0B 0%,#EF4444 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 11px; border-radius: 20px; font-size: 11px; font-weight: 700;
-      letter-spacing: .4px;
-    }
-    .badge-p  { background: rgba(124,58,237,.2); color:#A78BFA; border:1px solid rgba(124,58,237,.3); }
-    .badge-a  { background: rgba(245,158,11,.2); color:#FCD34D; border:1px solid rgba(245,158,11,.3); }
-    .badge-g  { background: rgba(16,185,129,.2); color:#6EE7B7; border:1px solid rgba(16,185,129,.3); }
-    .badge-r  { background: rgba(239,68,68,.2);  color:#FCA5A5; border:1px solid rgba(239,68,68,.3); }
-    .badge-n  { background: rgba(255,255,255,.06); color:var(--t2); border:1px solid var(--border); }
+<style>
+/* ============================================================
+   DESIGN TOKENS — Schemester Design System
+   ============================================================ */
+:root {
+  /* Palette */
+  --bg-0: #0e0e0e;
+  --bg-1: #1a1a1a;
+  --bg-2: #262626;
+  --bg-3: #3a3a3a;
+  --bg-4: #515150;
 
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; border-radius: 12px; font-size: 15px; font-weight: 700;
-      cursor: pointer; border: none; transition: all .2s ease;
-    }
-    .btn-primary {
-      background: var(--r-grd); color: #fff;
-      box-shadow: 0 4px 24px rgba(124,58,237,.4);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,.55); }
-    .btn-ghost {
-      background: rgba(255,255,255,.06); color: var(--t1);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,.1); }
+  --fg-1: #ffffff;
+  --fg-2: #b6b6b1;
+  --fg-3: #737270;
+  --fg-4: #515150;
 
-    /* Section wrapper */
-    .wrap { max-width: 1320px; margin: 0 auto; padding: 0 48px; }
+  --violet-950: #15111b;
+  --violet-900: #2a1b42;
+  --violet-700: #6c4c80;
+  --violet-500: #bc7ffc;
+  --violet-400: #ca98ff;
+  --violet-300: #d8b3ff;
+  --violet-200: #e2c6ff;
 
-    /* Section header */
-    .sh { text-align: center; max-width: 720px; margin: 0 auto 64px; }
-    .sh-eye { font-size: 11px; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--p-light); margin-bottom: 14px; }
-    .sh-title { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.08; margin-bottom: 18px; }
-    .sh-sub { font-size: 18px; color: var(--t2); line-height: 1.65; }
+  --success: #3ddc97;
+  --success-bg: #1a2e25;
+  --warning: #ffb347;
+  --warning-bg: #2e2415;
+  --danger: #ff5c7a;
+  --danger-bg: #2e1520;
 
-    /* ============================================================
-       NAVIGATION
-    ============================================================ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 48px;
-      background: rgba(7,7,15,.85);
-      backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 900; letter-spacing: -.4px; }
-    .logo-icon {
-      width: 26px; height: 34px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-links { display: flex; gap: 30px; list-style: none; }
-    .nav-links a { color: var(--t2); font-size: 14px; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: var(--t1); }
-    .nav-cta { display: flex; gap: 10px; align-items: center; }
+  --sourced: #28493b;
+  --sourced-fg: #8be0b4;
 
-    /* ============================================================
-       HERO
-    ============================================================ */
-    .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 140px 48px 80px;
-      position: relative; overflow: hidden; text-align: center;
-    }
-    .hero-glow {
-      position: absolute; inset: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 65% 55% at 50% -10%, rgba(124,58,237,.32), transparent),
-        radial-gradient(ellipse 35% 25% at 78% 60%, rgba(245,158,11,.12), transparent),
-        radial-gradient(ellipse 40% 30% at 20% 70%, rgba(192,38,211,.08), transparent);
-    }
-    .hero-eye { margin-bottom: 22px; }
-    .hero-title {
-      font-size: 76px; font-weight: 900; line-height: 1.04; letter-spacing: -2.5px;
-      margin-bottom: 22px; max-width: 950px;
-    }
-    .hero-sub {
-      font-size: 20px; color: var(--t2); line-height: 1.65;
-      max-width: 580px; margin: 0 auto 40px;
-    }
-    .hero-btns { display: flex; gap: 12px; justify-content: center; margin-bottom: 60px; }
-    .hero-stats { display: flex; gap: 56px; justify-content: center; margin-bottom: 80px; }
-    .hs-val { font-size: 34px; font-weight: 900; letter-spacing: -1px; }
-    .hs-lbl { font-size: 13px; color: var(--t3); margin-top: 4px; }
+  /* Semantic */
+  --canvas: var(--bg-0);
+  --surface: var(--bg-1);
+  --surface-hover: var(--bg-2);
+  --border: var(--bg-3);
+  --border-subtle: rgba(255,255,255,0.06);
+  --accent: var(--violet-500);
+  --accent-hover: var(--violet-400);
+  --text: var(--fg-1);
+  --text-dim: var(--fg-2);
+  --text-mute: var(--fg-3);
 
-    /* PHONE MOCKUP */
-    .phone {
-      width: 264px; height: 555px;
-      background: #131320;
-      border-radius: 42px;
-      border: 2px solid rgba(255,255,255,.09);
-      overflow: hidden; position: relative;
-      box-shadow: 0 40px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.04), inset 0 1px 0 rgba(255,255,255,.07);
-      flex-shrink: 0;
-    }
-    .ph-notch {
-      width: 76px; height: 22px;
-      background: #07070F;
-      border-radius: 0 0 14px 14px;
-      margin: 0 auto;
-      position: relative; z-index: 3;
-    }
-    .ph-screen { height: calc(100% - 22px); overflow: hidden; position: relative; }
-    .ph-bar {
-      background: #0A0A14; padding: 10px 16px 6px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .ph-bar-time { font-size: 11px; font-weight: 800; }
-    .ph-bar-icons { font-size: 11px; }
-    .ph-content { padding: 14px 14px 56px; height: calc(100% - 32px); overflow: hidden; }
-    .ph-tabs {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 52px; background: #0A0A14;
-      border-top: 1px solid var(--border);
-      display: flex; align-items: center;
-    }
-    .ph-tab {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
-      gap: 2px; padding: 6px;
-    }
-    .ph-tab-ico { font-size: 18px; }
-    .ph-tab-lbl { font-size: 8px; color: var(--t3); }
-    .ph-tab.on .ph-tab-lbl { color: #A78BFA; }
-    .ph-tab.on .ph-tab-ico { filter: drop-shadow(0 0 5px #A78BFA); }
+  /* Typography */
+  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-    .phones-row {
-      display: flex; gap: 20px; justify-content: center; align-items: flex-end;
-      perspective: 1200px;
-    }
-    .phones-row .phone:nth-child(1) { transform: rotateY(8deg) rotateX(2deg) translateY(22px); opacity: .72; }
-    .phones-row .phone:nth-child(2) { transform: rotateY(0) rotateX(0) scale(1.06); z-index: 2; animation: phoneFloat 4s ease-in-out infinite; }
-    .phones-row .phone:nth-child(3) { transform: rotateY(-8deg) rotateX(2deg) translateY(22px); opacity: .72; }
-    @keyframes phoneFloat {
-      0%,100% { transform: rotateY(0) rotateX(0) scale(1.06) translateY(0); }
-      50%      { transform: rotateY(0) rotateX(0) scale(1.06) translateY(-12px); }
-    }
+  /* Type scale */
+  --fs-display: 44px;
+  --fs-h1: 32px;
+  --fs-h2: 24px;
+  --fs-h3: 20px;
+  --fs-lead: 18px;
+  --fs-body: 15px;
+  --fs-small: 13px;
+  --fs-chip: 11px;
+  --fs-micro: 10px;
 
-    /* ============================================================
-       FEATURES
-    ============================================================ */
-    .features { padding: 100px 0; }
-    .feat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-    .feat-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 20px;
-      padding: 30px; position: relative; overflow: hidden;
-      transition: all .3s ease;
-    }
-    .feat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--r-grd); opacity: 0; transition: opacity .3s;
-    }
-    .feat-card:hover { transform: translateY(-4px); border-color: rgba(124,58,237,.38); }
-    .feat-card:hover::before { opacity: 1; }
-    .feat-ico { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 18px; }
-    .feat-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
-    .feat-desc { font-size: 14px; color: var(--t2); line-height: 1.65; }
+  /* Line heights */
+  --lh-tight: 1.1;
+  --lh-snug: 1.25;
+  --lh-normal: 1.45;
+  --lh-loose: 1.6;
 
-    /* ============================================================
-       HOW IT WORKS
-    ============================================================ */
-    .hiw { padding: 100px 0; }
-    .steps-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; position: relative; }
-    .steps-row::before {
-      content: '';
-      position: absolute; top: 40px; left: 13%; right: 13%; height: 2px;
-      background: linear-gradient(to right, #7C3AED, #C026D3, #F59E0B);
-      opacity: .25; pointer-events: none;
-    }
-    .step { text-align: center; position: relative; }
-    .step-num {
-      width: 80px; height: 80px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; font-weight: 900;
-      margin: 0 auto 18px;
-      position: relative; z-index: 1;
-    }
-    .step-title { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
-    .step-desc  { font-size: 14px; color: var(--t2); line-height: 1.6; }
+  /* Letter spacing */
+  --tracking-chip: 0.08em;
+  --tracking-tight: -0.01em;
+  --tracking-display: -0.025em;
 
-    /* ============================================================
-       BROWSER / APP FRAME
-    ============================================================ */
-    .proto-frame {
-      background: var(--bg2); border: 1px solid var(--border);
-      border-radius: 28px; overflow: hidden; margin: 0 24px;
-    }
-    .proto-top {
-      padding: 16px 24px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center;
-      background: rgba(124,58,237,.06);
-    }
-    .dots { display: flex; gap: 7px; }
-    .dot { width: 11px; height: 11px; border-radius: 50%; }
-    .url-bar {
-      flex: 1; margin: 0 18px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 7px; padding: 6px 14px;
-      font-size: 12px; color: var(--t2);
-    }
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
 
-    /* APP LAYOUT */
-    .app-layout { display: grid; grid-template-columns: 228px 1fr; min-height: 720px; }
-    .sidebar {
-      background: #0B0B16; border-right: 1px solid var(--border);
-      padding: 20px 14px; display: flex; flex-direction: column;
-    }
-    .sb-logo {
-      display: flex; align-items: center; gap: 9px;
-      padding: 0 8px 20px; font-size: 18px; font-weight: 900;
-      border-bottom: 1px solid var(--border); margin-bottom: 18px;
-    }
-    .ni {
-      display: flex; align-items: center; gap: 11px;
-      padding: 10px 10px; border-radius: 9px;
-      font-size: 13px; font-weight: 600; color: var(--t2);
-      cursor: pointer; transition: all .2s; margin-bottom: 2px;
-    }
-    .ni:hover { background: var(--hover); color: var(--t1); }
-    .ni.on { background: rgba(124,58,237,.2); color: #A78BFA; }
-    .ni-ico { font-size: 17px; width: 22px; text-align: center; }
-    .sb-lbl {
-      font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
-      text-transform: uppercase; color: var(--t3); padding: 14px 10px 6px;
-    }
-    .pill {
-      margin-left: auto; font-size: 10px; font-weight: 800;
-      padding: 2px 7px; border-radius: 10px;
-    }
-    .pill-p { background: rgba(124,58,237,.3); color: #A78BFA; }
-    .pill-r { background: rgba(239,68,68,.3);  color: #FCA5A5; }
-    .sb-user {
-      margin-top: auto; padding: 14px 10px 0;
-      display: flex; align-items: center; gap: 9px;
-      border-top: 1px solid var(--border);
-    }
-    .av {
-      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 800;
-    }
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
 
-    /* MAIN */
-    .main { padding: 28px; overflow-y: auto; }
-    .pg-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
-    .pg-title { font-size: 26px; font-weight: 900; letter-spacing: -.5px; }
-    .pg-sub { font-size: 13px; color: var(--t2); margin-top: 4px; }
+  /* Elevation */
+  --shadow-1: 0 2px 8px rgba(0,0,0,0.35);
+  --shadow-2: 0 6px 20px rgba(0,0,0,0.45);
+  --shadow-3: 0 10px 40px rgba(0,0,0,0.55);
+  --shadow-fab: 0 8px 28px rgba(188,127,252,0.35), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  --shadow-inner-hi: inset 0 1px 0 rgba(255,255,255,0.06);
 
-    /* STAT CARDS */
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 28px; }
-    .sc {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 18px;
-    }
-    .sc-lbl { font-size: 12px; color: var(--t2); margin-bottom: 7px; display: flex; align-items: center; gap: 5px; }
-    .sc-val { font-size: 26px; font-weight: 900; letter-spacing: -.8px; }
-    .sc-chg { font-size: 11px; margin-top: 4px; display: flex; align-items: center; gap: 3px; }
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 160ms;
+  --dur-med: 240ms;
+  --dur-slow: 420ms;
 
-    /* SCHEME CARDS */
-    .schemes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 28px; }
-    .skcard {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; overflow: hidden;
-      transition: all .2s; cursor: pointer;
-    }
-    .skcard:hover { border-color: rgba(124,58,237,.42); transform: translateY(-2px); }
-    .skcard-cover {
-      height: 110px; display: flex; align-items: center; justify-content: center;
-      font-size: 44px; position: relative;
-    }
-    .skcard-body { padding: 14px; }
-    .skcard-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
-    .skcard-meta  { font-size: 12px; color: var(--t2); margin-bottom: 10px; }
-    .prog-track { height: 4px; background: rgba(255,255,255,.07); border-radius: 2px; overflow: hidden; margin-bottom: 10px; }
-    .prog-fill  { height: 100%; border-radius: 2px; background: var(--r-grd); }
-    .sk-footer { display: flex; align-items: center; justify-content: space-between; }
-    .sk-avs { display: flex; }
-    .sk-av {
-      width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--card);
-      margin-right: -5px; font-size: 9px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-    }
+  /* Gradients */
+  --grad-protect: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  --grad-violet-glow: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(188,127,252,0.22), transparent 60%);
+  --grad-progress: linear-gradient(90deg, var(--violet-500), var(--violet-300));
+}
 
-    /* ACTIVITY */
-    .act-item {
-      display: flex; align-items: flex-start; gap: 11px;
-      padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.04);
-    }
-    .act-ico { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
-    .act-txt { font-size: 13px; line-height: 1.5; color: var(--t2); }
-    .act-txt strong { color: var(--t1); }
-    .act-time { font-size: 11px; color: var(--t3); margin-top: 3px; }
+@media (min-width: 900px) {
+  :root {
+    --fs-display: 56px;
+    --fs-h1: 40px;
+    --fs-h2: 28px;
+    --fs-h3: 22px;
+    --fs-body: 16px;
+  }
+}
 
-    /* BUDGET BARS */
-    .bb { margin-bottom: 12px; }
-    .bb-hd { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
-    .bb-lbl { color: var(--t2); }
-    .bb-val { font-weight: 700; }
-    .bb-track { height: 5px; background: rgba(255,255,255,.07); border-radius: 3px; overflow: hidden; }
-    .bb-fill  { height: 100%; border-radius: 3px; }
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--canvas);
+  color: var(--text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { text-decoration: none; color: inherit; }
+::selection { background: rgba(188,127,252,0.3); color: #fff; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 2px; }
 
-    /* CHECKLIST */
-    .cl-item {
-      display: flex; align-items: center; gap: 11px;
-      padding: 12px 14px; background: var(--card);
-      border: 1px solid var(--border); border-radius: 11px; margin-bottom: 7px;
-      transition: all .2s;
-    }
-    .cl-item:hover { border-color: rgba(124,58,237,.3); }
-    .cl-item.done { opacity: .55; }
-    .chkbx {
-      width: 19px; height: 19px; border-radius: 5px;
-      border: 2px solid var(--t3); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 11px;
-    }
-    .chkbx.on { background: var(--r-grd); border-color: transparent; color: #fff; }
-    .cl-lbl { font-size: 14px; font-weight: 600; flex: 1; }
+:where(button, a, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--violet-400);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 
-    /* VENDOR CARD */
-    .vc {
-      background: var(--card); border: 1px solid var(--border); border-radius: 11px;
-      padding: 14px; margin-bottom: 9px; display: flex; align-items: center; gap: 11px;
-      transition: all .2s; cursor: pointer;
-    }
-    .vc:hover { border-color: rgba(124,58,237,.38); }
-    .vc-logo { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-    .vc-info { flex: 1; }
-    .vc-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
-    .vc-meta { font-size: 12px; color: var(--t2); }
-    .vc-tags { display: flex; gap: 5px; margin-top: 5px; }
-    .vc-price { text-align: right; }
-    .vc-pval { font-size: 17px; font-weight: 900; }
-    .vc-pnote { font-size: 10px; color: var(--t3); }
-    .vc-btn {
-      margin-top: 7px; padding: 5px 11px; border-radius: 7px;
-      font-size: 11px; font-weight: 700; cursor: pointer; border: none; transition: all .2s;
-    }
-    .vc-btn-p { background: var(--r-grd); color: #fff; }
-    .vc-btn-g { background: rgba(255,255,255,.06); border: 1px solid var(--border); color: var(--t2); }
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-6); }
 
-    /* AI CHAT */
-    .ai-chat { background: var(--card); border: 1px solid var(--border); border-radius: 15px; overflow: hidden; }
-    .ai-chat-hd {
-      padding: 14px 16px; border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 9px;
-      background: rgba(124,58,237,.1);
-    }
-    .ai-av {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: var(--r-grd);
-      display: flex; align-items: center; justify-content: center; font-size: 17px;
-    }
-    .ai-dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; display: inline-block; margin-left: 4px; }
-    .chat-msgs { padding: 14px; height: 270px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-    .cm { display: flex; gap: 7px; }
-    .cm.u { justify-content: flex-end; }
-    .cmb {
-      max-width: 86%; padding: 9px 13px; border-radius: 13px;
-      font-size: 12px; line-height: 1.55;
-    }
-    .cm .cmb   { background: var(--hover); color: var(--t1); border-bottom-left-radius: 4px; }
-    .cm.u .cmb { background: linear-gradient(135deg,#7C3AED,#9333EA); color: #fff; border-bottom-right-radius: 4px; }
-    .chat-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-    .cta-chip {
-      background: rgba(124,58,237,.18); border: 1px solid rgba(124,58,237,.38);
-      border-radius: 7px; padding: 5px 10px; font-size: 11px; color: #A78BFA;
-      cursor: pointer; font-weight: 600;
-    }
-    .cta-chip-n {
-      background: rgba(255,255,255,.05); border: 1px solid var(--border);
-      border-radius: 7px; padding: 5px 10px; font-size: 11px; color: var(--t2);
-      cursor: pointer; font-weight: 600;
-    }
-    .chat-inp-row {
-      padding: 10px; border-top: 1px solid var(--border);
-      display: flex; gap: 7px;
-    }
-    .chat-inp {
-      flex: 1; background: var(--hover); border: 1px solid var(--border);
-      border-radius: 9px; padding: 9px 12px;
-      font-size: 12px; color: var(--t1); outline: none;
-    }
-    .chat-send {
-      width: 34px; height: 34px; background: var(--r-grd); border: none;
-      border-radius: 9px; cursor: pointer; font-size: 16px;
-      display: flex; align-items: center; justify-content: center; color: #fff;
-    }
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(14,14,14,0.75);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand img { height: 28px; width: auto; }
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 22px;
+  letter-spacing: var(--tracking-display);
+}
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  color: var(--fg-2); font-size: 14px; font-weight: 500;
+  transition: color var(--dur-base) var(--ease-out);
+}
+.nav-links a:hover { color: var(--fg-1); }
+.nav-cta { display: flex; gap: 10px; align-items: center; }
 
-    /* COLLAB */
-    .col-item {
-      display: flex; align-items: center; gap: 9px;
-      padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.04);
-    }
-    .col-av { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
-    .col-name { font-size: 13px; font-weight: 700; }
-    .col-role { font-size: 11px; color: var(--t2); }
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--sp-2); padding: 10px 16px;
+  border-radius: var(--radius-md); border: 0;
+  font-family: var(--font-sans); font-weight: 600;
+  font-size: var(--fs-small); cursor: pointer;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    background var(--dur-base) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+.btn:active { transform: scale(0.98); opacity: 0.9; }
+.btn-primary { background: var(--violet-500); color: #1a0d2e; }
+.btn-primary:hover { background: var(--violet-400); }
+.btn-ghost { background: transparent; color: var(--fg-1); border: 1px solid var(--bg-3); }
+.btn-ghost:hover { background: var(--bg-2); }
+.btn-lg { padding: 14px 24px; font-size: var(--fs-body); border-radius: var(--radius-md); }
 
-    /* TABS */
-    .tabs { display: flex; gap: 3px; background: var(--card); padding: 3px; border-radius: 10px; border: 1px solid var(--border); }
-    .tab { padding: 6px 14px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .2s; color: var(--t2); }
-    .tab.on { background: var(--r-grd); color: #fff; }
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  padding: 80px 0 40px;
+  background: var(--grad-violet-glow);
+  text-align: center;
+  position: relative;
+}
+.eyebrow {
+  display: inline-block; padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--violet-900); color: var(--violet-200);
+  font-size: var(--fs-chip); font-weight: 600;
+  letter-spacing: var(--tracking-chip); text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 500; line-height: 0.98;
+  letter-spacing: var(--tracking-display);
+  font-size: clamp(52px, 8vw, 92px);
+  margin: 0 0 24px;
+}
+.hero-title i { font-style: italic; color: var(--violet-300); }
+.hero-sub {
+  max-width: 560px; margin: 0 auto 32px;
+  font-size: var(--fs-lead); color: var(--fg-2); line-height: var(--lh-loose);
+}
+.hero-btns {
+  display: flex; gap: var(--sp-3); justify-content: center;
+  flex-wrap: wrap; margin-bottom: 32px;
+}
 
-    /* SCHEME DETAIL */
-    .sk-detail { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+/* Search demo */
+.search-demo {
+  max-width: 620px; margin: 0 auto 16px;
+  background: var(--bg-1); border: 1px solid var(--bg-3);
+  border-radius: 18px; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  text-align: left;
+}
+.search-demo .icon { color: var(--fg-3); flex-shrink: 0; }
+.search-demo .text { flex: 1; font-size: 17px; color: var(--fg-1); }
+.search-caret {
+  width: 2px; height: 20px;
+  background: var(--violet-500);
+  animation: blink 1s steps(2) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.search-demo .enter {
+  color: var(--violet-300);
+  font-size: var(--fs-chip); font-weight: 600;
+  letter-spacing: var(--tracking-chip);
+  white-space: nowrap;
+}
+.quick-pills {
+  display: flex; gap: var(--sp-2); justify-content: center;
+  margin: 0 auto 60px; flex-wrap: wrap;
+}
+.quick-pills span {
+  padding: 6px 14px; border-radius: var(--radius-full);
+  background: var(--bg-1); color: var(--fg-2); font-size: 13px;
+  cursor: pointer; transition: background var(--dur-base) var(--ease-out);
+}
+.quick-pills span:hover { background: var(--bg-2); color: var(--fg-1); }
 
-    /* ============================================================
-       ROADMAP
-    ============================================================ */
-    .roadmap { padding: 100px 0; }
-    .rm-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .rm-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 18px; padding: 28px; transition: all .3s;
-    }
-    .rm-card:hover { border-color: rgba(124,58,237,.35); transform: translateY(-3px); }
-    .rm-ico { font-size: 30px; margin-bottom: 14px; }
-    .rm-title { font-size: 16px; font-weight: 800; margin-bottom: 9px; }
-    .rm-desc { font-size: 13px; color: var(--t2); line-height: 1.65; }
+/* Phone mockups */
+.phones {
+  display: flex; justify-content: center; gap: 24px;
+  padding: 0 0 20px; perspective: 1800px;
+  overflow: hidden;
+}
+.mock {
+  width: 240px; height: 480px; border-radius: 30px;
+  box-shadow: 0 0 0 8px var(--bg-1), 0 0 0 10px var(--bg-2), 0 50px 80px rgba(0,0,0,0.6);
+  overflow: hidden; position: relative; flex-shrink: 0;
+}
+.mock:nth-child(1) { transform: rotateY(-12deg); opacity: 0.75; }
+.mock:nth-child(2) { transform: rotateY(0deg) translateY(-24px); animation: mockFloat 4s var(--ease-in-out) infinite; }
+.mock:nth-child(3) { transform: rotateY(12deg); opacity: 0.75; }
+@keyframes mockFloat {
+  0%,100% { transform: rotateY(0deg) translateY(-24px); }
+  50%      { transform: rotateY(0deg) translateY(-36px); }
+}
+.mock-inner { width: 100%; height: 100%; }
+.mock-home {
+  background: var(--bg-0);
+  display: flex; flex-direction: column;
+}
+.mock-topbar {
+  padding: 20px 16px 12px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mock-topbar-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; }
+.mock-search {
+  margin: 0 12px 14px;
+  background: var(--bg-2); border-radius: var(--radius-sm);
+  padding: 10px 14px; font-size: 12px; color: var(--fg-3);
+  display: flex; align-items: center; gap: 8px;
+}
+.mock-card {
+  margin: 0 12px 10px; border-radius: var(--radius-lg);
+  overflow: hidden; position: relative; height: 140px;
+}
+.mock-card-bg {
+  width: 100%; height: 100%; object-fit: cover;
+  background: linear-gradient(160deg, #4a6078 0%, #1a2a3a 80%);
+}
+.mock-card-overlay {
+  position: absolute; inset: 0;
+  background: var(--grad-protect);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12px;
+}
+.mock-card-title { font-family: var(--font-display); font-size: 14px; font-weight: 500; }
+.mock-card-meta { font-size: 10px; color: var(--fg-2); margin-top: 2px; }
+.mock-prog {
+  height: 3px; background: var(--bg-3); border-radius: var(--radius-full);
+  margin: 4px 0 0;
+}
+.mock-prog-fill {
+  height: 100%; border-radius: inherit;
+  background: var(--grad-progress);
+}
 
-    /* ============================================================
-       TECH STACK SECTION
-    ============================================================ */
-    .tech { padding: 80px 0; }
-    .tech-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
-    .tech-col { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; }
-    .tech-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; color: var(--p-light); }
-    .tech-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
-    .tech-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--p-light); margin-top: 6px; flex-shrink: 0; }
-    .tech-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
-    .tech-why { font-size: 12px; color: var(--t2); line-height: 1.5; }
+.mock-scheme {
+  background: var(--bg-0);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.mock-scheme-hero {
+  height: 160px; position: relative;
+  background: linear-gradient(160deg, #2a1b42 0%, #1a0d2e 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12px;
+}
+.mock-comp-row {
+  display: flex; gap: 8px; padding: 12px;
+  overflow: hidden;
+}
+.mock-comp {
+  flex: 1; border-radius: var(--radius-md); overflow: hidden;
+  position: relative; height: 90px; flex-shrink: 0;
+}
+.mock-ai-chip {
+  margin: 0 12px 8px;
+  background: var(--violet-950); border: 1px solid rgba(188,127,252,0.18);
+  border-radius: var(--radius-sm); padding: 10px 12px;
+  font-size: 11px; color: var(--fg-2); line-height: 1.5;
+}
+.mock-ai-chip .ai-glyph { color: var(--violet-400); margin-right: 4px; }
 
-    /* ============================================================
-       MONETIZATION
-    ============================================================ */
-    .money { padding: 80px 0; }
-    .money-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
-    .money-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 24px; text-align: center;
-    }
-    .money-ico { font-size: 36px; margin-bottom: 14px; }
-    .money-title { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
-    .money-desc { font-size: 13px; color: var(--t2); line-height: 1.6; }
+.mock-dash {
+  background: var(--bg-0);
+  display: flex; flex-direction: column;
+}
+.mock-dash-stat-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; padding: 12px 12px 0;
+}
+.mock-stat {
+  background: var(--bg-1); border-radius: var(--radius-sm); padding: 10px;
+}
+.mock-stat-val { font-family: var(--font-mono); font-size: 16px; font-weight: 600; }
+.mock-stat-lbl { font-size: 9px; color: var(--fg-3); margin-top: 2px; }
 
-    /* ============================================================
-       CTA
-    ============================================================ */
-    .cta-sec {
-      text-align: center; padding: 120px 48px;
-      position: relative; overflow: hidden;
-    }
-    .cta-glow {
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(124,58,237,.14), transparent);
-    }
-    .cta-title { font-size: 56px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 18px; }
-    .cta-sub { font-size: 20px; color: var(--t2); margin-bottom: 36px; }
-    .cta-note { font-size: 13px; color: var(--t3); margin-top: 20px; }
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { padding: 80px 0; }
+.section-h { text-align: center; margin-bottom: 48px; }
+.section-h .eyebrow-sm {
+  font-size: var(--fs-chip); font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--violet-300); margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(36px, 5vw, 48px);
+  letter-spacing: var(--tracking-display); line-height: 1.05;
+}
+.section-title i { font-style: italic; color: var(--violet-300); }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
-    footer {
-      border-top: 1px solid var(--border); padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .ft-links { display: flex; gap: 28px; }
-    .ft-links a { font-size: 13px; color: var(--t3); }
-    .ft-links a:hover { color: var(--t2); }
+/* ============================================================
+   HOW IT WORKS — STEPS
+   ============================================================ */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+.step {
+  background: var(--bg-1); border-radius: var(--radius-lg); padding: 28px;
+  display: flex; flex-direction: column; gap: 14px; min-height: 220px;
+  transition: background var(--dur-med) var(--ease-out);
+}
+.step:hover { background: var(--bg-2); }
+.step-n {
+  width: 32px; height: 32px; border-radius: var(--radius-full);
+  background: var(--violet-900); color: var(--violet-300);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 13px; font-weight: 600;
+}
+.step h3 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 26px; letter-spacing: -0.02em; line-height: var(--lh-snug);
+}
+.step p { color: var(--fg-2); font-size: 14px; line-height: var(--lh-loose); }
 
-    /* ============================================================
-       DIVIDER
-    ============================================================ */
-    .div-line { border: none; height: 1px; background: var(--border); margin: 0 48px; }
-  </style>
+/* ============================================================
+   FEATURES GRID
+   ============================================================ */
+.features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .features { grid-template-columns: 1fr; } }
+.feat {
+  background: var(--bg-1); border-radius: 18px; padding: 22px;
+  transition: background var(--dur-med) var(--ease-out);
+}
+.feat:hover { background: var(--bg-2); }
+.feat .glyph { width: 28px; height: 28px; color: var(--violet-300); margin-bottom: 14px; }
+.feat h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.feat p { font-size: 13px; color: var(--fg-2); line-height: var(--lh-loose); }
+
+/* ============================================================
+   SOCIAL PROOF
+   ============================================================ */
+.quotes { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 14px; }
+@media (max-width: 800px) { .quotes { grid-template-columns: 1fr; } }
+.q {
+  background: var(--bg-1); border-radius: var(--radius-lg);
+  padding: 28px; display: flex; flex-direction: column; gap: 18px;
+}
+.q-text {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: 22px; line-height: 1.3; letter-spacing: -0.015em;
+}
+.q-text i { color: var(--violet-300); font-style: italic; }
+.q-who { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.q-av {
+  width: 36px; height: 36px; border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--violet-500), var(--violet-700));
+  color: #fff; font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.q-name { font-size: 14px; font-weight: 600; }
+.q-label { font-size: 12px; color: var(--fg-3); }
+
+/* ============================================================
+   PRICING
+   ============================================================ */
+.pricing {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+  max-width: 900px; margin: 0 auto;
+}
+@media (max-width: 700px) { .pricing { grid-template-columns: 1fr; } }
+.price-card {
+  background: var(--bg-1); border-radius: var(--radius-lg);
+  padding: 28px; display: flex; flex-direction: column; gap: 16px;
+}
+.price-card.featured {
+  background: linear-gradient(180deg, var(--violet-900), var(--violet-950));
+  border: 1px solid rgba(188,127,252,0.3);
+}
+.price-name {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 26px; letter-spacing: -0.02em;
+}
+.price-name.feat-name { color: var(--violet-300); }
+.price-value {
+  font-family: var(--font-mono); font-size: 42px; font-weight: 600;
+}
+.price-value small { font-size: 14px; color: var(--fg-3); font-weight: 400; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.price-features li {
+  font-size: 13px; color: var(--fg-2);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.price-features li::before { content: '✓'; color: var(--violet-300); font-weight: 700; flex-shrink: 0; }
+.price-card .btn { margin-top: auto; width: 100%; }
+
+/* ============================================================
+   CTA BAND
+   ============================================================ */
+.cta-band {
+  background: linear-gradient(135deg, var(--violet-950), #1a0d2e);
+  border: 1px solid rgba(188,127,252,0.2);
+  border-radius: 28px; padding: 60px;
+  text-align: center;
+}
+.cta-band h2 {
+  font-family: var(--font-display); font-weight: 500;
+  font-size: clamp(40px, 6vw, 56px); letter-spacing: var(--tracking-display);
+  line-height: 1; margin-bottom: 12px;
+}
+.cta-band h2 i { color: var(--violet-300); }
+.cta-band p { color: var(--fg-2); font-size: 17px; margin-bottom: 28px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding: 60px 0 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 30px;
+  margin-bottom: 40px;
+}
+@media (max-width: 700px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer h5 {
+  font-size: var(--fs-chip); letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--fg-3);
+  font-weight: 600; margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-col a { color: var(--fg-2); font-size: 13px; transition: color var(--dur-base) var(--ease-out); }
+.footer-col a:hover { color: var(--fg-1); }
+.footer-col p { color: var(--fg-2); font-size: 13px; line-height: var(--lh-loose); margin-top: 14px; }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);
+  color: var(--fg-3); font-size: 12px;
+}
+
+/* ============================================================
+   PILLS
+   ============================================================ */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: var(--radius-full);
+  background: var(--bg-2); color: var(--fg-1);
+  font-size: var(--fs-chip); font-weight: 600;
+  letter-spacing: var(--tracking-chip); text-transform: uppercase;
+}
+.pill-violet { background: var(--violet-900); color: var(--violet-200); }
+.pill-success { background: var(--success-bg); color: var(--success); }
+.pill-danger { background: var(--danger-bg); color: var(--danger); }
+.pill-warning { background: var(--warning-bg); color: var(--warning); }
+
+/* ============================================================
+   FAB
+   ============================================================ */
+.fab {
+  width: 56px; height: 56px; border-radius: var(--radius-full);
+  background: var(--violet-500); color: #1a0d2e;
+  border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  animation: fabBreathe 2.4s var(--ease-in-out) infinite;
+  box-shadow: var(--shadow-fab);
+}
+@keyframes fabBreathe {
+  0%,100% { box-shadow: 0 8px 28px rgba(188,127,252,0.25), var(--shadow-inner-hi); }
+  50%      { box-shadow: 0 8px 32px rgba(188,127,252,0.45), var(--shadow-inner-hi); }
+}
+.fab:active { transform: scale(0.96); }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress {
+  position: relative; height: 6px;
+  background: var(--bg-3); border-radius: var(--radius-full); overflow: hidden;
+}
+.progress-fill {
+  position: absolute; inset: 0 auto 0 0;
+  background: var(--grad-progress); border-radius: inherit;
+  transition: width var(--dur-slow) var(--ease-out);
+  width: 0;
+}
+.progress-fill.animate { width: var(--pct, 60%); }
+
+/* ============================================================
+   PROTECTION GRADIENT
+   ============================================================ */
+.protect::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--grad-protect);
+  pointer-events: none;
+}
+
+/* ============================================================
+   AI CARD
+   ============================================================ */
+.card-ai {
+  background: var(--violet-950);
+  border: 1px solid rgba(188,127,252,0.12);
+  border-radius: var(--radius-lg);
+}
+
+/* ============================================================
+   STATS ROW (hero)
+   ============================================================ */
+.hero-stats {
+  display: flex; gap: 48px; justify-content: center;
+  margin: 40px 0 0; padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.hero-stat-val {
+  font-family: var(--font-mono); font-size: 28px; font-weight: 600;
+  color: var(--fg-1);
+}
+.hero-stat-lbl { font-size: 12px; color: var(--fg-3); margin-top: 4px; }
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider { height: 1px; background: rgba(255,255,255,0.05); margin: 0; }
+
+/* Mock color blocks */
+.scene-venue   { background: linear-gradient(160deg, #4a6078 0%, #1a2a3a 90%); }
+.scene-cater   { background: linear-gradient(160deg, #3a4a2b 0%, #0c0f0a 90%); }
+.scene-violet  { background: linear-gradient(160deg, var(--violet-700) 0%, var(--violet-950) 90%); }
+.scene-warm    { background: linear-gradient(160deg, #7a5a38 0%, #2a1a0a 90%); }
+.scene-success { background: linear-gradient(160deg, var(--success-bg) 0%, #0e0e0e 90%); }
+</style>
 </head>
 <body>
 
 <!-- ============================================================
-     NAVIGATION
-============================================================ -->
+     NAV
+     ============================================================ -->
 <nav class="nav">
-  <div class="nav-logo">
-    <svg class="logo-icon" viewBox="0 0 300 385" xmlns="http://www.w3.org/2000/svg" fill="white">
-      <path d="M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z"/>
-      <path d="M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z"/>
-      <path d="M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z"/>
-    </svg>
-    Schemester
-  </div>
-  <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#howitworks">How It Works</a></li>
-    <li><a href="#dashboard">Dashboard</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <div class="nav-cta">
-    <a href="#" class="btn btn-ghost" style="padding:9px 18px;font-size:13px;">Sign In</a>
-    <a href="#" class="btn btn-primary" style="padding:9px 18px;font-size:13px;">Get Started Free</a>
+  <div class="wrap nav-inner">
+    <div class="brand">
+      <img src="assets/logo-white.png" alt="Schemester logo">
+      <span class="brand-name">Schemester</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="btn btn-ghost">Log in</button>
+      <button class="btn btn-primary">Start a Scheme</button>
+    </div>
   </div>
 </nav>
 
 <!-- ============================================================
      HERO
-============================================================ -->
+     ============================================================ -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div style="position:relative;z-index:1;width:100%;">
-    <div class="hero-eye">
-      <span class="badge badge-p">✦ AI-Powered Event Planning Platform</span>
-    </div>
-    <h1 class="hero-title">
-      Your <span class="grad-text">AI Planning</span><br>Superpower is Here
-    </h1>
-    <p class="hero-sub">
-      Create a Scheme. Let AI break it down into every detail. Search live availability. Book everything — together.
-    </p>
-    <div class="hero-btns">
-      <a href="#" class="btn btn-primary" style="font-size:17px;padding:16px 32px;">✦ Start Your First Scheme</a>
-      <a href="#" class="btn btn-ghost" style="font-size:17px;padding:16px 32px;">▶ Watch Demo</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="hs-val grad-text">500K+</div><div class="hs-lbl">Schemes Created</div></div>
-      <div><div class="hs-val grad-text">98%</div><div class="hs-lbl">Satisfaction Rate</div></div>
-      <div><div class="hs-val grad-text">£2M+</div><div class="hs-lbl">Saved on Bookings</div></div>
-      <div><div class="hs-val grad-text">150+</div><div class="hs-lbl">Countries Supported</div></div>
-    </div>
-  </div>
-
-  <!-- ── 3 PHONE MOCKUPS ── -->
-  <div class="phones-row" style="position:relative;z-index:1;">
-
-    <!-- Phone 1: My Schemes list -->
-    <div class="phone">
-      <div class="ph-notch"></div>
-      <div class="ph-screen" style="background:#0A0A14;">
-        <div class="ph-bar"><span class="ph-bar-time">9:41</span><span class="ph-bar-icons">⚡📶🔋</span></div>
-        <div class="ph-content">
-          <div style="font-size:10px;color:var(--t3);margin-bottom:3px;">Good morning 👋</div>
-          <div style="font-size:17px;font-weight:900;margin-bottom:14px;">My Schemes</div>
-
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(192,38,211,.2));border-radius:13px;padding:13px;margin-bottom:9px;border:1px solid rgba(124,58,237,.32);">
-            <div style="font-size:22px;margin-bottom:7px;">💍</div>
-            <div style="font-size:12px;font-weight:800;">Sarah & James Wedding</div>
-            <div style="font-size:10px;color:var(--t2);margin:3px 0;">June 14, 2025 · London</div>
-            <div style="height:3px;background:rgba(255,255,255,.09);border-radius:2px;margin-top:9px;overflow:hidden;">
-              <div style="width:68%;height:100%;background:var(--r-grd);border-radius:2px;"></div>
-            </div>
-            <div style="font-size:9px;color:var(--t3);margin-top:3px;">68% complete</div>
-          </div>
-
-          <div style="background:var(--card);border-radius:13px;padding:13px;margin-bottom:9px;border:1px solid var(--border);">
-            <div style="font-size:22px;margin-bottom:7px;">🎉</div>
-            <div style="font-size:12px;font-weight:800;">30th Birthday Bash</div>
-            <div style="font-size:10px;color:var(--t2);margin:3px 0;">Mar 28, 2025 · Manchester</div>
-            <div style="height:3px;background:rgba(255,255,255,.09);border-radius:2px;margin-top:9px;overflow:hidden;">
-              <div style="width:35%;height:100%;background:var(--a-grd);border-radius:2px;"></div>
-            </div>
-            <div style="font-size:9px;color:var(--t3);margin-top:3px;">35% complete</div>
-          </div>
-
-          <div style="background:var(--card);border-radius:13px;padding:13px;border:1px solid var(--border);">
-            <div style="font-size:22px;margin-bottom:7px;">✈️</div>
-            <div style="font-size:12px;font-weight:800;">Maldives Getaway</div>
-            <div style="font-size:10px;color:var(--t2);margin:3px 0;">Aug 10–20, 2025</div>
-            <div style="height:3px;background:rgba(255,255,255,.09);border-radius:2px;margin-top:9px;overflow:hidden;">
-              <div style="width:20%;height:100%;background:var(--g-grd);border-radius:2px;"></div>
-            </div>
-            <div style="font-size:9px;color:var(--t3);margin-top:3px;">20% complete</div>
-          </div>
-        </div>
-        <div class="ph-tabs">
-          <div class="ph-tab on"><div class="ph-tab-ico">🏠</div><div class="ph-tab-lbl">Home</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">🔍</div><div class="ph-tab-lbl">Explore</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">➕</div><div class="ph-tab-lbl">Scheme</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">💬</div><div class="ph-tab-lbl">Chat</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">👤</div><div class="ph-tab-lbl">Me</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phone 2: Schemy AI (centre/hero) -->
-    <div class="phone">
-      <div class="ph-notch"></div>
-      <div class="ph-screen" style="background:#0A0A14;">
-        <div class="ph-bar"><span class="ph-bar-time">9:41</span><span class="ph-bar-icons">⚡📶🔋</span></div>
-        <div style="padding:14px;height:calc(100% - 32px - 52px);display:flex;flex-direction:column;">
-          <!-- AI header -->
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-            <div style="width:30px;height:30px;background:var(--r-grd);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;">✦</div>
-            <div>
-              <div style="font-size:13px;font-weight:800;">Schemy AI</div>
-              <div style="font-size:9px;color:var(--success);">● Online — always planning</div>
-            </div>
-          </div>
-          <!-- Messages -->
-          <div style="flex:1;display:flex;flex-direction:column;gap:9px;overflow:hidden;">
-            <div style="background:var(--hover);border-radius:11px 11px 11px 3px;padding:9px 11px;font-size:10px;line-height:1.55;max-width:88%;">
-              Hi! I'm Schemy 👋 Tell me what you're planning and I'll take care of the rest!
-            </div>
-            <div style="display:flex;justify-content:flex-end;">
-              <div style="background:linear-gradient(135deg,#7C3AED,#9333EA);border-radius:11px 11px 3px 11px;padding:9px 11px;font-size:10px;line-height:1.55;max-width:88%;color:#fff;">
-                I'm planning my wedding in London for June 2025 — around 150 guests
-              </div>
-            </div>
-            <div style="background:var(--hover);border-radius:11px 11px 11px 3px;padding:9px 11px;font-size:10px;line-height:1.55;max-width:94%;">
-              Amazing! 💍 I've created your Wedding Scheme and broken it into 14 key components. I found 3 venues near Central London available on your date. Shall I show you?
-            </div>
-            <div style="display:flex;gap:5px;flex-wrap:wrap;">
-              <div style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:7px;padding:5px 9px;font-size:9px;color:#A78BFA;font-weight:700;cursor:pointer;">✓ Show venues</div>
-              <div style="background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:7px;padding:5px 9px;font-size:9px;color:var(--t2);font-weight:700;cursor:pointer;">Set budget first</div>
-            </div>
-          </div>
-          <!-- Input -->
-          <div style="background:var(--hover);border-radius:10px;display:flex;align-items:center;padding:7px 10px;gap:7px;border:1px solid var(--border);margin-top:10px;">
-            <span style="font-size:10px;color:var(--t3);flex:1;">Message Schemy...</span>
-            <div style="width:26px;height:26px;background:var(--r-grd);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;">↑</div>
-          </div>
-        </div>
-        <div class="ph-tabs">
-          <div class="ph-tab"><div class="ph-tab-ico">🏠</div><div class="ph-tab-lbl">Home</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">🔍</div><div class="ph-tab-lbl">Explore</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">➕</div><div class="ph-tab-lbl">Scheme</div></div>
-          <div class="ph-tab on"><div class="ph-tab-ico">💬</div><div class="ph-tab-lbl">Chat</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">👤</div><div class="ph-tab-lbl">Me</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Phone 3: Vendor results -->
-    <div class="phone">
-      <div class="ph-notch"></div>
-      <div class="ph-screen" style="background:#0A0A14;">
-        <div class="ph-bar"><span class="ph-bar-time">9:41</span><span class="ph-bar-icons">⚡📶🔋</span></div>
-        <div class="ph-content" style="padding-bottom:60px;">
-          <div style="display:flex;align-items:center;gap:7px;margin-bottom:11px;">
-            <span style="font-size:13px;">←</span>
-            <div style="flex:1;">
-              <div style="font-size:13px;font-weight:800;">Wedding Venues</div>
-              <div style="font-size:9px;color:var(--t2);">3 live matches near London</div>
-            </div>
-            <div style="background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.35);border-radius:7px;padding:3px 7px;font-size:9px;color:#6EE7B7;font-weight:700;">● Live</div>
-          </div>
-          <div style="display:flex;gap:5px;margin-bottom:11px;">
-            <div style="background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.4);border-radius:7px;padding:3px 8px;font-size:9px;color:#A78BFA;font-weight:700;">All</div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:7px;padding:3px 8px;font-size:9px;color:var(--t2);font-weight:700;">Available</div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:7px;padding:3px 8px;font-size:9px;color:var(--t2);font-weight:700;">Best Deal</div>
-          </div>
-
-          <!-- Venue 1 -->
-          <div style="background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(16,185,129,.08));border:1px solid rgba(124,58,237,.35);border-radius:11px;padding:11px;margin-bottom:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-              <div style="font-size:12px;font-weight:800;">The Savoy</div>
-              <div style="background:rgba(16,185,129,.2);color:#6EE7B7;font-size:8px;padding:2px 5px;border-radius:4px;font-weight:700;">✓ Available</div>
-            </div>
-            <div style="font-size:9px;color:var(--t2);margin-bottom:7px;">📍 0.3mi · ⭐ 4.9 (234 reviews)</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-size:15px;font-weight:900;color:#A78BFA;">£8,500</div>
-              <div style="background:var(--r-grd);border-radius:7px;padding:4px 10px;font-size:9px;color:#fff;font-weight:800;cursor:pointer;">Book Now</div>
-            </div>
-          </div>
-
-          <!-- Venue 2 -->
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:11px;padding:11px;margin-bottom:8px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-              <div style="font-size:12px;font-weight:800;">Claridge's</div>
-              <div style="background:rgba(16,185,129,.2);color:#6EE7B7;font-size:8px;padding:2px 5px;border-radius:4px;font-weight:700;">✓ Available</div>
-            </div>
-            <div style="font-size:9px;color:var(--t2);margin-bottom:7px;">📍 0.8mi · ⭐ 4.8 (189 reviews)</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-size:15px;font-weight:900;">£6,200</div>
-              <div style="background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:9px;color:var(--t2);font-weight:800;cursor:pointer;">View</div>
-            </div>
-          </div>
-
-          <!-- Venue 3: Best deal -->
-          <div style="background:var(--card);border:1px solid rgba(245,158,11,.35);border-radius:11px;padding:11px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-              <div style="font-size:12px;font-weight:800;">Sketch London</div>
-              <div style="background:rgba(245,158,11,.2);color:#FCD34D;font-size:8px;padding:2px 5px;border-radius:4px;font-weight:700;">🔥 Best Deal</div>
-            </div>
-            <div style="font-size:9px;color:var(--t2);margin-bottom:7px;">📍 1.2mi · ⭐ 4.7 (156 reviews)</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="font-size:15px;font-weight:900;color:#F59E0B;">£4,800</div>
-                <div style="font-size:8px;color:var(--t3);text-decoration:line-through;">was £6,500</div>
-              </div>
-              <div style="background:rgba(255,255,255,.07);border:1px solid var(--border);border-radius:7px;padding:4px 10px;font-size:9px;color:var(--t2);font-weight:800;cursor:pointer;">View</div>
-            </div>
-          </div>
-        </div>
-        <div class="ph-tabs">
-          <div class="ph-tab"><div class="ph-tab-ico">🏠</div><div class="ph-tab-lbl">Home</div></div>
-          <div class="ph-tab on"><div class="ph-tab-ico">🔍</div><div class="ph-tab-lbl">Explore</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">➕</div><div class="ph-tab-lbl">Scheme</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">💬</div><div class="ph-tab-lbl">Chat</div></div>
-          <div class="ph-tab"><div class="ph-tab-ico">👤</div><div class="ph-tab-lbl">Me</div></div>
-        </div>
-      </div>
-    </div>
-  </div><!-- /phones-row -->
-</section>
-
-<!-- ============================================================
-     FEATURES
-============================================================ -->
-<section class="features" id="features">
   <div class="wrap">
-    <div class="sh">
-      <div class="sh-eye">Core Features</div>
-      <h2 class="sh-title">Everything you need to <span class="grad-text">plan perfectly</span></h2>
-      <p class="sh-sub">Schemester combines AI intelligence, real-time availability search, and seamless group collaboration into one stunning platform.</p>
+    <div class="eyebrow">✦ AI plans it. You enjoy it.</div>
+    <h1 class="hero-title">What's the<br><i>plan?</i></h1>
+    <p class="hero-sub">Type anything — "weekend in Lisbon, 6 people, end of May" — and Schemester builds the Scheme, finds the deals, splits the bill, and keeps the group in sync.</p>
+
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-lg">Start a Scheme</button>
+      <button class="btn btn-ghost btn-lg">See how it works</button>
     </div>
-    <div class="feat-grid">
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(124,58,237,.15);">✦</div>
-        <div class="feat-title">Schemy AI Assistant</div>
-        <div class="feat-desc">Describe your event in plain language. Schemy creates a tailored planning checklist broken into every component — venues, catering, entertainment, attire, and more — in seconds.</div>
+
+    <div class="search-demo">
+      <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+        <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+      </svg>
+      <span class="text">Weekend in Lisbon, 6 people, end of May</span>
+      <span class="search-caret"></span>
+      <span class="enter">⏎ ASK AI</span>
+    </div>
+    <div class="quick-pills">
+      <span>Wedding</span>
+      <span>Dinner party</span>
+      <span>Birthday</span>
+      <span>Hen do</span>
+      <span>Weekend away</span>
+      <span>Anniversary</span>
+    </div>
+  </div>
+
+  <!-- Phone mockups -->
+  <div class="phones">
+    <!-- Home screen -->
+    <div class="mock">
+      <div class="mock-inner mock-home">
+        <div class="mock-topbar">
+          <span style="font-size:11px;color:var(--fg-3)">9:41</span>
+          <span style="font-size:11px;color:var(--fg-3)">●●●</span>
+        </div>
+        <div style="padding:0 12px 10px">
+          <div style="font-family:var(--font-display);font-size:22px;font-weight:500;letter-spacing:-0.02em">Good evening 👋</div>
+          <div style="font-size:12px;color:var(--fg-3);margin-top:2px">3 active Schemes</div>
+        </div>
+        <div class="mock-search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          What's the plan?
+        </div>
+        <div class="mock-card scene-venue">
+          <div class="mock-card-overlay protect">
+            <div class="mock-card-title">The Big Wedding</div>
+            <div class="mock-card-meta">Jun 12 – 14 · 80 guests</div>
+            <div class="mock-prog"><div class="mock-prog-fill" style="width:72%"></div></div>
+          </div>
+        </div>
+        <div class="mock-card scene-warm" style="height:90px">
+          <div class="mock-card-overlay protect">
+            <div class="mock-card-title">Hen Do — Lisbon</div>
+            <div class="mock-card-meta">May 2 · 14 people</div>
+          </div>
+        </div>
+        <!-- Tab bar -->
+        <div style="margin-top:auto;border-top:1px solid var(--bg-3);background:rgba(14,14,14,0.9);display:flex;padding:8px 0 4px">
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--violet-500)">
+            <div style="font-size:16px">⊞</div>Home
+          </div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--fg-3)">
+            <div style="font-size:16px">◈</div>Schemes
+          </div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--fg-3)">
+            <div style="font-size:16px">◯</div>Discover
+          </div>
+          <div style="flex:1;text-align:center;font-size:9px;color:var(--fg-3)">
+            <div style="font-size:16px">◉</div>Profile
+          </div>
+        </div>
       </div>
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(245,158,11,.15);">🔍</div>
-        <div class="feat-title">Live Availability Search</div>
-        <div class="feat-desc">Real-time web search surfaces the best vendors with live pricing, actual availability for your dates, and proximity to your venue. No stale listings, ever.</div>
+    </div>
+
+    <!-- Scheme detail -->
+    <div class="mock">
+      <div class="mock-inner mock-scheme">
+        <div class="mock-scheme-hero">
+          <div style="font-size:10px;color:var(--fg-3);margin-bottom:4px;display:flex;justify-content:space-between"><span>9:41</span><span>●●●</span></div>
+          <div style="display:flex;gap:6px;margin-bottom:8px">
+            <span class="pill pill-success" style="font-size:9px;padding:3px 8px">BOOKED</span>
+            <span class="pill" style="font-size:9px;padding:3px 8px;background:var(--bg-3)">80 GUESTS</span>
+          </div>
+          <div style="font-family:var(--font-display);font-size:18px;font-weight:500">The Big Wedding</div>
+          <div style="font-size:11px;color:var(--fg-2);margin-top:2px">Jun 12 – 14, 2025 · Como, Italy</div>
+          <div class="progress" style="margin-top:8px"><div class="progress-fill animate" style="--pct:72%"></div></div>
+        </div>
+        <div class="mock-comp-row">
+          <div class="mock-comp scene-venue">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:var(--grad-protect);padding:8px;">
+              <div style="font-size:10px;font-weight:600">Venue</div>
+              <div style="font-size:9px;color:var(--fg-2)">Villa del Lago</div>
+            </div>
+          </div>
+          <div class="mock-comp scene-cater">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:var(--grad-protect);padding:8px;">
+              <div style="font-size:10px;font-weight:600">Catering</div>
+              <span class="pill pill-success" style="font-size:8px;padding:2px 6px;margin-top:2px;display:inline-flex">SOURCED</span>
+            </div>
+          </div>
+          <div class="mock-comp scene-warm">
+            <div style="position:absolute;bottom:0;left:0;right:0;background:var(--grad-protect);padding:8px;">
+              <div style="font-size:10px;font-weight:600">Outfits</div>
+              <div style="font-size:9px;color:var(--fg-2)">5 want a re-vote</div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-ai-chip card-ai">
+          <span class="ai-glyph">✦</span>
+          <span style="font-size:10px">Catering + Venue overlap Friday. Want me to reshuffle?</span>
+        </div>
       </div>
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(16,185,129,.15);">👥</div>
-        <div class="feat-title">Collaborative Planning</div>
-        <div class="feat-desc">Invite co-planners, guests, and vendors into your Scheme. Vote on options, assign tasks, react to ideas — everything in a shared, real-time space.</div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="mock">
+      <div class="mock-inner mock-dash">
+        <div class="mock-topbar">
+          <span style="font-size:11px;color:var(--fg-3)">9:41</span>
+          <span style="font-size:11px;color:var(--fg-3)">●●●</span>
+        </div>
+        <div style="padding:0 12px 12px">
+          <div style="font-family:var(--font-display);font-size:20px;font-weight:500">Dashboard</div>
+        </div>
+        <div class="mock-dash-stat-row">
+          <div class="mock-stat">
+            <div class="mock-stat-val">£1,240</div>
+            <div class="mock-stat-lbl">Total saved</div>
+          </div>
+          <div class="mock-stat">
+            <div class="mock-stat-val">12</div>
+            <div class="mock-stat-lbl">Schemes done</div>
+          </div>
+          <div class="mock-stat">
+            <div class="mock-stat-val">84%</div>
+            <div class="mock-stat-lbl">On budget</div>
+          </div>
+          <div class="mock-stat">
+            <div class="mock-stat-val">47</div>
+            <div class="mock-stat-lbl">Friends planned</div>
+          </div>
+        </div>
+        <div style="padding:12px">
+          <div style="font-size:11px;color:var(--fg-3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px">Budget breakdown</div>
+          <div style="margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--fg-2)">Venue</span><span>£4,200</span></div>
+            <div class="progress"><div class="progress-fill animate" style="--pct:84%"></div></div>
+          </div>
+          <div style="margin-bottom:8px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--fg-2)">Catering</span><span>£2,800</span></div>
+            <div class="progress"><div class="progress-fill animate" style="--pct:56%"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--fg-2)">Travel</span><span>£960</span></div>
+            <div class="progress"><div class="progress-fill animate" style="--pct:38%"></div></div>
+          </div>
+        </div>
       </div>
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(59,130,246,.15);">💳</div>
-        <div class="feat-title">Group & Split Payments</div>
-        <div class="feat-desc">Pay individually, split evenly, or collect contributions. Manage deposits, track balances, and send automatic reminders — no awkward money conversations needed.</div>
+    </div>
+  </div>
+
+  <!-- Stats strip -->
+  <div class="wrap">
+    <div class="hero-stats">
+      <div style="text-align:center">
+        <div class="hero-stat-val">£1,240</div>
+        <div class="hero-stat-lbl">Avg. saved per Scheme</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(239,68,68,.15);">📊</div>
-        <div class="feat-title">Smart Dashboard</div>
-        <div class="feat-desc">A beautiful command centre tracking your planning progress, budget breakdown, vendor bookings, upcoming milestones, and everything your collaborators are up to.</div>
+      <div style="text-align:center">
+        <div class="hero-stat-val">40k+</div>
+        <div class="hero-stat-lbl">Schemes planned</div>
       </div>
-      <div class="feat-card">
-        <div class="feat-ico" style="background:rgba(168,85,247,.15);">🏆</div>
-        <div class="feat-title">Rewards & Scheme Points</div>
-        <div class="feat-desc">Earn Scheme Points on every booking. Unlock badges, climb tiers from Novice Schemer to Legendary Schemer, and redeem points for discounts and exclusive vendor perks.</div>
+      <div style="text-align:center">
+        <div class="hero-stat-val">4.9 ★</div>
+        <div class="hero-stat-lbl">App Store rating</div>
       </div>
     </div>
   </div>
 </section>
-
-<hr class="div-line" />
 
 <!-- ============================================================
      HOW IT WORKS
-============================================================ -->
-<section class="hiw" id="howitworks">
+     ============================================================ -->
+<section class="section" id="how">
   <div class="wrap">
-    <div class="sh">
-      <div class="sh-eye">How It Works</div>
-      <h2 class="sh-title">From idea to <span class="grad-text">unforgettable</span></h2>
-      <p class="sh-sub">Four simple steps that take you from a vague idea to a fully booked, perfectly planned event.</p>
+    <div class="section-h">
+      <div class="eyebrow-sm">How it works</div>
+      <div class="section-title">Three steps.<br>Any <i>plan.</i></div>
     </div>
-    <div class="steps-row">
+    <div class="steps">
       <div class="step">
-        <div class="step-num" style="background:linear-gradient(135deg,rgba(124,58,237,.32),rgba(192,38,211,.2));border:2px solid rgba(124,58,237,.44);">1</div>
-        <div class="step-title">Create a Scheme</div>
-        <div class="step-desc">Tell Schemy what you're planning — a wedding, holiday, birthday, date night, corporate event, or anything you can imagine.</div>
-      </div>
-      <div class="step">
-        <div class="step-num" style="background:linear-gradient(135deg,rgba(192,38,211,.3),rgba(245,158,11,.2));border:2px solid rgba(192,38,211,.44);">2</div>
-        <div class="step-title">AI Breaks It Down</div>
-        <div class="step-desc">Schemy generates your personalised checklist with every component you'll need. Add, remove, or customise each item to make it yours.</div>
+        <div class="step-n">01</div>
+        <h3>Name your Scheme</h3>
+        <p>Type it in plain language. Schemester extracts dates, destination, headcount, vibe — automatically.</p>
       </div>
       <div class="step">
-        <div class="step-num" style="background:linear-gradient(135deg,rgba(245,158,11,.3),rgba(239,68,68,.2));border:2px solid rgba(245,158,11,.44);">3</div>
-        <div class="step-title">Discover & Book</div>
-        <div class="step-desc">Browse AI-curated vendor results with live pricing and real availability. Compare, save, and book directly — all without leaving Schemester.</div>
+        <div class="step-n">02</div>
+        <h3>Pick components</h3>
+        <p>AI breaks your Scheme into venue, catering, outfits, travel — whatever fits. Swap, poll, or let AI decide.</p>
       </div>
       <div class="step">
-        <div class="step-num" style="background:linear-gradient(135deg,rgba(16,185,129,.3),rgba(59,130,246,.2));border:2px solid rgba(16,185,129,.44);">4</div>
-        <div class="step-title">Celebrate Together</div>
-        <div class="step-desc">Invite your crew, split costs, chat, share a mood board, and relive memories — all inside your Scheme. Your event, perfectly executed.</div>
+        <div class="step-n">03</div>
+        <h3>Split &amp; enjoy</h3>
+        <p>Invite the group. Chat, vote, pay together or separately. Schemester tracks deadlines and price drops.</p>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="div-line" />
+<div class="divider"></div>
 
 <!-- ============================================================
-     DASHBOARD PROTOTYPE
-============================================================ -->
-<section id="dashboard" style="padding:100px 0;">
-  <div class="wrap" style="margin-bottom:52px;">
-    <div class="sh">
-      <div class="sh-eye">Dashboard Preview</div>
-      <h2 class="sh-title">Your planning <span class="grad-text">command centre</span></h2>
-      <p class="sh-sub">A beautiful, personalised overview of every Scheme, booking, payment, and team member — all in one place.</p>
-    </div>
-  </div>
-
-  <div class="proto-frame">
-    <!-- Browser top bar -->
-    <div class="proto-top">
-      <div class="dots">
-        <div class="dot" style="background:#FF5F57;"></div>
-        <div class="dot" style="background:#FFBD2E;"></div>
-        <div class="dot" style="background:#28C840;"></div>
-      </div>
-      <div class="url-bar">🔒 app.schemester.com/dashboard</div>
-      <span style="font-size:13px;color:var(--t2);">↺</span>
-    </div>
-
-    <!-- App layout -->
-    <div class="app-layout">
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <div class="sb-logo">
-          <svg width="21" height="27" viewBox="0 0 300 385" xmlns="http://www.w3.org/2000/svg" fill="white" style="flex-shrink:0;">
-            <path d="M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z"/>
-            <path d="M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z"/>
-            <path d="M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z"/>
-          </svg>
-          Schemester
-        </div>
-        <div class="ni on"><span class="ni-ico">🏠</span>Dashboard</div>
-        <div class="ni"><span class="ni-ico">✦</span>My Schemes<span class="pill pill-p">3</span></div>
-        <div class="ni"><span class="ni-ico">🔍</span>Discover</div>
-        <div class="ni"><span class="ni-ico">💬</span>Messages<span class="pill pill-r">4</span></div>
-        <div class="ni"><span class="ni-ico">📅</span>Calendar</div>
-        <div class="sb-lbl">Active Schemes</div>
-        <div class="ni"><span class="ni-ico">💍</span>Sarah's Wedding</div>
-        <div class="ni"><span class="ni-ico">🎉</span>30th Birthday</div>
-        <div class="ni"><span class="ni-ico">✈️</span>Maldives Trip</div>
-        <div class="sb-lbl">Account</div>
-        <div class="ni"><span class="ni-ico">💳</span>Payments</div>
-        <div class="ni"><span class="ni-ico">⚙️</span>Settings</div>
-        <div class="sb-user">
-          <div class="av" style="background:var(--r-grd);color:#fff;">SW</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;">Sarah Williams</div>
-            <div style="font-size:10px;color:var(--t2);">🏆 Gold Schemer</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main -->
-      <div class="main">
-        <div class="pg-hd">
-          <div>
-            <div class="pg-title">Good morning, Sarah ☀️</div>
-            <div class="pg-sub">3 active schemes · 2 upcoming payments · 63 days to your wedding</div>
-          </div>
-          <div style="display:flex;gap:9px;">
-            <a href="#" class="btn btn-ghost" style="padding:9px 14px;font-size:12px;">📅 Calendar</a>
-            <a href="#" class="btn btn-primary" style="padding:9px 14px;font-size:12px;">✦ New Scheme</a>
-          </div>
-        </div>
-
-        <!-- Stats row -->
-        <div class="stats-row">
-          <div class="sc">
-            <div class="sc-lbl">💼 Active Schemes</div>
-            <div class="sc-val">3</div>
-            <div class="sc-chg" style="color:var(--success);">↑ +1 this month</div>
-          </div>
-          <div class="sc">
-            <div class="sc-lbl">💰 Total Budget</div>
-            <div class="sc-val">£32,400</div>
-            <div class="sc-chg" style="color:var(--t3);">Across all schemes</div>
-          </div>
-          <div class="sc">
-            <div class="sc-lbl">✅ Booked Items</div>
-            <div class="sc-val">12</div>
-            <div class="sc-chg" style="color:var(--success);">8 still pending</div>
-          </div>
-          <div class="sc">
-            <div class="sc-lbl">🏆 Scheme Points</div>
-            <div class="sc-val grad-text">4,820</div>
-            <div class="sc-chg" style="color:var(--accent);">↑ +320 this week</div>
-          </div>
-        </div>
-
-        <!-- Schemes grid -->
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-          <div style="font-size:16px;font-weight:800;">Active Schemes</div>
-          <a href="#" style="font-size:12px;color:#A78BFA;font-weight:700;">View all →</a>
-        </div>
-        <div class="schemes-grid">
-          <div class="skcard">
-            <div class="skcard-cover" style="background:linear-gradient(135deg,rgba(124,58,237,.4),rgba(192,38,211,.28));">💍</div>
-            <div class="skcard-body">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-                <div class="skcard-title">Sarah &amp; James Wedding</div>
-                <span class="badge badge-p" style="font-size:9px;padding:2px 7px;">Active</span>
-              </div>
-              <div class="skcard-meta">June 14, 2025 · The Savoy, London · 150 guests</div>
-              <div class="prog-track"><div class="prog-fill" style="width:68%;"></div></div>
-              <div class="sk-footer">
-                <div class="sk-avs">
-                  <div class="sk-av" style="background:var(--r-grd);color:#fff;">SW</div>
-                  <div class="sk-av" style="background:var(--a-grd);color:#fff;">JW</div>
-                  <div class="sk-av" style="background:var(--g-grd);color:#fff;">MK</div>
-                  <div class="sk-av" style="background:var(--hover);color:var(--t2);">+4</div>
-                </div>
-                <div style="font-size:12px;color:var(--t2);">68% done</div>
-              </div>
-            </div>
-          </div>
-          <div class="skcard">
-            <div class="skcard-cover" style="background:linear-gradient(135deg,rgba(245,158,11,.4),rgba(239,68,68,.28));">🎉</div>
-            <div class="skcard-body">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-                <div class="skcard-title">30th Birthday Bash</div>
-                <span class="badge badge-a" style="font-size:9px;padding:2px 7px;">Planning</span>
-              </div>
-              <div class="skcard-meta">Mar 28, 2025 · Manchester · 40 guests</div>
-              <div class="prog-track"><div class="prog-fill" style="width:35%;background:var(--a-grd);"></div></div>
-              <div class="sk-footer">
-                <div class="sk-avs">
-                  <div class="sk-av" style="background:var(--r-grd);color:#fff;">SW</div>
-                  <div class="sk-av" style="background:var(--g-grd);color:#fff;">LT</div>
-                </div>
-                <div style="font-size:12px;color:var(--t2);">35% done</div>
-              </div>
-            </div>
-          </div>
-          <div class="skcard">
-            <div class="skcard-cover" style="background:linear-gradient(135deg,rgba(16,185,129,.4),rgba(59,130,246,.28));">✈️</div>
-            <div class="skcard-body">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
-                <div class="skcard-title">Maldives Getaway</div>
-                <span class="badge badge-g" style="font-size:9px;padding:2px 7px;">Early</span>
-              </div>
-              <div class="skcard-meta">Aug 10–20, 2025 · Maldives · 2 people</div>
-              <div class="prog-track"><div class="prog-fill" style="width:20%;background:var(--g-grd);"></div></div>
-              <div class="sk-footer">
-                <div class="sk-avs">
-                  <div class="sk-av" style="background:var(--r-grd);color:#fff;">SW</div>
-                  <div class="sk-av" style="background:var(--a-grd);color:#fff;">JW</div>
-                </div>
-                <div style="font-size:12px;color:var(--t2);">20% done</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Activity + Budget side-by-side -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <!-- Activity -->
-          <div>
-            <div style="font-size:16px;font-weight:800;margin-bottom:14px;">Recent Activity</div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;">
-              <div class="act-item">
-                <div class="act-ico" style="background:rgba(16,185,129,.15);">✅</div>
-                <div><div class="act-txt"><strong>The Savoy</strong> confirmed for June 14th</div><div class="act-time">2 hours ago</div></div>
-              </div>
-              <div class="act-item">
-                <div class="act-ico" style="background:rgba(124,58,237,.15);">💬</div>
-                <div><div class="act-txt"><strong>James</strong> commented on the wedding cake section</div><div class="act-time">4 hours ago</div></div>
-              </div>
-              <div class="act-item">
-                <div class="act-ico" style="background:rgba(245,158,11,.15);">🔍</div>
-                <div><div class="act-txt"><strong>Schemy</strong> found 5 new photographers under £2,000</div><div class="act-time">Yesterday</div></div>
-              </div>
-              <div class="act-item" style="border:none;">
-                <div class="act-ico" style="background:rgba(59,130,246,.15);">💳</div>
-                <div><div class="act-txt"><strong>Mia K.</strong> paid their £400 deposit contribution</div><div class="act-time">Yesterday</div></div>
-              </div>
-            </div>
-          </div>
-          <!-- Budget -->
-          <div>
-            <div style="font-size:16px;font-weight:800;margin-bottom:14px;">Wedding Budget Tracker</div>
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;">
-                <div>
-                  <div style="font-size:26px;font-weight:900;">£14,200</div>
-                  <div style="font-size:12px;color:var(--t2);">of £25,000 budget</div>
-                </div>
-                <span class="badge badge-g">On Track</span>
-              </div>
-              <div class="bb">
-                <div class="bb-hd"><span class="bb-lbl">Venue</span><span class="bb-val">£8,500 / £10,000</span></div>
-                <div class="bb-track"><div class="bb-fill" style="width:85%;background:var(--r-grd);"></div></div>
-              </div>
-              <div class="bb">
-                <div class="bb-hd"><span class="bb-lbl">Catering</span><span class="bb-val">£3,200 / £6,000</span></div>
-                <div class="bb-track"><div class="bb-fill" style="width:53%;background:var(--a-grd);"></div></div>
-              </div>
-              <div class="bb">
-                <div class="bb-hd"><span class="bb-lbl">Photography</span><span class="bb-val">£0 / £2,500</span></div>
-                <div class="bb-track"><div class="bb-fill" style="width:0%;background:var(--g-grd);"></div></div>
-              </div>
-              <div class="bb">
-                <div class="bb-hd"><span class="bb-lbl">Flowers &amp; Décor</span><span class="bb-val">£2,500 / £3,000</span></div>
-                <div class="bb-track"><div class="bb-fill" style="width:83%;background:linear-gradient(135deg,#EC4899,#A855F7);"></div></div>
-              </div>
-              <div class="bb" style="margin-bottom:0;">
-                <div class="bb-hd"><span class="bb-lbl">Wedding Cake</span><span class="bb-val">£0 / £800</span></div>
-                <div class="bb-track"><div class="bb-fill" style="width:0%;background:var(--g-grd);"></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /main -->
-    </div><!-- /app-layout -->
-  </div><!-- /proto-frame -->
-</section>
-
-<!-- ============================================================
-     SCHEME DETAIL VIEW
-============================================================ -->
-<section style="padding:40px 0 100px;">
-  <div class="wrap" style="margin-bottom:52px;">
-    <div class="sh">
-      <div class="sh-eye">Scheme Detail View</div>
-      <h2 class="sh-title">Manage every <span class="grad-text">detail</span></h2>
-      <p class="sh-sub">Drill into any Scheme to manage your checklist, search vendors, chat with Schemy, coordinate your team, and track spending — all from one screen.</p>
-    </div>
-  </div>
-
-  <div class="proto-frame">
-    <div class="proto-top">
-      <div class="dots">
-        <div class="dot" style="background:#FF5F57;"></div>
-        <div class="dot" style="background:#FFBD2E;"></div>
-        <div class="dot" style="background:#28C840;"></div>
-      </div>
-      <div class="url-bar">🔒 app.schemester.com/schemes/sarah-james-wedding</div>
-      <span style="font-size:13px;color:var(--t2);">↺</span>
-    </div>
-
-    <div class="app-layout">
-      <div class="sidebar">
-        <div class="sb-logo">
-          <svg width="21" height="27" viewBox="0 0 300 385" xmlns="http://www.w3.org/2000/svg" fill="white" style="flex-shrink:0;">
-            <path d="M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z"/>
-            <path d="M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z"/>
-            <path d="M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z"/>
-          </svg>
-          Schemester
-        </div>
-        <div class="ni"><span class="ni-ico">🏠</span>Dashboard</div>
-        <div class="ni"><span class="ni-ico">✦</span>My Schemes</div>
-        <div class="sb-lbl">This Scheme</div>
-        <div class="ni on" style="font-size:12px;"><span class="ni-ico">📋</span>Checklist</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">🔍</span>Find Vendors</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">💳</span>Budget</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">👥</span>Collaborators</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">💬</span>Group Chat</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">📸</span>Mood Board</div>
-        <div class="ni" style="font-size:12px;"><span class="ni-ico">🗺️</span>Guest Page</div>
-        <div class="sb-user">
-          <div class="av" style="background:var(--r-grd);color:#fff;">SW</div>
-          <div>
-            <div style="font-size:12px;font-weight:700;">Sarah Williams</div>
-            <div style="font-size:10px;color:var(--t2);">🏆 Gold Schemer</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="main">
-        <!-- Scheme header banner -->
-        <div style="background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(192,38,211,.12));border:1px solid rgba(124,58,237,.32);border-radius:18px;padding:22px;margin-bottom:22px;display:flex;align-items:center;gap:18px;">
-          <div style="font-size:50px;">💍</div>
-          <div style="flex:1;">
-            <div style="font-size:22px;font-weight:900;letter-spacing:-.4px;margin-bottom:5px;">Sarah &amp; James Wedding</div>
-            <div style="display:flex;gap:16px;font-size:13px;color:var(--t2);margin-bottom:12px;flex-wrap:wrap;">
-              <span>📅 June 14, 2025</span>
-              <span>📍 The Savoy, London</span>
-              <span>👥 150 guests</span>
-              <span>💰 £25,000 budget</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:9px;">
-              <div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;">
-                <div style="width:68%;height:100%;background:var(--r-grd);border-radius:3px;"></div>
-              </div>
-              <span style="font-size:12px;color:var(--t2);">68% complete</span>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;">
-            <span class="badge badge-p">Active</span>
-            <span style="font-size:12px;color:var(--t2);">63 days to go ⏳</span>
-          </div>
-        </div>
-
-        <!-- Detail two-column -->
-        <div class="sk-detail">
-          <!-- Left: checklist + vendors -->
-          <div>
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-              <div style="font-size:16px;font-weight:800;">Planning Checklist</div>
-              <div class="tabs">
-                <div class="tab on">All</div>
-                <div class="tab">Booked</div>
-                <div class="tab">Pending</div>
-              </div>
-            </div>
-
-            <div class="cl-item done">
-              <div class="chkbx on">✓</div>
-              <div class="cl-lbl" style="text-decoration:line-through;color:var(--t2);">Wedding Venue</div>
-              <span class="badge badge-g" style="font-size:10px;">Booked</span>
-            </div>
-            <div class="cl-item done">
-              <div class="chkbx on">✓</div>
-              <div class="cl-lbl" style="text-decoration:line-through;color:var(--t2);">Flowers &amp; Décor</div>
-              <span class="badge badge-g" style="font-size:10px;">Booked</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div style="flex:1;">
-                <div class="cl-lbl">Wedding Catering</div>
-                <div style="font-size:11px;color:var(--t3);margin-top:2px;">3 quotes received · awaiting decision</div>
-              </div>
-              <span class="badge badge-a" style="font-size:10px;">Deciding</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Wedding Photographer</div>
-              <span class="badge badge-p" style="font-size:10px;">5 options</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Wedding Cake</div>
-              <span class="badge badge-p" style="font-size:10px;">4 options</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Wedding Dress</div>
-              <span class="badge badge-n" style="font-size:10px;">Not started</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Groom's Suit</div>
-              <span class="badge badge-n" style="font-size:10px;">Not started</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Live Band / DJ</div>
-              <span class="badge badge-p" style="font-size:10px;">6 options</span>
-            </div>
-            <div class="cl-item">
-              <div class="chkbx"></div>
-              <div class="cl-lbl">Honeymoon</div>
-              <span class="badge badge-n" style="font-size:10px;">Not started</span>
-            </div>
-
-            <!-- Photographer results -->
-            <div style="margin-top:22px;">
-              <div style="font-size:16px;font-weight:800;margin-bottom:4px;">📸 Photographers — Live Results</div>
-              <div style="font-size:11px;color:var(--t3);margin-bottom:14px;">Updated 2 minutes ago · Sorted by best match</div>
-
-              <div class="vc" style="border-color:rgba(245,158,11,.4);">
-                <div class="vc-logo" style="background:rgba(245,158,11,.15);">📸</div>
-                <div class="vc-info">
-                  <div class="vc-name">Oliver James Photography</div>
-                  <div class="vc-meta">⭐ 4.9 · 0.5mi · ✓ Available June 14 · 200+ weddings</div>
-                  <div class="vc-tags">
-                    <span class="badge badge-a" style="font-size:9px;padding:2px 7px;">🔥 Best Match</span>
-                    <span class="badge badge-g" style="font-size:9px;padding:2px 7px;">✓ Insured</span>
-                  </div>
-                </div>
-                <div class="vc-price">
-                  <div class="vc-pval" style="color:#F59E0B;">£1,800</div>
-                  <div class="vc-pnote">full day</div>
-                  <button class="vc-btn vc-btn-p">Book</button>
-                </div>
-              </div>
-
-              <div class="vc">
-                <div class="vc-logo" style="background:rgba(124,58,237,.15);">🎞️</div>
-                <div class="vc-info">
-                  <div class="vc-name">Bella Vista Studios</div>
-                  <div class="vc-meta">⭐ 4.8 · 1.1mi · ✓ Available June 14 · 150+ weddings</div>
-                  <div class="vc-tags">
-                    <span class="badge badge-p" style="font-size:9px;padding:2px 7px;">Photo + Video</span>
-                  </div>
-                </div>
-                <div class="vc-price">
-                  <div class="vc-pval">£2,200</div>
-                  <div class="vc-pnote">photo + video</div>
-                  <button class="vc-btn vc-btn-g">View</button>
-                </div>
-              </div>
-
-              <div class="vc">
-                <div class="vc-logo" style="background:rgba(16,185,129,.15);">🌿</div>
-                <div class="vc-info">
-                  <div class="vc-name">Capture Love Studio</div>
-                  <div class="vc-meta">⭐ 4.7 · 2.3mi · ✓ Available June 14 · 90+ weddings</div>
-                  <div class="vc-tags">
-                    <span class="badge badge-g" style="font-size:9px;padding:2px 7px;">Budget Friendly</span>
-                  </div>
-                </div>
-                <div class="vc-price">
-                  <div class="vc-pval">£1,500</div>
-                  <div class="vc-pnote">half + full day</div>
-                  <button class="vc-btn vc-btn-g">View</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: AI + Collaborators + Payments -->
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <!-- Schemy Chat -->
-            <div class="ai-chat">
-              <div class="ai-chat-hd">
-                <div class="ai-av">✦</div>
-                <div>
-                  <div style="font-size:13px;font-weight:800;">Schemy AI <span class="ai-dot"></span></div>
-                  <div style="font-size:11px;color:var(--t2);">Your personal wedding planner</div>
-                </div>
-              </div>
-              <div class="chat-msgs">
-                <div class="cm">
-                  <div class="cmb">The Savoy is confirmed for June 14th — amazing! 🎉 You're 68% done. I'd recommend locking in your photographer next — Oliver James Photography has a special June rate and only 2 weekends left.</div>
-                </div>
-                <div class="cm u">
-                  <div class="cmb">What photographers are under £2,000?</div>
-                </div>
-                <div class="cm">
-                  <div class="cmb">Found 3 under £2k for June 14: Oliver James (£1,800) ⭐4.9, Capture Love (£1,500) ⭐4.7, Morning Light (£1,650) ⭐4.6. All verified and available. Shall I send quotes to James too?</div>
-                </div>
-                <div class="chat-btns">
-                  <div class="cta-chip">✓ Send James the quotes</div>
-                  <div class="cta-chip-n">Compare side by side</div>
-                </div>
-              </div>
-              <div class="chat-inp-row">
-                <input class="chat-inp" placeholder="Ask Schemy anything..." />
-                <button class="chat-send">↑</button>
-              </div>
-            </div>
-
-            <!-- Collaborators -->
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-                <div style="font-size:14px;font-weight:800;">Collaborators</div>
-                <div style="background:rgba(124,58,237,.18);border:1px solid rgba(124,58,237,.3);border-radius:7px;padding:5px 10px;font-size:11px;color:#A78BFA;font-weight:700;cursor:pointer;">+ Invite</div>
-              </div>
-              <div class="col-item">
-                <div class="col-av" style="background:var(--r-grd);color:#fff;">SW</div>
-                <div style="flex:1;"><div class="col-name">Sarah Williams</div><div class="col-role">Owner · Bride</div></div>
-                <span class="badge badge-p" style="font-size:9px;">Admin</span>
-              </div>
-              <div class="col-item">
-                <div class="col-av" style="background:var(--a-grd);color:#fff;">JW</div>
-                <div style="flex:1;"><div class="col-name">James Williams</div><div class="col-role">Co-planner · Groom</div></div>
-                <span class="badge badge-g" style="font-size:9px;">● Online</span>
-              </div>
-              <div class="col-item">
-                <div class="col-av" style="background:var(--g-grd);color:#fff;">MK</div>
-                <div style="flex:1;"><div class="col-name">Mia Khan</div><div class="col-role">Maid of Honour</div></div>
-                <span class="badge badge-n" style="font-size:9px;">Away</span>
-              </div>
-              <div class="col-item" style="border:none;">
-                <div class="col-av" style="background:linear-gradient(135deg,#EC4899,#A855F7);color:#fff;">LT</div>
-                <div style="flex:1;"><div class="col-name">Lisa Thompson</div><div class="col-role">Best Woman</div></div>
-                <span class="badge badge-n" style="font-size:9px;">Away</span>
-              </div>
-            </div>
-
-            <!-- Group Payments -->
-            <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;">
-              <div style="font-size:14px;font-weight:800;margin-bottom:14px;">Group Payments</div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-                <div style="font-size:12px;color:var(--t2);">Collected so far</div>
-                <div style="font-size:14px;font-weight:800;color:var(--success);">£4,200</div>
-              </div>
-              <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
-                <div style="font-size:12px;color:var(--t2);">Outstanding</div>
-                <div style="font-size:14px;font-weight:800;color:var(--accent);">£1,800</div>
-              </div>
-              <div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.22);border-radius:9px;padding:10px 13px;font-size:12px;color:#FCA5A5;display:flex;align-items:center;gap:7px;">
-                ⏰ James's deposit reminder sent 2 days ago
-              </div>
-            </div>
-          </div>
-        </div><!-- /sk-detail -->
-      </div><!-- /main -->
-    </div><!-- /app-layout -->
-  </div><!-- /proto-frame -->
-</section>
-
-<hr class="div-line" />
-
-<!-- ============================================================
-     ROADMAP IDEAS
-============================================================ -->
-<section class="roadmap" id="roadmap">
+     FEATURES
+     ============================================================ -->
+<section class="section" id="features">
   <div class="wrap">
-    <div class="sh">
-      <div class="sh-eye">Ideas &amp; Roadmap</div>
-      <h2 class="sh-title">What makes Schemester <span class="grad-text">unstoppable</span></h2>
-      <p class="sh-sub">Beyond the core product — high-impact features that will differentiate Schemester from anything else on the market.</p>
+    <div class="section-h">
+      <div class="eyebrow-sm">Features</div>
+      <div class="section-title">Built for <i>groups.</i></div>
     </div>
-    <div class="rm-grid">
-      <div class="rm-card">
-        <div class="rm-ico">🗺️</div>
-        <div class="rm-title">Inspiration Feed</div>
-        <div class="rm-desc">Browse trending public Schemes, save ideas to a personal Mood Board, and share your completed events to inspire others. Think Pinterest, but built for booking — with every item shoppable.</div>
+    <div class="features">
+      <div class="feat">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2"/>
+        </svg>
+        <h4>Live deal engine</h4>
+        <p>Schemester searches the web in real-time for the best price within reach of your venue.</p>
       </div>
-      <div class="rm-card">
-        <div class="rm-ico">🎯</div>
-        <div class="rm-title">Price Alerts &amp; Match</div>
-        <div class="rm-desc">Set a target price for any vendor or booking. Get instant push notifications the moment availability opens up or the price drops. Smart waitlisting that auto-books when conditions are met.</div>
+      <div class="feat">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/>
+          <path d="M21 21v-2a4 4 0 0 0-3-3.87M17 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <h4>Group vote</h4>
+        <p>Push any component to the group. Swipe to decide. Majority wins and auto-books.</p>
       </div>
-      <div class="rm-card">
-        <div class="rm-ico">📱</div>
-        <div class="rm-title">Guest Experience App</div>
-        <div class="rm-desc">Share a Scheme link with guests — they get a beautiful personal event page with RSVP, dietary preferences, travel info, a digital invite, and a shared photo gallery post-event.</div>
+      <div class="feat">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/>
+        </svg>
+        <h4>Split Pay</h4>
+        <p>Pay individually or as a group. Receipts auto-allocated, no more spreadsheets.</p>
       </div>
-      <div class="rm-card">
-        <div class="rm-ico">🏪</div>
-        <div class="rm-title">Vendor Marketplace Portal</div>
-        <div class="rm-desc">A dedicated B2B portal for vendors to list services, manage live availability, receive instant booking requests, reply to enquiries, and grow their business via Schemester's network.</div>
-      </div>
-      <div class="rm-card">
-        <div class="rm-ico">🌍</div>
-        <div class="rm-title">Destination Event Planner</div>
-        <div class="rm-desc">Full destination support with local vendor discovery in any country, currency conversion, timezone-aware reminders, and integrated travel logistics for flights and accommodation.</div>
-      </div>
-      <div class="rm-card">
-        <div class="rm-ico">🎮</div>
-        <div class="rm-title">Gamification &amp; Tiers</div>
-        <div class="rm-desc">Earn badges like "First Scheme", "Master Planner", and "Group Legend". Progress through tiers — Bronze → Gold → Legendary Schemer. Redeem points for vendor discounts and premium features.</div>
-      </div>
-      <div class="rm-card">
-        <div class="rm-ico">🤖</div>
-        <div class="rm-title">AI Negotiation Agent</div>
-        <div class="rm-desc">Schemy can reach out to vendors on your behalf to negotiate quotes, request custom packages, or ask about discounts — all with your approval before anything is agreed.</div>
-      </div>
-      <div class="rm-card">
-        <div class="rm-ico">🌦️</div>
-        <div class="rm-title">Weather &amp; Risk Intelligence</div>
-        <div class="rm-desc">Live weather forecasts integrated into your Scheme timeline. Automated alerts for outdoor events with AI-recommended contingency vendors (marquees, indoor alternatives) pre-loaded.</div>
-      </div>
-      <div class="rm-card">
-        <div class="rm-ico">🧾</div>
-        <div class="rm-title">Expense &amp; Tax Reporting</div>
-        <div class="rm-desc">Automated expense reports for corporate events and business occasions. Export a full spending breakdown, receipts, and invoices for accounting or reimbursement in one click.</div>
+      <div class="feat">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-6"/>
+        </svg>
+        <h4>Scheme Rewind</h4>
+        <p>Dashboard tracking every Scheme, pound saved, person planned-with. Share it yearly.</p>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="div-line" />
+<div class="divider"></div>
 
 <!-- ============================================================
-     TECH STACK
-============================================================ -->
-<section class="tech">
+     SOCIAL PROOF
+     ============================================================ -->
+<section class="section">
   <div class="wrap">
-    <div class="sh">
-      <div class="sh-eye">Build Strategy</div>
-      <h2 class="sh-title">How to bring <span class="grad-text">Schemester to life</span></h2>
-      <p class="sh-sub">A modern, scalable tech stack that powers AI search, real-time collaboration, and seamless payments from day one.</p>
+    <div class="section-h">
+      <div class="eyebrow-sm">Loved by groups</div>
+      <div class="section-title">Real <i>Schemes.</i> Real saves.</div>
     </div>
-    <div class="tech-grid">
-      <div class="tech-col">
-        <div class="tech-title">📱 Frontend &amp; Apps</div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Next.js 15 (Web)</div><div class="tech-why">React-based with server rendering for fast load times and SEO. Powers the marketing site and web app.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">React Native / Expo (Mobile)</div><div class="tech-why">Single codebase for iOS and Android. Share business logic with the web app for faster iteration.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Tailwind CSS</div><div class="tech-why">Rapid UI development with a consistent design system across all surfaces.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Framer Motion</div><div class="tech-why">Premium micro-animations and page transitions that give Schemester its premium feel.</div></div></div>
+    <div class="quotes">
+      <div class="q">
+        <div class="q-text">It planned my entire <i>hen do</i> in 20 minutes. Everyone paid in the chat. I didn't chase a single person.</div>
+        <div class="q-who">
+          <div class="q-av">PR</div>
+          <div>
+            <div class="q-name">Priya R.</div>
+            <div class="q-label">Hen do · 14 people</div>
+          </div>
+        </div>
       </div>
-      <div class="tech-col">
-        <div class="tech-title">⚙️ Backend &amp; Infrastructure</div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Node.js + Fastify API</div><div class="tech-why">High-throughput REST + GraphQL API layer. Handles real-time events via WebSockets for live collaboration.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">PostgreSQL + Supabase</div><div class="tech-why">Relational data model for schemes, users, vendors, bookings. Supabase adds real-time subscriptions and row-level security out of the box.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Redis</div><div class="tech-why">Cache layer for live search results, session management, and pub/sub messaging for real-time chat.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Vercel + Railway</div><div class="tech-why">Vercel for the Next.js frontend (edge functions, global CDN). Railway for the Node API and background workers.</div></div></div>
+      <div class="q">
+        <div class="q-text">Saved <i>£1,840</i> on the wedding catering alone.</div>
+        <div class="q-who">
+          <div class="q-av" style="background:linear-gradient(135deg,#d48a66,#a5583a)">SA</div>
+          <div>
+            <div class="q-name">Sarah A.</div>
+            <div class="q-label">Wedding · 80 guests</div>
+          </div>
+        </div>
       </div>
-      <div class="tech-col">
-        <div class="tech-title">✦ AI &amp; Search</div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Claude API (Anthropic)</div><div class="tech-why">Powers Schemy — scheme creation, checklist generation, vendor recommendations, negotiation drafts, and conversational planning.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Perplexity / Tavily Search API</div><div class="tech-why">Live web search for real vendor prices, availability, and reviews — grounded in current data, not stale databases.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Google Maps Platform</div><div class="tech-why">Proximity search, venue maps, travel time estimates, and destination discovery for location-based filtering.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Pinecone (Vector DB)</div><div class="tech-why">Store embeddings of vendor profiles and past schemes to power semantic search and personalised AI recommendations.</div></div></div>
-      </div>
-      <div class="tech-col">
-        <div class="tech-title">💳 Payments &amp; Comms</div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Stripe Connect</div><div class="tech-why">Handles split payments, group contributions, vendor payouts, and deposit management. The industry standard for marketplace payments.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Resend + React Email</div><div class="tech-why">Beautiful transactional emails for booking confirmations, payment reminders, and guest invitations.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Twilio / OneSignal</div><div class="tech-why">SMS reminders for time-sensitive bookings and push notifications for mobile — price alerts, payment reminders, and collaborator activity.</div></div></div>
-        <div class="tech-item"><div class="tech-dot"></div><div><div class="tech-name">Clerk (Auth)</div><div class="tech-why">Social login (Google, Apple, Facebook), magic links, and multi-user invite flows — all production-ready from day one.</div></div></div>
+      <div class="q">
+        <div class="q-text">Like a <i>group chat</i> that actually gets things done.</div>
+        <div class="q-who">
+          <div class="q-av" style="background:linear-gradient(135deg,#7a9e8a,#445e55)">JM</div>
+          <div>
+            <div class="q-name">James M.</div>
+            <div class="q-label">Weekend trips</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="div-line" />
+<div class="divider"></div>
 
 <!-- ============================================================
-     MONETISATION
-============================================================ -->
-<section class="money" id="pricing">
+     PRICING
+     ============================================================ -->
+<section class="section" id="pricing">
   <div class="wrap">
-    <div class="sh">
-      <div class="sh-eye">Business Model</div>
-      <h2 class="sh-title">Four revenue streams, <span class="grad-text">built in from day one</span></h2>
+    <div class="section-h">
+      <div class="eyebrow-sm">Pricing</div>
+      <div class="section-title">Free to <i>scheme.</i></div>
     </div>
-    <div class="money-grid">
-      <div class="money-card">
-        <div class="money-ico">🆓</div>
-        <div class="money-title">Freemium</div>
-        <div class="money-desc">Free for personal use with up to 2 active Schemes. Drives viral growth through invite-based collaboration.</div>
+    <div class="pricing">
+      <div class="price-card">
+        <div class="price-name">Solo</div>
+        <div class="price-value">£0<small> / month</small></div>
+        <ul class="price-features">
+          <li>Unlimited Schemes</li>
+          <li>Live deal search</li>
+          <li>Split Pay for groups up to 4</li>
+        </ul>
+        <button class="btn btn-ghost">Start free</button>
       </div>
-      <div class="money-card">
-        <div class="money-ico">⭐</div>
-        <div class="money-title">Schemester Pro</div>
-        <div class="money-desc">£9.99/month for unlimited Schemes, premium AI features, priority vendor search, and advanced budget tools.</div>
+      <div class="price-card featured">
+        <div class="price-name feat-name">Crew</div>
+        <div class="price-value">£6<small> / month</small></div>
+        <ul class="price-features">
+          <li>Everything in Solo</li>
+          <li>Groups up to 20</li>
+          <li>Price-drop alerts</li>
+          <li>Priority AI</li>
+        </ul>
+        <button class="btn btn-primary">Start 14-day trial</button>
       </div>
-      <div class="money-card">
-        <div class="money-ico">💼</div>
-        <div class="money-title">Vendor Commission</div>
-        <div class="money-desc">2–8% booking commission from vendors on completed transactions through the platform. Zero risk to users.</div>
-      </div>
-      <div class="money-card">
-        <div class="money-ico">🏢</div>
-        <div class="money-title">Enterprise &amp; API</div>
-        <div class="money-desc">White-label licensing for event agencies, hotels, and corporate clients. API access for third-party integrations.</div>
+      <div class="price-card">
+        <div class="price-name">Concierge</div>
+        <div class="price-value">£24<small> / month</small></div>
+        <ul class="price-features">
+          <li>Everything in Crew</li>
+          <li>Human + AI concierge</li>
+          <li>Negotiations handled for you</li>
+        </ul>
+        <button class="btn btn-ghost">Talk to us</button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     CTA
-============================================================ -->
-<section class="cta-sec" style="max-width:none;">
-  <div class="cta-glow"></div>
-  <div style="position:relative;z-index:1;max-width:820px;margin:0 auto;">
-    <div class="badge badge-p" style="margin-bottom:22px;font-size:12px;">✦ Join the waitlist — launching soon</div>
-    <h2 class="cta-title">Ready to <span class="grad-text">Scheme</span><br>something amazing?</h2>
-    <p class="cta-sub">Join thousands of people planning the moments that matter most. Free forever for personal use.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="#" class="btn btn-primary" style="font-size:17px;padding:16px 32px;">✦ Start for Free</a>
-      <a href="#" class="btn btn-ghost" style="font-size:17px;padding:16px 32px;">📱 Download the App</a>
+     CTA BAND
+     ============================================================ -->
+<section class="section" style="padding-bottom:60px">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>So… what's the <i>plan?</i></h2>
+      <p>Start a Scheme in 30 seconds. No card needed.</p>
+      <button class="btn btn-primary btn-lg">Start a Scheme</button>
     </div>
-    <div class="cta-note">No credit card required · Available on iOS &amp; Android · Free forever for personal use</div>
   </div>
 </section>
 
 <!-- ============================================================
      FOOTER
-============================================================ -->
-<footer>
-  <div class="nav-logo">
-    <svg class="logo-icon" viewBox="0 0 300 385" xmlns="http://www.w3.org/2000/svg" fill="white">
-      <path d="M50,33 C118,3 186,3 254,85 C186,135 118,135 50,33Z"/>
-      <path d="M0,70 C100,125 200,125 300,267 C200,347 100,347 0,70Z"/>
-      <path d="M11,309 C79,279 147,279 215,368 C147,397 79,397 11,309Z"/>
-    </svg>
-    Schemester
+     ============================================================ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="brand">
+          <img src="assets/logo-white.png" alt="S" style="height:24px">
+          <span class="brand-name" style="font-size:18px">Schemester</span>
+        </div>
+        <p>Plan any activity. Any group. Any budget. That's the plan.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <ul>
+          <li><a href="#">App</a></li>
+          <li><a href="#">Web</a></li>
+          <li><a href="#">Discover</a></li>
+          <li><a href="#">Dashboard</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Schemester Ltd.</span>
+      <span>Made for groups, everywhere.</span>
+    </div>
   </div>
-  <div class="ft-links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">For Vendors</a>
-    <a href="#">Careers</a>
-    <a href="#">Blog</a>
-    <a href="#">Contact</a>
-  </div>
-  <div style="font-size:13px;color:var(--t3);">© 2025 Schemester Ltd. All rights reserved.</div>
 </footer>
 
 <script>
-  // Tab switching
-  document.querySelectorAll('.tabs').forEach(group => {
-    group.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        group.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-        tab.classList.add('on');
-      });
+  // Animate progress bars when they scroll into view
+  const fills = document.querySelectorAll('.progress-fill');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('animate');
+        obs.unobserve(e.target);
+      }
     });
-  });
-
-  // Prevent link navigation on demo links
-  document.querySelectorAll('a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
-
-  // Subtle card interaction
-  document.querySelectorAll('.skcard').forEach(card => {
-    card.addEventListener('mouseenter', () => card.style.boxShadow = '0 8px 32px rgba(124,58,237,.18)');
-    card.addEventListener('mouseleave', () => card.style.boxShadow = '');
-  });
+  }, { threshold: 0.2 });
+  fills.forEach(f => obs.observe(f));
 </script>
+
 </body>
 </html>
