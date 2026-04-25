@@ -1,0 +1,2467 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Schemes — Schemester</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'dark';</script>
+<link rel="icon" id="faviconLink" href="favicon-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0:#0e0e0e; --bg-1:#1a1a1a; --bg-2:#262626; --bg-3:#3a3a3a; --bg-4:#515150;
+  --fg-1:#ffffff; --fg-2:#b6b6b1; --fg-3:#737270; --fg-4:#515150;
+  --violet-950:#15111b; --violet-900:#2a1b42; --violet-700:#6c4c80;
+  --violet-500:#bc7ffc; --violet-400:#ca98ff; --violet-300:#d8b3ff; --violet-200:#e2c6ff;
+  --success:#3ddc97; --success-bg:#1a2e25;
+  --warning:#ffb347; --warning-bg:#2e2415;
+  --danger:#ff5c7a; --danger-bg:#2e1520;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-sans:'Geist',-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --r-sm:8px; --r-md:14px; --r-lg:22px; --r-xl:32px; --r-full:9999px;
+  --sidebar-w:228px;
+  --ease-out:cubic-bezier(0.22,1,0.36,1);
+  --dur-fast:120ms; --dur-base:160ms; --dur-med:240ms;
+  --grad-progress:linear-gradient(90deg,var(--violet-500),var(--violet-300));
+  --grad-protect:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.3) 50%,transparent 100%);
+  --shadow-1:0 2px 8px rgba(0,0,0,.35);
+  --shadow-2:0 6px 20px rgba(0,0,0,.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--fg-1);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font-sans);cursor:pointer}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:2px}
+
+/* ── APP SHELL ── */
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--bg-1);border-right:1px solid rgba(255,255,255,.05);
+  display:flex;flex-direction:column;padding:18px 10px;overflow:hidden;
+}
+.sb-brand{display:flex;align-items:center;gap:9px;padding:0 8px 22px}
+.sb-brand img{height:22px}
+html[data-theme="light"] .sb-brand img{filter:invert(1)}
+.sb-brand-name{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.nav-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-4);padding:0 8px;margin:8px 0 3px}
+.nav-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 8px;border-radius:var(--r-sm);
+  color:var(--fg-3);font-size:13px;font-weight:500;
+  cursor:pointer;border:none;background:none;width:100%;text-align:left;
+  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+}
+.nav-item:hover{background:var(--bg-2);color:var(--fg-1)}
+.nav-item.active{background:var(--violet-900);color:var(--violet-300)}
+.nav-item svg{flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--violet-500);color:#1a0d2e;font-size:10px;font-weight:700;border-radius:var(--r-full);padding:1px 6px;min-width:18px;text-align:center}
+.sb-spacer{flex:1}
+.sb-user{
+  display:flex;align-items:center;gap:10px;padding:10px 8px;
+  border-radius:var(--r-md);background:var(--bg-2);border:1px solid rgba(255,255,255,.06);
+}
+.sb-av{
+  width:30px;height:30px;border-radius:var(--r-full);flex-shrink:0;
+  background:linear-gradient(135deg,var(--violet-500),var(--violet-700));
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+}
+.sb-user-name{font-size:13px;font-weight:600}
+.sb-user-plan{font-size:11px;color:var(--fg-3)}
+
+/* ── MAIN ── */
+.main{flex:1;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+
+/* ── TOPBAR ── */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;
+}
+.topbar h1{font-family:var(--font-display);font-size:20px;font-weight:500;letter-spacing:-.02em}
+.topbar p{font-size:12px;color:var(--fg-3);margin-top:1px}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.icon-btn{
+  width:34px;height:34px;border-radius:var(--r-md);background:var(--bg-2);
+  border:1px solid rgba(255,255,255,.12);color:var(--fg-2);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+  position:relative;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 4px 14px rgba(0,0,0,.45);
+}
+.icon-btn:hover{background:var(--bg-3);color:var(--fg-1);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 6px 20px rgba(0,0,0,.55)}
+html[data-theme="light"] .icon-btn{border-color:var(--bg-3);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--violet-500);border:2px solid var(--bg-1)}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--r-md);border:none;font-size:13px;font-weight:600;cursor:pointer;transition:background var(--dur-base) var(--ease-out)}
+.btn-primary{background:var(--violet-500);color:#1a0d2e}
+.btn-primary:hover{background:var(--violet-400)}
+.btn-ghost{background:var(--bg-2);color:var(--fg-1);border:1px solid var(--bg-3)}
+.btn-ghost:hover{background:var(--bg-3)}
+
+/* ── VIEWS ── */
+.view{display:none;height:100%;flex-direction:column;overflow:hidden}
+.view.active{display:flex}
+
+/* ═══════════════════════════════════════════
+   DASHBOARD VIEW
+═══════════════════════════════════════════ */
+.dash-scroll{flex:1;overflow-y:auto;padding:22px 32px 22px 24px}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{
+  background:var(--bg-1);border-radius:var(--r-lg);padding:18px;
+  border:1px solid rgba(255,255,255,.04);
+  transition:background var(--dur-med) var(--ease-out);
+}
+.stat-card:hover{background:var(--bg-2)}
+.stat-icon{
+  width:34px;height:34px;border-radius:var(--r-sm);
+  background:var(--violet-900);color:var(--violet-300);
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+}
+.stat-val{font-family:var(--font-mono);font-size:26px;font-weight:600;line-height:1}
+.stat-lbl{font-size:11px;color:var(--fg-3);margin-top:4px}
+.stat-delta{font-size:11px;margin-top:8px}
+.stat-delta.up{color:var(--success)}
+.stat-delta.warn{color:var(--warning)}
+
+.dash-row{display:grid;grid-template-columns:1fr 340px;gap:16px}
+
+/* Panel */
+.panel{background:var(--bg-1);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.04);overflow:hidden}
+.panel-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.04)}
+.panel-title{font-family:var(--font-display);font-size:15px;font-weight:500}
+.panel-link{font-size:12px;color:var(--violet-400);font-weight:600;cursor:pointer}
+.panel-link:hover{color:var(--violet-300)}
+
+/* Scheme rows */
+.scheme-row{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.03);cursor:pointer;transition:background var(--dur-base) var(--ease-out)}
+.scheme-row:last-child{border-bottom:none}
+.scheme-row:hover{background:var(--bg-2)}
+.scheme-thumb{width:44px;height:44px;border-radius:var(--r-md);object-fit:cover;flex-shrink:0;background:var(--bg-3)}
+.scheme-info{flex:1;min-width:0}
+.scheme-name{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scheme-meta{font-size:11px;color:var(--fg-3);margin-top:2px}
+.scheme-prog{height:3px;background:var(--bg-3);border-radius:var(--r-full);margin-top:7px}
+.scheme-prog-fill{height:100%;border-radius:inherit;background:var(--grad-progress)}
+.scheme-pct{font-family:var(--font-mono);font-size:12px;color:var(--violet-300);flex-shrink:0}
+
+/* Donut */
+.donut-wrap{padding:18px;display:flex;gap:18px;align-items:center}
+.donut-legend{display:flex;flex-direction:column;gap:7px}
+.legend-row{display:flex;align-items:center;gap:8px;font-size:12px}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-val{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);margin-left:auto;padding-left:12px}
+
+/* Chart */
+.chart-wrap{padding:14px 18px 6px}
+.chart-lbl{font-size:10px;fill:var(--fg-3);font-family:var(--font-sans)}
+
+/* Activity */
+.act-item{display:flex;gap:10px;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.03)}
+.act-item:last-child{border-bottom:none}
+.act-av{width:30px;height:30px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;align-self:flex-start;margin-top:1px}
+.act-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400)}
+.act-text{font-size:13px;line-height:1.4}
+.act-text strong{font-weight:600}
+.act-text .tag{color:var(--violet-300);font-weight:600}
+.act-time{font-size:11px;color:var(--fg-3);margin-top:2px}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:var(--r-full);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.pill-success{background:var(--success-bg);color:var(--success)}
+.pill-warning{background:var(--warning-bg);color:var(--warning)}
+.pill-violet{background:var(--violet-900);color:var(--violet-300)}
+.pill-neutral{background:rgba(255,255,255,.08);color:var(--fg-3)}
+
+/* ═══════════════════════════════════════════
+   CALENDAR
+═══════════════════════════════════════════ */
+.dash-layout{display:grid;grid-template-columns:1fr 268px;gap:16px;align-items:start}
+.dash-main{display:flex;flex-direction:column;gap:16px}
+.dash-aside{display:flex;flex-direction:column;gap:12px;position:sticky;top:0}
+.cal-panel{background:var(--bg-1);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.04);overflow:hidden}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04)}
+.cal-nav-title{font-family:var(--font-display);font-size:13px;font-weight:500}
+.cal-nav-btns{display:flex;gap:4px}
+.cal-nav-btn{width:24px;height:24px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.07);background:var(--bg-2);color:var(--fg-2);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out)}
+.cal-nav-btn:hover{background:var(--bg-3);color:var(--fg-1)}
+.cal-grid{padding:8px 10px 10px}
+.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:3px}
+.cal-dow span{text-align:center;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-3);padding:3px 0}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-day{
+  aspect-ratio:1;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;
+  font-size:11px;cursor:pointer;position:relative;
+  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+}
+.cal-day:hover{background:var(--bg-2)}
+.cal-day.other-month{color:var(--fg-4)}
+.cal-day.today{background:var(--bg-3);font-weight:700;color:var(--fg-1)}
+.cal-day.has-event{color:var(--violet-300);font-weight:700}
+.cal-day.has-event::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--violet-500)}
+.cal-day.today.has-event{background:var(--violet-900)}
+.cal-day.range-start,.cal-day.range-end,.cal-day.in-range{background:var(--violet-900);color:var(--violet-300)}
+.cal-day.range-start{border-radius:var(--r-sm) 0 0 var(--r-sm)}
+.cal-day.range-end{border-radius:0 var(--r-sm) var(--r-sm) 0}
+.cal-day.in-range{border-radius:0;background:rgba(188,127,252,.12);color:var(--violet-400)}
+/* Scheme Chart */
+.scht-donut-center{display:flex;justify-content:center;padding:0 16px 10px}
+.scht-legend{padding:0 16px 16px;display:flex;flex-direction:column;gap:9px}
+.scht-legend-item{display:flex;align-items:center;gap:9px;font-size:12px}
+.scht-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.scht-legend-name{flex:1;color:var(--fg-2)}
+.scht-legend-pct{font-family:var(--font-mono);font-size:11px;color:var(--fg-3)}
+/* Upcoming */
+.upcoming-list{padding:0}
+.upcoming-item{display:flex;gap:12px;align-items:flex-start;padding:11px 18px;border-bottom:1px solid rgba(255,255,255,.03)}
+.upcoming-item:last-child{border-bottom:none}
+.upcoming-date-badge{flex-shrink:0;width:38px;text-align:center;background:var(--violet-900);border-radius:var(--r-sm);padding:5px 0}
+.upcoming-date-badge .ub-month{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--violet-400)}
+.upcoming-date-badge .ub-day{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--violet-300);line-height:1.2}
+.upcoming-info{flex:1;min-width:0}
+.upcoming-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.upcoming-meta{font-size:11px;color:var(--fg-3);margin-top:2px}
+.upcoming-countdown{font-size:10px;color:var(--violet-400);font-weight:600;margin-top:3px}
+/* light mode */
+html[data-theme="light"] .cal-day.today{background:var(--bg-3)}
+html[data-theme="light"] .cal-day.range-start,
+html[data-theme="light"] .cal-day.range-end,
+html[data-theme="light"] .cal-day.in-range{background:var(--violet-900);color:var(--violet-700)}
+html[data-theme="light"] .upcoming-date-badge{background:var(--violet-900)}
+html[data-theme="light"] .upcoming-date-badge .ub-month{color:var(--violet-700)}
+html[data-theme="light"] .upcoming-date-badge .ub-day{color:var(--violet-700)}
+
+/* ═══════════════════════════════════════════
+   SCHEMES VIEW
+═══════════════════════════════════════════ */
+.schemes-scroll{flex:1;overflow-y:auto;padding:22px 32px 22px 24px}
+.schemes-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.schemes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scheme-tabs{display:flex;justify-content:center;gap:4px;padding:14px 14px 10px}
+.scheme-tab{padding:5px 14px;border-radius:6px;border:none;background:none;color:var(--fg-3);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font-sans);transition:all var(--dur-base) var(--ease-out)}
+.scheme-tab:hover{color:var(--fg-2)}
+.scheme-tab.active{background:var(--bg-2);color:var(--fg-1)}
+.scheme-section{display:none}.scheme-section.active{display:block}
+.scheme-card{
+  background:var(--bg-1);border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);cursor:pointer;
+  box-shadow:0 2px 8px rgba(0,0,0,.24),0 8px 24px rgba(0,0,0,.32);
+  transition:background var(--dur-med) var(--ease-out),transform var(--dur-med) var(--ease-out),box-shadow var(--dur-med) var(--ease-out);
+}
+.scheme-card:hover{background:var(--bg-2);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.28),0 16px 40px rgba(0,0,0,.40)}
+.scheme-card-img{width:calc(100% - 16px);height:150px;object-fit:cover;display:block;border-radius:var(--r-md);margin:8px 8px 0}
+.scheme-card-body{padding:14px}
+.scheme-card-name{font-family:var(--font-display);font-size:16px;font-weight:500;letter-spacing:-.02em;margin:8px 0 3px}
+.scheme-card-meta{font-size:12px;color:var(--fg-3);margin-bottom:12px}
+.scheme-card-foot{display:flex;align-items:center;gap:10px}
+.sc-prog{flex:1;height:3px;background:var(--bg-3);border-radius:var(--r-full)}
+.sc-prog-fill{height:100%;border-radius:inherit;background:var(--grad-progress)}
+.sc-pct{font-family:var(--font-mono);font-size:11px;color:var(--violet-300)}
+.sc-members{display:flex;align-items:center;margin-bottom:10px}
+.sc-av{width:33px;height:33px;border-radius:50%;border:2px solid var(--bg-1);object-fit:cover;margin-left:-9px;flex-shrink:0}
+.sc-av:first-child{margin-left:0}
+.sc-av-overflow{width:33px;height:33px;border-radius:50%;border:2px solid var(--bg-1);background:var(--bg-3);color:var(--fg-3);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:-9px;flex-shrink:0;letter-spacing:-.02em}
+/* ═══════════════════════════════════════════
+   DISCOVER VIEW
+═══════════════════════════════════════════ */
+.disc-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden}
+.disc-topbar{padding:20px 32px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;gap:10px;align-items:center;flex-shrink:0}
+.disc-search-box{flex:1;display:flex;align-items:center;gap:10px;background:var(--bg-2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);padding:10px 14px}
+.disc-search-box input{flex:1;background:none;border:none;outline:none;color:var(--fg-1);font-size:14px;font-family:var(--font-sans)}
+.disc-search-box input::placeholder{color:var(--fg-4)}
+.disc-location-btn{display:flex;align-items:center;gap:6px;background:var(--bg-2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-md);padding:10px 14px;font-size:13px;color:var(--fg-2);cursor:pointer;white-space:nowrap;font-family:var(--font-sans);transition:background var(--dur-base) var(--ease-out)}
+.disc-location-btn:hover{background:var(--bg-3)}
+.disc-scroll{flex:1;overflow-y:auto;padding:28px 32px 40px}
+.disc-section{margin-bottom:40px}
+.disc-section-title{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em;margin-bottom:16px}
+.disc-row{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.disc-card{cursor:pointer;transition:transform var(--dur-med) var(--ease-out)}
+.disc-card:hover{transform:translateY(-3px)}
+.disc-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-md);display:block;background:var(--bg-3)}
+.disc-card-body{padding:8px 2px 0}
+.disc-card-name{font-size:13px;font-weight:600;color:var(--fg-1);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.disc-card-meta{font-size:11px;color:var(--fg-3);margin-bottom:5px}
+.disc-card-foot{display:flex;align-items:center;justify-content:space-between}
+.disc-card-price{font-size:13px;font-weight:700;color:var(--fg-1)}
+.disc-card-price em{font-style:normal;font-weight:400;color:var(--fg-3);font-size:11px}
+.disc-card-rating{display:flex;align-items:center;gap:3px;font-size:11px;color:var(--fg-2);font-weight:600}
+
+/* ═══════════════════════════════════════════
+   CHAT VIEW
+═══════════════════════════════════════════ */
+.chat-layout{display:grid;grid-template-columns:260px 1fr 260px;height:100%;overflow:hidden}
+
+/* Chat list */
+.chat-sidebar{border-right:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;overflow:hidden}
+.chat-search{padding:14px}
+.chat-search input{
+  width:100%;background:var(--bg-2);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--r-sm);padding:8px 12px;color:var(--fg-1);
+  font-family:var(--font-sans);font-size:13px;outline:none;
+}
+.chat-search input::placeholder{color:var(--fg-4)}
+.chat-tabs{display:flex;gap:4px;padding:0 14px 10px}
+.chat-tab{flex:1;padding:6px;border-radius:6px;border:none;background:none;color:var(--fg-3);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--dur-base) var(--ease-out)}
+.chat-tab.active{background:var(--bg-2);color:var(--fg-1)}
+.chat-list{flex:1;overflow-y:auto}
+.chat-row{
+  display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,.03);
+  transition:background var(--dur-base) var(--ease-out);
+}
+.chat-row:hover{background:var(--bg-2)}
+.chat-row.active{background:var(--violet-950);border-left:2px solid var(--violet-500);padding-left:12px}
+.chat-av{width:38px;height:38px;border-radius:var(--r-sm);object-fit:cover;flex-shrink:0;background:var(--bg-3)}
+.chat-av-txt{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.chat-row-info{flex:1;min-width:0}
+.chat-row-name{font-size:13px;font-weight:600}
+.chat-row-last{font-size:11px;color:var(--fg-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.chat-row-time{font-size:10px;color:var(--fg-3);flex-shrink:0}
+.chat-unread{background:var(--violet-500);color:#1a0d2e;font-size:10px;font-weight:700;border-radius:var(--r-full);padding:1px 5px;min-width:16px;text-align:center}
+
+/* Chat main */
+.chat-main{display:flex;flex-direction:column;overflow:hidden}
+.chat-header{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
+.chat-hav{width:34px;height:34px;border-radius:var(--r-sm);object-fit:cover;background:var(--bg-3)}
+.chat-hname{font-weight:600;font-size:14px}
+.chat-hmeta{font-size:11px;color:var(--fg-3)}
+.chat-hactions{display:flex;gap:8px;margin-left:auto}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+.msg-group{display:flex;gap:9px}
+.msg-group.mine{flex-direction:row-reverse}
+.msg-av{width:30px;height:30px;border-radius:var(--r-full);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;align-self:flex-end;object-fit:cover}
+.msg-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400);object-fit:contain;padding:5px}
+img.msg-av{display:block}
+.msg-content{display:flex;flex-direction:column;gap:3px;max-width:62%}
+.msg-sender{font-size:11px;color:var(--fg-3);font-weight:600;margin-bottom:1px}
+.msg-group.mine .msg-sender{text-align:right}
+.msg-bubble{background:var(--bg-2);border-radius:16px 16px 16px 4px;padding:9px 13px;font-size:13px;line-height:1.5;color:var(--fg-1)}
+.msg-group.mine .msg-bubble{background:var(--violet-500);color:#1a0d2e;border-radius:16px 16px 4px 16px}
+.msg-bubble.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.2)}
+.msg-time{font-size:10px;color:var(--fg-4)}
+.msg-group.mine .msg-time{text-align:right}
+.date-sep{text-align:center;font-size:11px;color:var(--fg-4);padding:2px 0}
+
+.chat-input-area{padding:14px 18px;border-top:1px solid rgba(255,255,255,.05);flex-shrink:0}
+.chat-input-row{
+  display:flex;gap:8px;align-items:center;background:var(--bg-2);
+  border-radius:var(--r-lg);padding:9px 12px;border:1px solid rgba(255,255,255,.06);
+}
+.chat-input-row input{flex:1;background:none;border:none;outline:none;color:var(--fg-1);font-family:var(--font-sans);font-size:13px}
+.chat-input-row input::placeholder{color:var(--fg-4)}
+.chat-act{width:26px;height:26px;border-radius:var(--r-sm);border:none;background:none;color:var(--fg-3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color var(--dur-base)}
+.chat-act:hover{color:var(--fg-1)}
+.send-btn{width:30px;height:30px;border-radius:var(--r-sm);background:var(--violet-500);border:none;color:#1a0d2e;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.send-btn:hover{background:var(--violet-400)}
+
+/* Chat detail */
+.chat-detail{border-left:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;overflow:hidden}
+.detail-head{padding:13px 18px 13px 15px;border-bottom:1px solid rgba(255,255,255,.05);font-family:var(--font-display);font-size:14px;font-weight:500}
+.detail-cover{width:calc(100% - 20px);height:110px;object-fit:cover;display:block;border-radius:var(--r-md);margin:10px 10px 0}
+.detail-sec{padding:12px 18px 12px 15px;border-bottom:1px solid rgba(255,255,255,.04)}
+.detail-members-scroll{flex:1;overflow-y:auto;padding:12px 18px 16px 15px}
+.detail-members-scroll::-webkit-scrollbar{width:3px}
+.detail-members-scroll::-webkit-scrollbar-track{background:transparent}
+.detail-members-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:99px}
+.detail-sec-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-bottom:8px}
+.detail-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px}
+.detail-row span:first-child{color:var(--fg-3)}
+.detail-prog{height:3px;background:var(--bg-3);border-radius:var(--r-full);margin-top:8px}
+.detail-prog-fill{height:100%;border-radius:inherit;background:var(--grad-progress)}
+.member-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.member-av{width:26px;height:26px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.member-name{font-size:12px}
+.member-role{font-size:11px;color:var(--fg-3);margin-left:auto}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle{
+  display:flex;align-items:center;gap:8px;width:100%;
+  padding:8px 8px;border-radius:var(--r-sm);border:none;
+  background:none;color:var(--fg-3);font-size:13px;font-weight:500;
+  cursor:pointer;transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+  font-family:var(--font-sans);
+}
+.theme-toggle:hover{background:var(--bg-2);color:var(--fg-1)}
+.toggle-track{
+  margin-left:auto;width:34px;height:18px;border-radius:var(--r-full);
+  background:var(--bg-3);position:relative;transition:background var(--dur-med) var(--ease-out);flex-shrink:0;
+}
+html[data-theme="light"] .toggle-track{background:var(--violet-500)}
+.toggle-thumb{
+  position:absolute;top:2px;left:2px;width:14px;height:14px;
+  border-radius:var(--r-full);background:#fff;
+  transition:transform var(--dur-med) var(--ease-out);
+}
+html[data-theme="light"] .toggle-thumb{transform:translateX(16px)}
+
+/* ── MODAL PHONE MOCKUP ── */
+.popup-mock{
+  width:240px;height:480px;border-radius:30px;flex-shrink:0;
+  box-shadow:0 0 0 8px var(--bg-2),0 0 0 10px var(--bg-3),0 30px 60px rgba(0,0,0,.6);
+  overflow:hidden;position:relative;background:var(--bg-0);display:flex;flex-direction:column;
+}
+.popup-mock::before{content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:6px;border-radius:50px;background:var(--bg-3);z-index:2}
+.popup-phones-outer{flex-shrink:0;width:476px;height:320px;position:relative;overflow:visible}
+.popup-phones{position:absolute;top:0;left:0;display:flex;gap:24px;perspective:1800px;transform:scale(0.62);transform-origin:top left}
+.popup-phones .popup-mock{animation:none}
+.popup-phones .popup-mock:nth-child(1){transform:rotateY(-12deg);opacity:.75}
+.popup-phones .popup-mock:nth-child(2){transform:rotateY(0deg) translateY(-24px);animation:popupFloat 4s ease-in-out infinite}
+.popup-phones .popup-mock:nth-child(3){transform:rotateY(12deg);opacity:.75}
+@keyframes popupFloat{0%,100%{transform:rotateY(0deg) translateY(-24px);}50%{transform:rotateY(0deg) translateY(-36px);}}
+.pm-topbar{padding:22px 16px 12px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--fg-3)}
+.pm-search{margin:0 12px 12px;background:var(--bg-2);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--fg-3);display:flex;align-items:center;gap:8px}
+.pm-card{margin:0 12px 10px;border-radius:14px;overflow:hidden;position:relative;background-size:cover;background-position:center}
+.pm-card-overlay{position:absolute;inset:0;background:var(--grad-protect);display:flex;flex-direction:column;justify-content:flex-end;padding:10px}
+.pm-card-title{font-family:var(--font-display);font-size:13px;font-weight:500}
+.pm-card-meta{font-size:9px;color:var(--fg-2);margin-top:1px}
+.pm-prog{height:3px;background:var(--bg-3);border-radius:50px;margin-top:5px}
+.pm-prog-fill{height:100%;border-radius:inherit;background:var(--grad-progress)}
+.pm-tabbar{margin-top:auto;border-top:1px solid var(--bg-3);background:rgba(14,14,14,.9);display:flex;padding:8px 0 4px}
+.pm-tab{flex:1;text-align:center;font-size:9px}
+html[data-theme="light"] .popup-mock{background:var(--bg-0);box-shadow:0 0 0 8px var(--bg-2),0 0 0 10px var(--bg-3),0 20px 40px rgba(0,0,0,.15)}
+html[data-theme="light"] .pm-tabbar{background:rgba(242,242,245,.95)}
+/* ── INSTALL BUTTON ── */
+.install-btn{
+  font-size:12px;font-weight:600;padding:7px 13px;gap:7px;color:var(--fg-2);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 4px 14px rgba(0,0,0,.45);
+}
+.install-btn:hover{color:var(--fg-1);border-color:rgba(255,255,255,.28);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 6px 20px rgba(0,0,0,.55)}
+html[data-theme="light"] .install-btn{color:var(--fg-2);border-color:var(--bg-3);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+
+/* ── NOTIFICATIONS ── */
+.notif-wrap{position:relative}
+.notif-panel{
+  position:absolute;top:calc(100% + 10px);right:0;width:340px;
+  background:var(--bg-1);border-radius:var(--r-lg);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,
+             0 8px 16px rgba(0,0,0,.4),
+             0 24px 56px rgba(0,0,0,.65),
+             0 0 0 0.5px rgba(188,127,252,.12);
+  z-index:200;
+  opacity:0;pointer-events:none;transform:translateY(-6px) scale(.97);
+  transition:opacity var(--dur-med) var(--ease-out),transform var(--dur-med) var(--ease-out);
+  overflow:hidden;
+}
+.notif-panel.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.notif-panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.05);
+}
+.notif-panel-title{font-family:var(--font-display);font-size:15px;font-weight:500}
+.notif-mark-read{font-size:11px;color:var(--violet-400);font-weight:600;background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-sans)}
+.notif-mark-read:hover{color:var(--violet-300)}
+.notif-list{max-height:380px;overflow-y:auto}
+.notif-item{
+  display:flex;align-items:flex-start;gap:10px;padding:11px 16px;
+  border-bottom:1px solid rgba(255,255,255,.03);cursor:pointer;position:relative;
+  transition:background var(--dur-base) var(--ease-out);
+}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:var(--bg-2)}
+.notif-item.unread{background:rgba(188,127,252,.05)}
+.notif-item.unread:hover{background:rgba(188,127,252,.09)}
+.notif-av{width:34px;height:34px;border-radius:var(--r-full);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.notif-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400)}
+.notif-av-alert{background:rgba(255,92,122,.15);color:var(--danger);border:1px solid rgba(255,92,122,.25)}
+.notif-av-warn{background:var(--warning-bg);color:var(--warning);border:1px solid rgba(255,179,71,.25)}
+.notif-body{flex:1;min-width:0}
+.notif-text{font-size:12.5px;line-height:1.45;color:var(--fg-2)}
+.notif-text strong{color:var(--fg-1);font-weight:600}
+.notif-text .ntag{color:var(--violet-300);font-weight:600}
+.notif-time{font-size:10.5px;color:var(--fg-4);margin-top:3px}
+.notif-unread-dot{width:7px;height:7px;border-radius:50%;background:var(--violet-500);flex-shrink:0;margin-top:4px}
+/* light */
+html[data-theme="light"] .notif-panel{background:var(--bg-1);border-color:var(--bg-3);box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.12)}
+html[data-theme="light"] .notif-item.unread{background:rgba(188,127,252,.06)}
+html[data-theme="light"] .notif-av.ai{background:var(--violet-900)}
+html[data-theme="light"] .notif-text .ntag{color:var(--violet-700)}
+html[data-theme="light"] .notif-text strong{color:var(--fg-1)}
+
+/* ── PROFILE BUTTON + MENU ── */
+.profile-wrap{position:relative}
+.profile-btn{
+  width:36px;height:36px;border-radius:50%;border:2px solid var(--bg-3);
+  background:var(--bg-2);cursor:pointer;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color var(--dur-base) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+  padding:0;flex-shrink:0;
+}
+.profile-btn:hover{border-color:var(--violet-500);box-shadow:0 0 0 3px rgba(188,127,252,.2)}
+.profile-btn svg{color:var(--fg-3)}
+.profile-menu{
+  position:absolute;top:calc(100% + 10px);right:0;width:280px;
+  background:var(--bg-1);border-radius:16px;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 0 0 1px rgba(255,255,255,.05) inset,0 8px 16px rgba(0,0,0,.4),0 24px 56px rgba(0,0,0,.65);
+  overflow:hidden;z-index:300;
+  opacity:0;pointer-events:none;transform:translateY(-6px) scale(.97);
+  transition:opacity var(--dur-med) var(--ease-out),transform var(--dur-med) var(--ease-out);
+}
+.profile-menu.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.pm-header{display:flex;align-items:center;gap:12px;padding:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.pm-av{
+  width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--violet-500),var(--violet-700));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:700;color:#fff;
+}
+.pm-name{font-size:14px;font-weight:600;line-height:1.2}
+.pm-sub{font-size:12px;color:var(--fg-3);margin-top:2px}
+.pm-section{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.pm-section:last-child{border-bottom:none}
+.pm-item{
+  display:flex;align-items:center;gap:12px;padding:10px 16px;
+  font-size:13px;font-weight:500;color:var(--fg-2);cursor:pointer;
+  transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out);
+}
+.pm-item:hover{background:var(--bg-2);color:var(--fg-1)}
+.pm-item svg{color:var(--fg-3);flex-shrink:0}
+.pm-item:hover svg{color:var(--fg-2)}
+.pm-appearance{display:flex;align-items:center;gap:12px;padding:10px 16px;font-size:13px;font-weight:500;color:var(--fg-2)}
+.pm-appearance svg{color:var(--fg-3);flex-shrink:0}
+.pm-appearance span{flex:1}
+.pm-track{
+  width:38px;height:20px;border-radius:50px;background:var(--bg-3);position:relative;
+  cursor:pointer;transition:background var(--dur-med) var(--ease-out);flex-shrink:0;
+  border:1px solid rgba(255,255,255,.08);
+}
+html[data-theme="light"] .pm-track{background:var(--violet-500)}
+.pm-thumb{
+  position:absolute;top:2px;left:2px;width:14px;height:14px;
+  border-radius:50%;background:#fff;transition:transform var(--dur-med) var(--ease-out);
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+html[data-theme="light"] .pm-thumb{transform:translateX(18px)}
+.pm-danger{color:var(--danger) !important}
+.pm-danger svg{color:var(--danger) !important}
+html[data-theme="light"] .profile-menu{background:var(--bg-1);border-color:var(--bg-3);box-shadow:0 4px 12px rgba(0,0,0,.08),0 16px 40px rgba(0,0,0,.12)}
+html[data-theme="light"] .pm-section{border-color:var(--bg-3)}
+html[data-theme="light"] .pm-header{border-color:var(--bg-3)}
+
+/* ── DOWNLOAD MODAL ── */
+.dl-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity var(--dur-med) var(--ease-out);
+}
+.dl-overlay.open{opacity:1;pointer-events:auto}
+.dl-modal{
+  background:var(--bg-1);border-radius:var(--r-xl);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,
+             0 8px 20px rgba(0,0,0,.4),
+             0 32px 80px rgba(0,0,0,.7),
+             0 0 0 0.5px rgba(188,127,252,.1);
+  padding:36px 40px 32px;max-width:960px;width:calc(100% - 40px);
+  display:flex;gap:44px;align-items:center;
+  transform:translateY(16px) scale(.97);transition:transform var(--dur-med) var(--ease-out);
+  position:relative;
+}
+.dl-overlay.open .dl-modal{transform:translateY(0) scale(1)}
+.dl-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:var(--r-full);
+  background:var(--bg-2);border:1px solid rgba(255,255,255,.08);
+  color:var(--fg-3);font-size:16px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out);
+}
+.dl-close:hover{background:var(--bg-3);color:var(--fg-1)}
+/* Phone mockup */
+.dl-phone{
+  flex-shrink:0;width:200px;height:400px;
+  background:var(--bg-0);border-radius:32px;
+  border:7px solid var(--bg-3);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 28px 64px rgba(0,0,0,.6);
+  overflow:hidden;position:relative;display:flex;flex-direction:column;
+}
+.dl-phone::before{
+  content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  width:56px;height:6px;border-radius:var(--r-full);background:var(--bg-3);z-index:2;
+}
+.dl-phone-screen{
+  flex:1;padding:28px 14px 16px;display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(175deg,var(--violet-950) 0%,var(--bg-0) 60%);
+}
+.dl-phone-brand{display:flex;align-items:center;gap:7px;padding:4px 0}
+.dl-phone-brand img{height:18px;filter:none}
+html[data-theme="light"] .dl-phone-brand img{filter:invert(1)}
+.dl-phone-brand span{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--fg-1)}
+.dl-phone-stat{
+  background:var(--bg-1);border-radius:10px;padding:10px 12px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.dl-phone-stat-lbl{font-size:9px;color:var(--fg-3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.dl-phone-stat-val{font-family:var(--font-mono);font-size:20px;font-weight:700;color:var(--violet-300)}
+.dl-phone-bar{height:3px;background:var(--bg-3);border-radius:var(--r-full);margin-top:6px}
+.dl-phone-bar-fill{height:100%;border-radius:inherit;background:var(--grad-progress);width:72%}
+.dl-phone-mini-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dl-phone-mini{background:var(--bg-1);border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,.05)}
+.dl-phone-mini-label{font-size:8px;color:var(--fg-3);margin-bottom:2px}
+.dl-phone-mini-val{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--fg-1)}
+.dl-phone-nav{
+  height:38px;background:var(--bg-1);border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-around;padding:0 10px;flex-shrink:0;
+}
+.dl-phone-nav-dot{width:5px;height:5px;border-radius:50%;background:var(--bg-3)}
+.dl-phone-nav-dot.active{background:var(--violet-500)}
+/* Right side copy */
+.dl-copy{flex:1;min-width:0}
+.dl-brand{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.dl-brand img{height:22px}
+.dl-brand span{font-family:var(--font-display);font-size:18px;font-weight:600;letter-spacing:-.02em}
+html[data-theme="light"] .dl-brand img{filter:invert(1)}
+.dl-copy h2{font-family:var(--font-display);font-size:28px;font-weight:500;letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+.dl-copy p{font-size:14px;color:var(--fg-2);line-height:1.6;margin-bottom:28px}
+.dl-stores{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.dl-store-btn{
+  display:flex;align-items:center;gap:13px;
+  padding:13px 18px;border-radius:var(--r-md);
+  background:var(--bg-2);border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;transition:background var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out);
+  text-decoration:none;color:inherit;
+}
+.dl-store-btn:hover{background:var(--bg-3);border-color:rgba(255,255,255,.14)}
+.dl-store-btn svg{flex-shrink:0}
+.dl-store-info{text-align:left}
+.dl-store-sub{font-size:10px;color:var(--fg-3);display:block}
+.dl-store-name{font-size:14px;font-weight:700;color:var(--fg-1);display:block;margin-top:1px}
+.dl-divider{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--fg-4);margin-bottom:20px}
+.dl-divider::before,.dl-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06)}
+.dl-qr-row{display:flex;align-items:center;gap:16px}
+.dl-qr{
+  width:76px;height:76px;border-radius:10px;padding:8px;
+  background:#fff;flex-shrink:0;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;
+}
+.dl-qr-cell{border-radius:1px;background:#1a1a1a}
+.dl-qr-cell.w{background:transparent}
+.dl-qr-text{font-size:12px;color:var(--fg-3);line-height:1.5}
+.dl-qr-text strong{display:block;font-size:13px;color:var(--fg-1);margin-bottom:2px}
+/* Light mode */
+html[data-theme="light"] .dl-modal{background:var(--bg-1);border-color:var(--bg-3)}
+html[data-theme="light"] .dl-phone{background:#f2f2f5;border-color:var(--bg-3)}
+html[data-theme="light"] .dl-phone::before{background:var(--bg-3)}
+html[data-theme="light"] .dl-phone-screen{background:linear-gradient(175deg,var(--violet-900) 0%,var(--bg-0) 60%)}
+html[data-theme="light"] .dl-phone-stat{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .dl-phone-mini{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .dl-phone-nav{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .dl-store-btn{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .dl-store-btn:hover{background:var(--bg-3)}
+html[data-theme="light"] .dl-divider::before,html[data-theme="light"] .dl-divider::after{background:var(--bg-3)}
+html[data-theme="light"] .dl-qr{background:#fff}
+html[data-theme="light"] .dl-qr-cell{background:#111}
+
+/* ── LIGHT MODE VARIABLES ── */
+html[data-theme="light"] {
+  --bg-0:#f2f2f5; --bg-1:#ffffff; --bg-2:#ebebee; --bg-3:#d8d8e0; --bg-4:#b4b4c0;
+  --fg-1:#111111; --fg-2:#484848; --fg-3:#888888; --fg-4:#bbbbbb;
+  --violet-950:#f2ebff; --violet-900:#e6d5ff;
+  --success-bg:#cef5e2; --warning-bg:#fff3d0; --danger-bg:#ffe4ec;
+}
+html[data-theme="light"] .msg-group.mine .msg-bubble{color:#fff}
+html[data-theme="light"] .nav-item.active{background:var(--violet-900);color:var(--violet-700)}
+html[data-theme="light"] .nav-badge{background:var(--violet-500);color:#fff}
+html[data-theme="light"] .stat-icon{background:var(--violet-900);color:var(--violet-700)}
+html[data-theme="light"] .chat-row.active{background:var(--violet-950);border-left-color:var(--violet-500)}
+html[data-theme="light"] .scheme-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.10)}
+html[data-theme="light"] .chat-input-row{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .donut-wrap svg text[fill="white"]{fill:var(--fg-1)}
+html[data-theme="light"] .act-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
+html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
+html[data-theme="light"] .msg-bubble.ai{background:var(--violet-950);border-color:rgba(188,127,252,.3)}
+html[data-theme="light"] .sb-user{background:var(--bg-2);border-color:var(--bg-3)}
+html[data-theme="light"] .icon-btn{background:var(--bg-2)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar">
+  <a href="https://www.schemester.com" target="_blank" rel="noopener" class="sb-brand" style="text-decoration:none;color:inherit">
+    <img src="assets/logo-white.png" alt="Schemester">
+    <span class="sb-brand-name">Schemester</span>
+  </a>
+
+  <div class="nav-label">Main</div>
+  <button class="nav-item active" data-view="dashboard">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    My Schemes
+    <span class="nav-badge">3</span>
+  </button>
+  <button class="nav-item" data-view="chat">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Chat
+    <span class="nav-badge">5</span>
+  </button>
+
+  <div class="nav-label">Explore</div>
+  <button class="nav-item" data-view="discover">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Discover
+  </button>
+  <button class="nav-item">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+    Budget
+  </button>
+
+  <div class="nav-label">Account</div>
+  <button class="nav-item">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    Profile
+  </button>
+  <button class="nav-item" id="logoutBtn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+    Log out
+  </button>
+
+  <div class="sb-spacer"></div>
+
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+    <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+    </svg>
+    <span id="themeLabel">Light mode</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+
+  <div style="height:8px"></div>
+  <div class="sb-user">
+    <div class="sb-av">TW</div>
+    <div>
+      <div class="sb-user-name">Travis W.</div>
+      <div class="sb-user-plan">Crew plan</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<div class="main">
+
+  <!-- ─── DASHBOARD ─── -->
+  <div class="view active" id="view-dashboard">
+    <div class="topbar">
+      <div>
+        <h1>My Schemes</h1>
+        <p>3 active · 12 completed</p>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost install-btn" id="dlAppBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8.5 12.5l3.5 4 3.5-4"/></svg>
+          Install App
+        </button>
+        <div class="notif-wrap" id="notifWrap">
+          <button class="icon-btn" id="notifBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notif-dot"></span>
+          </button>
+          <div class="notif-panel" id="notifPanel">
+            <div class="notif-panel-head">
+              <span class="notif-panel-title">Notifications</span>
+              <button class="notif-mark-read">Mark all read</button>
+            </div>
+            <div class="notif-list">
+              <div class="notif-item unread">
+                <div class="notif-av ai">✦</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>AI saving found</strong> — Schemester AI found a £340 saving on catering for <span class="ntag">The Big Wedding</span></div>
+                  <div class="notif-time">18 min ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-av" style="background:linear-gradient(135deg,#d48a66,#a5583a)">SA</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>Sarah A.</strong> confirmed her deposit for <span class="ntag">The Big Wedding</span></div>
+                  <div class="notif-time">2 min ago</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+              <div class="notif-item unread">
+                <div class="notif-av notif-av-alert">!</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>Reminder</strong> — Hen Do — Lisbon is in <span class="ntag">9 days</span>. 6 tasks still pending.</div>
+                  <div class="notif-time">Just now</div>
+                </div>
+                <div class="notif-unread-dot"></div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-av" style="background:linear-gradient(135deg,#9e7a9e,#5e3a6a)">PR</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>Priya R.</strong> voted on the hotel poll for <span class="ntag">Hen Do — Lisbon</span></div>
+                  <div class="notif-time">1 hr ago</div>
+                </div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-av notif-av-warn">£</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>Budget alert</strong> — <span class="ntag">The Big Wedding</span> outfits category is £200 over budget</div>
+                  <div class="notif-time">3 hrs ago</div>
+                </div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-av" style="background:linear-gradient(135deg,#7a9e8a,#445e55)">JM</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>James M.</strong> added 3 outfit options to <span class="ntag">The Big Wedding</span></div>
+                  <div class="notif-time">3 hrs ago</div>
+                </div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-av ai">✦</div>
+                <div class="notif-body">
+                  <div class="notif-text"><strong>Price drop alert</strong> — Flights to Lisbon dropped by £42. Book now for <span class="ntag">Hen Do — Lisbon</span></div>
+                  <div class="notif-time">Yesterday</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          New Scheme
+        </button>
+        <div class="profile-wrap">
+          <button class="profile-btn" id="profileBtn" aria-label="Account menu">
+            <span style="font-size:13px;font-weight:700;color:var(--fg-2)">TW</span>
+          </button>
+          <div class="profile-menu" id="profileMenu" role="menu">
+            <div class="pm-header">
+              <div class="pm-av">TW</div>
+              <div>
+                <div class="pm-name">Travis Wilcox</div>
+                <div class="pm-sub">Crew plan · schemester@outlook.com</div>
+              </div>
+            </div>
+            <div class="pm-section">
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                My Profile
+              </div>
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Schemester Profile
+              </div>
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Settings
+              </div>
+            </div>
+            <div class="pm-section">
+              <div class="pm-appearance">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <span>Light mode</span>
+                <div class="pm-track" id="pmTrack" role="switch" aria-label="Toggle light mode">
+                  <div class="pm-thumb" id="pmThumb"></div>
+                </div>
+              </div>
+            </div>
+            <div class="pm-section">
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Help &amp; Support
+              </div>
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Privacy Policy
+              </div>
+              <div class="pm-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Terms of Service
+              </div>
+            </div>
+            <div class="pm-section">
+              <div class="pm-item pm-danger">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Sign out
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-scroll">
+      <div class="dash-layout">
+      <div class="dash-main">
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="stat-val">3</div>
+          <div class="stat-lbl">Active Schemes</div>
+          <div class="stat-delta up">↑ 1 new this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stat-val">£1,240</div>
+          <div class="stat-lbl">Total saved</div>
+          <div class="stat-delta up">↑ £340 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="stat-val">47</div>
+          <div class="stat-lbl">Friends planned with</div>
+          <div class="stat-delta up">↑ 12 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg></div>
+          <div class="stat-val">84%</div>
+          <div class="stat-lbl">On budget</div>
+          <div class="stat-delta warn">⚠ Wedding over by £200</div>
+        </div>
+      </div>
+
+      <!-- Schemes panel with tabs -->
+      <div class="panel">
+        <div class="scheme-tabs">
+          <button class="scheme-tab active" data-tab="live" onclick="switchSchemeTab(this)">Live</button>
+          <button class="scheme-tab" data-tab="liked" onclick="switchSchemeTab(this)">Liked</button>
+          <button class="scheme-tab" data-tab="shared" onclick="switchSchemeTab(this)">Shared</button>
+          <button class="scheme-tab" data-tab="bookmarked" onclick="switchSchemeTab(this)">Bookmarked</button>
+          <button class="scheme-tab" data-tab="completed" onclick="switchSchemeTab(this)">Completed</button>
+        </div>
+
+        <!-- Live Schemes -->
+        <div class="scheme-section active" id="tab-live">
+          <div class="schemes-grid" style="padding:0 14px 14px">
+            <div class="scheme-card">
+              <img class="scheme-card-img" src="assets/lisbon2.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-warning">PLANNING</span>
+                <div class="scheme-card-name">Hen Do — Lisbon</div>
+                <div class="scheme-card-meta">May 2 · Lisbon · 14 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=16" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=20" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=44" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=47" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=56" alt="">
+                  <div class="sc-av-overflow">+9</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:45%;background:#fb923c"></div></div><span class="sc-pct">45%</span></div>
+              </div>
+            </div>
+            <div class="scheme-card">
+              <img class="scheme-card-img" src="assets/italywedding.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-success">BOOKED</span>
+                <div class="scheme-card-name">The Big Wedding</div>
+                <div class="scheme-card-meta">Jun 12–14 · Como, Italy · 80 guests</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=6" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=7" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=8" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=9" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=10" alt="">
+                  <div class="sc-av-overflow">+75</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:72%;background:#bc7ffc"></div></div><span class="sc-pct">72%</span></div>
+              </div>
+            </div>
+            <div class="scheme-card">
+              <img class="scheme-card-img" src="assets/birthday2.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-violet">STARTING</span>
+                <div class="scheme-card-name">30th Birthday</div>
+                <div class="scheme-card-meta">Aug 5 · London · 22 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=11" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=12" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=13" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=14" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=15" alt="">
+                  <div class="sc-av-overflow">+17</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:20%;background:#38bdf8"></div></div><span class="sc-pct">20%</span></div>
+              </div>
+            </div>
+            <div class="scheme-card" style="display:flex;align-items:center;justify-content:center;min-height:220px;border:1px dashed rgba(255,255,255,.1);background:transparent">
+              <div style="text-align:center;color:var(--fg-3)">
+                <div style="width:44px;height:44px;border-radius:var(--r-full);background:var(--bg-2);display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                </div>
+                <div style="font-size:13px;font-weight:600;color:var(--fg-2)">New Scheme</div>
+                <div style="font-size:11px;margin-top:3px">Plan something amazing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shared Schemes -->
+        <div class="scheme-section" id="tab-shared">
+          <div class="schemes-grid" style="padding:0 14px 14px">
+            <div class="scheme-card" style="position:relative">
+              <div style="position:absolute;top:10px;left:10px;z-index:2;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border-radius:20px;padding:3px 10px 3px 6px;display:flex;align-items:center;gap:6px">
+                <img src="https://i.pravatar.cc/52?img=3" alt="James M." style="width:18px;height:18px;border-radius:50%;object-fit:cover;flex-shrink:0">
+                <span style="font-size:10px;font-weight:600;color:#fff">Shared by James M.</span>
+              </div>
+              <img class="scheme-card-img" src="assets/barcelona.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-violet">SUGGESTED</span>
+                <div class="scheme-card-name">Weekend in Barcelona</div>
+                <div class="scheme-card-meta">Jul 11–13 · Barcelona · 8 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=3" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=8" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=9" alt="">
+                  <div class="sc-av-overflow">+5</div>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn btn-primary" style="flex:1;justify-content:center">Join Scheme</button>
+                  <button class="btn btn-ghost" style="flex:1;justify-content:center">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookmarked Schemes -->
+        <div class="scheme-section" id="tab-bookmarked">
+          <div style="padding:32px 14px;text-align:center;color:var(--fg-3)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4;margin-bottom:10px"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            <div style="font-size:13px;font-weight:600;color:var(--fg-2);margin-bottom:4px">No bookmarked schemes yet</div>
+            <div style="font-size:12px">Activities you've bookmarked will appear here</div>
+          </div>
+        </div>
+
+        <!-- Liked Schemes -->
+        <div class="scheme-section" id="tab-liked">
+          <div style="padding:32px 14px;text-align:center;color:var(--fg-3)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.4;margin-bottom:10px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <div style="font-size:13px;font-weight:600;color:var(--fg-2);margin-bottom:4px">No liked schemes yet</div>
+            <div style="font-size:12px">Schemes you've saved for inspiration will appear here</div>
+          </div>
+        </div>
+
+        <!-- Completed Schemes -->
+        <div class="scheme-section" id="tab-completed">
+          <div class="schemes-grid" style="padding:0 14px 14px">
+
+            <div class="scheme-card" style="opacity:.85">
+              <img class="scheme-card-img" src="assets/completed-italy-villa.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-neutral">COMPLETED</span>
+                <div class="scheme-card-name">Italy Villa Weekend</div>
+                <div class="scheme-card-meta">Sep 6–8, 2025 · Tuscany · 12 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=1" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=33" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=6" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=5" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=8" alt="">
+                  <div class="sc-av-overflow">+7</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:100%;background:var(--fg-3)"></div></div><span class="sc-pct" style="color:var(--fg-3)">100%</span></div>
+              </div>
+            </div>
+
+            <div class="scheme-card" style="opacity:.85">
+              <img class="scheme-card-img" src="assets/completed-nye-2025.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-neutral">COMPLETED</span>
+                <div class="scheme-card-name">New Year's Eve 2025</div>
+                <div class="scheme-card-meta">Dec 31, 2024 · London · 28 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=7" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=33" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=9" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=2" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=4" alt="">
+                  <div class="sc-av-overflow">+23</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:100%;background:var(--fg-3)"></div></div><span class="sc-pct" style="color:var(--fg-3)">100%</span></div>
+              </div>
+            </div>
+
+            <div class="scheme-card" style="opacity:.85">
+              <img class="scheme-card-img" src="assets/completed-summer-bash.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-neutral">COMPLETED</span>
+                <div class="scheme-card-name">Alex's Summer Bash</div>
+                <div class="scheme-card-meta">Jul 19, 2025 · Shoreditch · 45 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=12" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=33" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=10" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=3" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=15" alt="">
+                  <div class="sc-av-overflow">+40</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:100%;background:var(--fg-3)"></div></div><span class="sc-pct" style="color:var(--fg-3)">100%</span></div>
+              </div>
+            </div>
+
+            <div class="scheme-card" style="opacity:.85">
+              <img class="scheme-card-img" src="assets/completed-ski-trip.jpg" alt="">
+              <div class="scheme-card-body">
+                <span class="pill pill-neutral">COMPLETED</span>
+                <div class="scheme-card-name">Ski Trip — Val Thorens</div>
+                <div class="scheme-card-meta">Feb 14–21, 2025 · France · 10 people</div>
+                <div class="sc-members">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=11" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=33" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=13" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=14" alt="">
+                  <img class="sc-av" src="https://i.pravatar.cc/52?img=9" alt="">
+                  <div class="sc-av-overflow">+5</div>
+                </div>
+                <div class="scheme-card-foot"><div class="sc-prog"><div class="sc-prog-fill" style="width:100%;background:var(--fg-3)"></div></div><span class="sc-pct" style="color:var(--fg-3)">100%</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Spending chart -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Spending over time</span>
+          <span style="font-size:11px;color:var(--fg-3)">Last 6 months</span>
+        </div>
+        <div class="chart-wrap">
+          <svg width="100%" height="110" viewBox="0 0 500 110" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bc7ffc" stop-opacity=".28"/>
+                <stop offset="100%" stop-color="#bc7ffc" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line x1="0" y1="0" x2="500" y2="0" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="0" y1="36" x2="500" y2="36" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <line x1="0" y1="72" x2="500" y2="72" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+            <path d="M40,90 L120,68 L210,44 L295,57 L385,18 L470,4 L470,110 L40,110Z" fill="url(#cg)"/>
+            <polyline points="40,90 120,68 210,44 295,57 385,18 470,4" fill="none" stroke="#bc7ffc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="40" cy="90" r="3.5" fill="#bc7ffc"/>
+            <circle cx="120" cy="68" r="3.5" fill="#bc7ffc"/>
+            <circle cx="210" cy="44" r="3.5" fill="#bc7ffc"/>
+            <circle cx="295" cy="57" r="3.5" fill="#bc7ffc"/>
+            <circle cx="385" cy="18" r="3.5" fill="#bc7ffc"/>
+            <circle cx="470" cy="4" r="4" fill="#d8b3ff"/>
+          </svg>
+          <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:10px;color:var(--fg-3)">
+            <span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+          </div>
+        </div>
+      </div>
+      </div><!-- /dash-main -->
+
+      <!-- Right aside: scheme chart, calendar, upcoming, activity -->
+      <div class="dash-aside">
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Scheme Chart</span></div>
+          <div class="scht-donut-center">
+            <svg style="max-width:140px;width:100%" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="80" fill="none" stroke="var(--bg-3)" stroke-width="5"/>
+              <circle cx="100" cy="100" r="60" fill="none" stroke="var(--bg-3)" stroke-width="5"/>
+              <circle cx="100" cy="100" r="40" fill="none" stroke="var(--bg-3)" stroke-width="5"/>
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#fb923c" stroke-width="5" stroke-linecap="round" stroke-dasharray="226 503" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+              <circle cx="100" cy="100" r="60" fill="none" stroke="#bc7ffc" stroke-width="5" stroke-linecap="round" stroke-dasharray="271 377" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+              <circle cx="100" cy="100" r="40" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" stroke-dasharray="50 251" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+              <text x="100" y="100" text-anchor="middle" dominant-baseline="central" fill="black" font-size="28" font-weight="700" font-family="JetBrains Mono,monospace">46%</text>
+            </svg>
+          </div>
+          <div class="scht-legend">
+            <div class="scht-legend-item">
+              <span class="scht-legend-dot" style="background:#fb923c"></span>
+              <span class="scht-legend-name">Hen Do — Lisbon</span>
+              <span class="scht-legend-pct">45%</span>
+            </div>
+            <div class="scht-legend-item">
+              <span class="scht-legend-dot" style="background:#bc7ffc"></span>
+              <span class="scht-legend-name">The Big Wedding</span>
+              <span class="scht-legend-pct">72%</span>
+            </div>
+            <div class="scht-legend-item">
+              <span class="scht-legend-dot" style="background:#38bdf8"></span>
+              <span class="scht-legend-name">30th Birthday</span>
+              <span class="scht-legend-pct">20%</span>
+            </div>
+          </div>
+        </div>
+        <div class="cal-panel">
+          <div class="cal-nav">
+            <span class="cal-nav-title" id="calTitle"></span>
+            <div class="cal-nav-btns">
+              <button class="cal-nav-btn" id="calPrev">&#8249;</button>
+              <button class="cal-nav-btn" id="calNext">&#8250;</button>
+            </div>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-dow">
+              <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+            </div>
+            <div class="cal-days" id="calDays"></div>
+          </div>
+        </div>
+        <div class="cal-panel">
+          <div class="panel-head"><span class="panel-title">Upcoming Schemes</span></div>
+          <div class="upcoming-list" id="upcomingList"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">Recent activity</span></div>
+          <div class="act-item">
+            <div class="act-av" style="background:linear-gradient(135deg,#d48a66,#a5583a)">SA</div>
+            <div>
+              <div class="act-text"><strong>Sarah A.</strong> paid her deposit for <span class="tag">The Big Wedding</span></div>
+              <div class="act-time">2 min ago</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-av ai">✦</div>
+            <div>
+              <div class="act-text"><strong>Schemester AI</strong> found a £340 saving on catering for <span class="tag">The Big Wedding</span></div>
+              <div class="act-time">18 min ago</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-av" style="background:linear-gradient(135deg,#9e7a9e,#5e3a6a)">PR</div>
+            <div>
+              <div class="act-text"><strong>Priya R.</strong> voted on the hotel for <span class="tag">Hen Do — Lisbon</span></div>
+              <div class="act-time">1 hr ago</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-av" style="background:linear-gradient(135deg,#7a9e8a,#445e55)">JM</div>
+            <div>
+              <div class="act-text"><strong>James M.</strong> added an outfit option to <span class="tag">The Big Wedding</span></div>
+              <div class="act-time">3 hrs ago</div>
+            </div>
+          </div>
+          <div class="act-item">
+            <div class="act-av ai">✦</div>
+            <div>
+              <div class="act-text"><strong>Schemester AI</strong> set a price-drop alert on flights for <span class="tag">Hen Do — Lisbon</span></div>
+              <div class="act-time">Yesterday</div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /dash-aside -->
+      </div><!-- /dash-layout -->
+    </div>
+  </div>
+
+  <!-- ─── DISCOVER ─── -->
+  <div class="view" id="view-discover">
+    <div class="disc-wrap">
+
+      <!-- Search bar -->
+      <div class="disc-topbar">
+        <div class="disc-search-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search activities, experiences, restaurants…">
+        </div>
+        <button class="disc-location-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          London, UK
+        </button>
+      </div>
+
+      <!-- Activity sections -->
+      <div class="disc-scroll">
+
+        <!-- Trending in London -->
+        <div class="disc-section">
+          <div class="disc-section-title">🔥 Trending in London</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/thames-cruise.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Thames River Sunset Cruise</div>
+                <div class="disc-card-meta">Sightseeing · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£45 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/rooftop-cocktails.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Rooftop Cocktail Masterclass</div>
+                <div class="disc-card-meta">Drinks & Mixology · 3 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£65 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/street-food-london.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Street Food Walking Tour</div>
+                <div class="disc-card-meta">Food & Culture · 2.5 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£38 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/tower-bridge.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Tower Bridge Photography Walk</div>
+                <div class="disc-card-meta">Photography · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£42 <em>/ person</em></div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/eastlondon-graffiti.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">East London Graffiti Tour</div>
+                <div class="disc-card-meta">Art & Culture · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£35 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nearby Fun Activities -->
+        <div class="disc-section">
+          <div class="disc-section-title">⚡ Nearby Fun Activities</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/axe-throwing.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Axe Throwing Session</div>
+                <div class="disc-card-meta">Action · 1.5 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£28 <em>/ person</em></div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/escape-room-heist.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Escape Room: The Heist</div>
+                <div class="disc-card-meta">Puzzle · 1 hour</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£22 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/pottery-wheel.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Pottery Wheel Workshop</div>
+                <div class="disc-card-meta">Creative · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£55 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/kayaking-thames.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Kayaking on the Thames</div>
+                <div class="disc-card-meta">Outdoor · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£40 <em>/ person</em></div><div class="disc-card-rating">★ 4.6</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/bouldering-climbing.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Bouldering for Beginners</div>
+                <div class="disc-card-meta">Sport · 2 hours</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£18 <em>/ person</em></div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Music -->
+        <div class="disc-section">
+          <div class="disc-section-title">🎵 Live Music</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/jazz-ronnies.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Jazz at Ronnie Scott's</div>
+                <div class="disc-card-meta">Jazz · Fri 9pm · Soho</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £25</div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/rock-o2-academy.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Rock Night at O2 Academy</div>
+                <div class="disc-card-meta">Rock · Sat 8pm · Brixton</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £18</div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/royal-albert-hall.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Classical at Royal Albert Hall</div>
+                <div class="disc-card-meta">Classical · Thu 7:30pm</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £35</div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/blues-soul-bar.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Blues & Soul Evening</div>
+                <div class="disc-card-meta">Blues · Wed 8pm · Camden</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £20</div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/indie-moth-club.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Indie Showcase at Moth Club</div>
+                <div class="disc-card-meta">Indie · Fri 8pm · Hackney</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £12</div><div class="disc-card-rating">★ 4.6</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Restaurants -->
+        <div class="disc-section">
+          <div class="disc-section-title">🍽 Restaurants</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/brat-restaurant.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Brat</div>
+                <div class="disc-card-meta">Wood-fired British · Shoreditch</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £85 <em>/ head</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/dishoom-london.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Dishoom</div>
+                <div class="disc-card-meta">Bombay café · Covent Garden</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £30 <em>/ head</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/gymkhana-mayfair.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Gymkhana</div>
+                <div class="disc-card-meta">Modern Indian · Mayfair</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £75 <em>/ head</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/sketch-london.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Sketch</div>
+                <div class="disc-card-meta">Contemporary British · Mayfair</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £110 <em>/ head</em></div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/clove-club.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">The Clove Club</div>
+                <div class="disc-card-meta">Tasting menu · Shoreditch</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £95 <em>/ head</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bars -->
+        <div class="disc-section">
+          <div class="disc-section-title">🍸 Bars</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/nightjar-bar.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Nightjar</div>
+                <div class="disc-card-meta">Speakeasy · Shoreditch</div>
+                <div class="disc-card-foot"><div class="disc-card-price">No cover</div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/lyaness-southbank.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Lyaness</div>
+                <div class="disc-card-meta">Cocktail bar · Southbank</div>
+                <div class="disc-card-foot"><div class="disc-card-price">No cover</div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/satans-whiskers.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Satan's Whiskers</div>
+                <div class="disc-card-meta">Neighbourhood bar · Bethnal Green</div>
+                <div class="disc-card-foot"><div class="disc-card-price">No cover</div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/artesian-langham.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Artesian at The Langham</div>
+                <div class="disc-card-meta">Hotel bar · Marylebone</div>
+                <div class="disc-card-foot"><div class="disc-card-price">No cover</div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/trailer-happiness-tiki.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Trailer Happiness</div>
+                <div class="disc-card-meta">Tiki bar · Notting Hill</div>
+                <div class="disc-card-foot"><div class="disc-card-price">No cover</div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comedy Nights -->
+        <div class="disc-section">
+          <div class="disc-section-title">😂 Comedy Nights</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/comedy-store-london.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">The Comedy Store</div>
+                <div class="disc-card-meta">Stand-up · Sat 8pm · Leicester Sq</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £20</div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/soho-theatre-comedy.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Soho Theatre New Acts</div>
+                <div class="disc-card-meta">New comedians · Thu 7:30pm</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £12</div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/up-the-creek.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Up the Creek</div>
+                <div class="disc-card-meta">Open mic · Fri 7pm · Greenwich</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £8</div><div class="disc-card-rating">★ 4.6</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/banana-cabaret.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Banana Cabaret</div>
+                <div class="disc-card-meta">Stand-up · Sat 8pm · Clapham</div>
+                <div class="disc-card-foot"><div class="disc-card-price">From £18</div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/angel-comedy-club.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Angel Comedy Club</div>
+                <div class="disc-card-meta">Free comedy · Nightly · Islington</div>
+                <div class="disc-card-foot"><div class="disc-card-price">Free entry</div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experiences -->
+        <div class="disc-section">
+          <div class="disc-section-title">✨ Experiences</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/private-chef-dinner.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Private Chef Dinner</div>
+                <div class="disc-card-meta">Fine dining · Up to 12 guests</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£120 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/helicopter-city-tour.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Helicopter City Tour</div>
+                <div class="disc-card-meta">Aerial · 30 mins · Battersea</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£299 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/foraging-wild-cooking.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Foraging & Wild Cooking</div>
+                <div class="disc-card-meta">Outdoors · Full day · Surrey Hills</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£75 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/chocolate-masterclass.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Chocolate Making Masterclass</div>
+                <div class="disc-card-meta">Foodie · 2.5 hours · Bermondsey</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£55 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/hot-air-balloon-sunrise.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Sunrise Hot Air Balloon</div>
+                <div class="disc-card-meta">Aerial · 1 hour · Countryside</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£185 <em>/ person</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date Activities -->
+        <div class="disc-section">
+          <div class="disc-section-title">💛 Date Activities</div>
+          <div class="disc-row">
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/sunset-picnic-hyde-park.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Sunset Picnic in Hyde Park</div>
+                <div class="disc-card-meta">Romantic · 2 hours · Hyde Park</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£35 <em>/ couple</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/wine-tasting-two.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Wine Tasting for Two</div>
+                <div class="disc-card-meta">Food & Drink · 2 hours · Borough</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£65 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/life-drawing-class.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Life Drawing Class</div>
+                <div class="disc-card-meta">Art · 2 hours · Hackney</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£45 <em>/ person</em></div><div class="disc-card-rating">★ 4.7</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/couples-pottery-workshop.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Couples Pottery Workshop</div>
+                <div class="disc-card-meta">Creative · 2.5 hours · Peckham</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£90 <em>/ couple</em></div><div class="disc-card-rating">★ 4.9</div></div>
+              </div>
+            </div>
+            <div class="disc-card">
+              <img class="disc-card-img" src="assets/discover/secret-cinema-experience.jpg" alt="">
+              <div class="disc-card-body">
+                <div class="disc-card-name">Secret Cinema Experience</div>
+                <div class="disc-card-meta">Immersive · Various dates</div>
+                <div class="disc-card-foot"><div class="disc-card-price">£55 <em>/ person</em></div><div class="disc-card-rating">★ 4.8</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end disc-scroll -->
+    </div><!-- end disc-wrap -->
+  </div>
+
+  <!-- ─── CHAT ─── -->
+  <div class="view" id="view-chat">
+    <div class="chat-layout">
+      <!-- List -->
+      <div class="chat-sidebar">
+        <div class="chat-search"><input type="text" placeholder="Search chats…"></div>
+        <div class="chat-tabs">
+          <button class="chat-tab active">Schemes</button>
+          <button class="chat-tab">Direct</button>
+        </div>
+        <div class="chat-list">
+          <div class="chat-row active" data-chat="wedding">
+            <img class="chat-av" src="assets/italywedding.jpg" alt="">
+            <div class="chat-row-info">
+              <div class="chat-row-name">The Big Wedding</div>
+              <div class="chat-row-last">✦ AI: Setup rescheduled ✓</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+              <span class="chat-row-time">2m</span>
+              <span class="chat-unread">3</span>
+            </div>
+          </div>
+          <div class="chat-row" data-chat="henlo">
+            <img class="chat-av" src="assets/lisbon2.jpg" alt="">
+            <div class="chat-row-info">
+              <div class="chat-row-name">Hen Do — Lisbon</div>
+              <div class="chat-row-last">Priya: Hotel vote closes tomorrow!</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+              <span class="chat-row-time">1h</span>
+              <span class="chat-unread">2</span>
+            </div>
+          </div>
+          <div class="chat-row" data-chat="bday">
+            <img class="chat-av" src="assets/birthday2.jpg" alt="">
+            <div class="chat-row-info">
+              <div class="chat-row-name">30th Birthday</div>
+              <div class="chat-row-last">You: Sounds great! 🎉</div>
+            </div>
+            <span class="chat-row-time">3h</span>
+          </div>
+          <div class="chat-row" data-chat="bcn">
+            <img class="chat-av" src="assets/barcelona.jpg" alt="">
+            <div class="chat-row-info">
+              <div class="chat-row-name">Weekend in Barcelona</div>
+              <div class="chat-row-last">James: Anyone free in July?</div>
+            </div>
+            <span class="chat-row-time">1d</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="chat-main">
+        <div class="chat-header">
+          <img class="chat-hav" src="assets/italywedding.jpg" alt="">
+          <div>
+            <div class="chat-hname">The Big Wedding</div>
+            <div class="chat-hmeta">80 members · Jun 12–14, Como, Italy</div>
+          </div>
+          <div class="chat-hactions">
+            <button class="icon-btn" style="width:30px;height:30px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+            <button class="icon-btn" style="width:30px;height:30px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></button>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chatMsgs">
+          <div class="date-sep">Monday, 21 April 2026</div>
+          <div class="msg-group">
+            <img class="msg-av" src="https://i.pravatar.cc/60?img=1" alt="Sarah A.">
+            <div class="msg-content">
+              <div class="msg-sender">Sarah A.</div>
+              <div class="msg-bubble">The venue deposit is due this Friday! Everyone needs to transfer £500 by then 🙏</div>
+              <div class="msg-time">10:14 AM</div>
+            </div>
+          </div>
+          <div class="msg-group">
+            <img class="msg-av" src="https://i.pravatar.cc/60?img=3" alt="James M.">
+            <div class="msg-content">
+              <div class="msg-sender">James M.</div>
+              <div class="msg-bubble">Done ✓ just sent mine</div>
+              <div class="msg-time">10:22 AM</div>
+            </div>
+          </div>
+          <div class="msg-group">
+            <img class="msg-av" src="https://i.pravatar.cc/60?img=5" alt="Priya R.">
+            <div class="msg-content">
+              <div class="msg-sender">Priya R.</div>
+              <div class="msg-bubble">On it! Also — has anyone sorted the outfit for the rehearsal dinner yet?</div>
+              <div class="msg-time">10:31 AM</div>
+            </div>
+          </div>
+          <div class="msg-group">
+            <img class="msg-av ai" src="assets/logo-black-transparent.png" alt="Schemester AI">
+            <div class="msg-content">
+              <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
+              <div class="msg-bubble ai">Catering and venue setup both need Friday access — I've spotted a conflict. Want me to reshuffle the setup window to Saturday morning? It would free up all of Friday for arrivals.</div>
+              <div class="msg-time">10:45 AM</div>
+            </div>
+          </div>
+          <div class="msg-group mine">
+            <img class="msg-av" src="https://i.pravatar.cc/60?img=33" alt="You">
+            <div class="msg-content">
+              <div class="msg-sender">You</div>
+              <div class="msg-bubble">Yes please! That would be amazing 🙌</div>
+              <div class="msg-time">10:47 AM</div>
+            </div>
+          </div>
+          <div class="msg-group">
+            <img class="msg-av ai" src="assets/logo-black-transparent.png" alt="Schemester AI">
+            <div class="msg-content">
+              <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
+              <div class="msg-bubble ai">Done ✓ Setup rescheduled to Saturday 8–11 AM. I've notified the catering team and updated the Scheme timeline. I also found a £340 saving on the catering package — want me to book it?</div>
+              <div class="msg-time">10:47 AM</div>
+            </div>
+          </div>
+          <div class="msg-group">
+            <img class="msg-av" src="https://i.pravatar.cc/60?img=1" alt="Sarah A.">
+            <div class="msg-content">
+              <div class="msg-sender">Sarah A.</div>
+              <div class="msg-bubble">YES book it!! This AI is genuinely incredible 😭</div>
+              <div class="msg-time">10:52 AM</div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-input-row">
+            <button class="chat-act"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+            <button class="chat-act"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></button>
+            <input id="chatInput" type="text" placeholder="Message The Big Wedding…">
+            <button class="send-btn" id="sendBtn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail -->
+      <div class="chat-detail">
+        <div class="detail-head">Scheme Details</div>
+        <img class="detail-cover" src="assets/italywedding.jpg" alt="">
+        <div class="detail-sec">
+          <div class="detail-sec-title">Overview</div>
+          <div class="detail-row"><span>Date</span><span>Jun 12–14, 2026</span></div>
+          <div class="detail-row"><span>Location</span><span>Como, Italy</span></div>
+          <div class="detail-row"><span>Guests</span><span>80 people</span></div>
+          <div class="detail-row"><span>Budget</span><span>£12,400</span></div>
+          <div class="detail-row"><span>Saved</span><span style="color:var(--success)">£1,840</span></div>
+          <div class="detail-prog"><div class="detail-prog-fill" style="width:72%"></div></div>
+          <div style="font-size:10px;color:var(--fg-3);margin-top:4px">72% planned</div>
+        </div>
+        <div class="detail-members-scroll">
+          <div class="detail-sec-title">Members (80)</div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=1" alt="Sarah A." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Sarah A.</span><span class="member-role">Organiser</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=33" alt="Travis W." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Travis W.</span><span class="member-role">Co-host</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=3" alt="James M." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">James M.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=5" alt="Priya R." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Priya R.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=2" alt="Charlotte B." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Charlotte B.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=6" alt="Oliver K." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Oliver K.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=4" alt="Mia T." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Mia T.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=7" alt="Liam H." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Liam H.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=10" alt="Ava W." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Ava W.</span><span class="member-role">Guest</span>
+          </div>
+          <div class="member-row">
+            <img src="https://i.pravatar.cc/52?img=11" alt="Noah S." style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+            <span class="member-name">Noah S.</span><span class="member-role">Guest</span>
+          </div>
+          <a href="#" style="font-size:12px;color:var(--violet-400);font-weight:600;display:block;margin-top:6px">+ 70 more members</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// Theme toggle
+const SUN = `<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>`;
+const MOON = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  localStorage.setItem('schemeTheme', t);
+  const isLight = t === 'light';
+  document.getElementById('themeIcon').innerHTML = isLight ? MOON : SUN;
+  document.getElementById('themeLabel').textContent = isLight ? 'Dark mode' : 'Light mode';
+  document.getElementById('faviconLink').href = isLight ? 'favicon.svg?v=2' : 'favicon-dark.svg';
+}
+
+applyTheme(document.documentElement.dataset.theme || 'dark');
+document.getElementById('themeToggle').addEventListener('click', () => {
+  applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
+});
+
+// Profile menu
+const profileBtn  = document.getElementById('profileBtn');
+const profileMenu = document.getElementById('profileMenu');
+const pmTrack     = document.getElementById('pmTrack');
+
+function toggleProfileMenu(open) {
+  profileMenu.classList.toggle('open', open);
+}
+profileBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  toggleProfileMenu(!profileMenu.classList.contains('open'));
+});
+document.addEventListener('click', e => {
+  if (!profileMenu.contains(e.target)) toggleProfileMenu(false);
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') toggleProfileMenu(false);
+});
+pmTrack.addEventListener('click', () => {
+  applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
+});
+
+// View switching
+const navItems = document.querySelectorAll('.nav-item[data-view]');
+const views = document.querySelectorAll('.view');
+
+function switchSchemeTab(btn) {
+  document.querySelectorAll('.scheme-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.scheme-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+}
+
+function switchView(name) {
+  views.forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+  navItems.forEach(n => n.classList.toggle('active', n.dataset.view === name));
+}
+
+navItems.forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
+
+// Panel "View all" links
+document.querySelectorAll('.panel-link[data-view]').forEach(el =>
+  el.addEventListener('click', () => switchView(el.dataset.view))
+);
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  window.location.href = 'Home.html';
+});
+
+// Chat data
+const CHATS = {
+  wedding: {
+    name: 'The Big Wedding',
+    meta: '80 members · Jun 12–14, Como, Italy',
+    avatar: 'assets/italywedding.jpg',
+    placeholder: 'Message The Big Wedding…',
+    messages: null, // already in DOM
+    detail: {
+      cover: 'assets/italywedding.jpg',
+      rows: [
+        { label: 'Date',     value: 'Jun 12–14, 2026' },
+        { label: 'Location', value: 'Como, Italy' },
+        { label: 'Guests',   value: '80 people' },
+        { label: 'Budget',   value: '£12,400' },
+        { label: 'Saved',    value: '£1,840', highlight: true },
+      ],
+      progress: 72,
+      memberCount: 80,
+      members: [
+        { av: 'https://i.pravatar.cc/52?img=1',  name: 'Sarah A.',     role: 'Organiser' },
+        { av: 'https://i.pravatar.cc/52?img=33', name: 'Travis W.',    role: 'Co-host' },
+        { av: 'https://i.pravatar.cc/52?img=3',  name: 'James M.',     role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=5',  name: 'Priya R.',     role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=2',  name: 'Charlotte B.', role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=6',  name: 'Oliver K.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=4',  name: 'Mia T.',       role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=7',  name: 'Liam H.',      role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=10', name: 'Ava W.',       role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=11', name: 'Noah S.',      role: 'Guest' },
+      ],
+      moreMembers: 70,
+    }
+  },
+  henlo: {
+    name: 'Hen Do — Lisbon',
+    meta: '14 members · May 30 – Jun 1, Lisbon',
+    avatar: 'assets/lisbon2.jpg',
+    placeholder: 'Message Hen Do — Lisbon…',
+    detail: {
+      cover: 'assets/lisbon2.jpg',
+      rows: [
+        { label: 'Date',     value: 'May 30 – Jun 1, 2026' },
+        { label: 'Location', value: 'Lisbon, Portugal' },
+        { label: 'People',   value: '14 people' },
+        { label: 'Budget',   value: '£3,200' },
+        { label: 'Saved',    value: '£480', highlight: true },
+      ],
+      progress: 45,
+      memberCount: 14,
+      members: [
+        { av: 'https://i.pravatar.cc/52?img=16', name: 'Priya R.',   role: 'Organiser' },
+        { av: 'https://i.pravatar.cc/52?img=33', name: 'Travis W.',  role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=20', name: 'Emma S.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=44', name: 'Zoe T.',     role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=47', name: 'Sophie K.',  role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=56', name: 'Chloe M.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=21', name: 'Isla B.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=25', name: 'Freya T.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=26', name: 'Olivia P.',  role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=27', name: 'Grace H.',   role: 'Guest' },
+      ],
+      moreMembers: 4,
+    },
+    messages: [
+      { date: 'Friday, 18 April 2026' },
+      { av: 'https://i.pravatar.cc/60?img=16', sender: 'Priya R.', text: 'Girls!! Hotel vote closes TOMORROW so please get your votes in by midnight 🗳️', time: '9:02 AM' },
+      { av: 'https://i.pravatar.cc/60?img=20', sender: 'Emma S.', text: 'Voted! I\'m obsessed with Option B — that rooftop pool 😍', time: '9:15 AM' },
+      { av: 'https://i.pravatar.cc/60?img=44', sender: 'Zoe T.', text: 'Same, Option B all the way. Also has anyone looked at the fado night on Saturday? Looks amazing', time: '9:28 AM' },
+      { av: 'https://i.pravatar.cc/60?img=47', sender: 'Sophie K.', text: 'YES Zoe I was just about to say that! It\'s in Alfama and reviews are incredible', time: '9:41 AM' },
+      { ai: true, sender: 'Schemester AI', text: 'I\'ve reserved 14 spots at the Fado night in Alfama for Saturday 9 PM — £32 per person. Total: £448. Want me to confirm and add it to the Scheme?', time: '9:42 AM' },
+      { av: 'https://i.pravatar.cc/60?img=16', sender: 'Priya R.', text: 'YESSS confirm it!! This is going to be the best hen do ever 🎉', time: '9:44 AM' },
+      { me: true, av: 'https://i.pravatar.cc/60?img=33', sender: 'You', text: 'Can\'t wait!! Just voted for Option B too 🙌', time: '9:50 AM' },
+    ]
+  },
+  bday: {
+    name: '30th Birthday',
+    meta: '22 members · Jul 19, London',
+    avatar: 'assets/birthday2.jpg',
+    placeholder: 'Message 30th Birthday…',
+    detail: {
+      cover: 'assets/birthday2.jpg',
+      rows: [
+        { label: 'Date',     value: 'Jul 19, 2026' },
+        { label: 'Location', value: 'London' },
+        { label: 'People',   value: '22 people' },
+        { label: 'Budget',   value: '£1,800' },
+        { label: 'Saved',    value: '£0', highlight: false },
+      ],
+      progress: 20,
+      memberCount: 22,
+      members: [
+        { av: 'https://i.pravatar.cc/52?img=7',  name: 'Tom H.',    role: 'Organiser' },
+        { av: 'https://i.pravatar.cc/52?img=33', name: 'Travis W.', role: 'Co-host' },
+        { av: 'https://i.pravatar.cc/52?img=8',  name: 'Dan W.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=9',  name: 'Marcus J.', role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=12', name: 'Alex B.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=13', name: 'Ryan P.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=14', name: 'Charlie K.',role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=15', name: 'Sam L.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=6',  name: 'Jack M.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=4',  name: 'Finn O.',   role: 'Guest' },
+      ],
+      moreMembers: 12,
+    },
+    messages: [
+      { date: 'Thursday, 17 April 2026' },
+      { av: 'https://i.pravatar.cc/60?img=7', sender: 'Tom H.', text: 'Right everyone — Liam\'s 30th is coming up fast. We need to lock in the venue this week', time: '6:30 PM' },
+      { av: 'https://i.pravatar.cc/60?img=8', sender: 'Dan W.', text: 'I say we do a private dining room somewhere in Shoreditch, then hit a club after', time: '6:45 PM' },
+      { av: 'https://i.pravatar.cc/60?img=9', sender: 'Marcus J.', text: 'Or what about a rooftop bar? That new one in Peckham looks sick', time: '6:52 PM' },
+      { me: true, av: 'https://i.pravatar.cc/60?img=33', sender: 'You', text: 'Sounds great! 🎉 Either works for me. What\'s the budget per head?', time: '7:01 PM' },
+      { av: 'https://i.pravatar.cc/60?img=7', sender: 'Tom H.', text: 'Thinking £60–80 per person including dinner. We\'ve got 22 people confirmed', time: '7:08 PM' },
+      { ai: true, sender: 'Schemester AI', text: 'I\'ve found 3 private dining options in Shoreditch within budget. Top pick: Brat Restaurant private room — 7-course tasting menu at £75pp, available Jul 19. Want me to check availability?', time: '7:09 PM' },
+      { av: 'https://i.pravatar.cc/60?img=8', sender: 'Dan W.', text: 'Brat would be absolutely class. Let\'s do it 🔥', time: '7:14 PM' },
+      { av: 'https://i.pravatar.cc/60?img=9', sender: 'Marcus J.', text: 'Seconded. Book it before it goes!', time: '7:16 PM' },
+    ]
+  },
+  bcn: {
+    name: 'Weekend in Barcelona',
+    meta: '8 members · Jul 11–13, Barcelona',
+    avatar: 'assets/barcelona.jpg',
+    placeholder: 'Message Weekend in Barcelona…',
+    detail: {
+      cover: 'assets/barcelona.jpg',
+      rows: [
+        { label: 'Date',     value: 'Jul 11–13, 2026' },
+        { label: 'Location', value: 'Barcelona, Spain' },
+        { label: 'People',   value: '8 people' },
+        { label: 'Budget',   value: '£2,400' },
+        { label: 'Saved',    value: '£0', highlight: false },
+      ],
+      progress: 10,
+      memberCount: 8,
+      members: [
+        { av: 'https://i.pravatar.cc/52?img=3',  name: 'James M.',  role: 'Organiser' },
+        { av: 'https://i.pravatar.cc/52?img=33', name: 'Travis W.', role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=8',  name: 'Dan W.',    role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=9',  name: 'Marcus J.', role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=12', name: 'Alex B.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=2',  name: 'Lena S.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=13', name: 'Ryan P.',   role: 'Guest' },
+        { av: 'https://i.pravatar.cc/52?img=14', name: 'Charlie K.',role: 'Guest' },
+      ],
+      moreMembers: 0,
+    },
+    messages: [
+      { date: 'Wednesday, 23 April 2026' },
+      { av: 'https://i.pravatar.cc/60?img=3', sender: 'James M.', text: 'Anyone free in July? Thinking a long weekend in Barcelona — flights are cheap right now', time: '2:10 PM' },
+      { av: 'https://i.pravatar.cc/60?img=8', sender: 'Dan W.', text: 'I\'m in! July 11–13?', time: '2:18 PM' },
+      { av: 'https://i.pravatar.cc/60?img=9', sender: 'Marcus J.', text: 'Works for me. We doing Airbnb or hotel?', time: '2:25 PM' },
+      { av: 'https://i.pravatar.cc/60?img=3', sender: 'James M.', text: 'Airbnb I reckon — get somewhere in the Gothic Quarter', time: '2:31 PM' },
+      { ai: true, sender: 'Schemester AI', text: 'I\'ve found return flights from London Gatwick Jul 11–13 from £89pp with Vueling. I can also suggest 3 Airbnbs in the Gothic Quarter for 8 guests. Want me to pull those up?', time: '2:32 PM' },
+      { me: true, av: 'https://i.pravatar.cc/60?img=33', sender: 'You', text: 'Yes please! And we should book the Sagrada Família early — gets sold out', time: '2:40 PM' },
+      { ai: true, sender: 'Schemester AI', text: 'Noted — I\'ll add Sagrada Família tickets to the to-do list. Entry slots for Jul 12 morning are still available at €26pp. I\'ll hold them while you confirm the group.', time: '2:41 PM' },
+      { av: 'https://i.pravatar.cc/60?img=8', sender: 'Dan W.', text: 'This is genuinely making planning so easy 😂 let\'s lock in the flights first', time: '2:48 PM' },
+    ]
+  }
+};
+
+function renderMessages(msgs) {
+  const logo = 'assets/logo-black-transparent.png';
+  return msgs.map(m => {
+    if (m.date) return `<div class="date-sep">${m.date}</div>`;
+    if (m.ai) return `
+      <div class="msg-group">
+        <img class="msg-av ai" src="${logo}" alt="Schemester AI">
+        <div class="msg-content">
+          <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
+          <div class="msg-bubble ai">${m.text}</div>
+          <div class="msg-time">${m.time}</div>
+        </div>
+      </div>`;
+    return `
+      <div class="msg-group${m.me ? ' mine' : ''}">
+        <img class="msg-av" src="${m.av}" alt="${m.sender}">
+        <div class="msg-content">
+          <div class="msg-sender">${m.sender}</div>
+          <div class="msg-bubble">${m.text}</div>
+          <div class="msg-time">${m.time}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// Wedding messages + detail are already in the DOM — store them
+const weddingHTML = document.getElementById('chatMsgs').innerHTML;
+const weddingDetailHTML = document.querySelector('.chat-detail').innerHTML;
+
+function renderDetail(d) {
+  const membersHTML = d.members.map(m => `
+    <div class="member-row">
+      <img src="${m.av}" alt="${m.name}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
+      <span class="member-name">${m.name}</span><span class="member-role">${m.role}</span>
+    </div>`).join('');
+  const moreLink = d.moreMembers > 0
+    ? `<a href="#" style="font-size:12px;color:var(--violet-400);font-weight:600;display:block;margin-top:6px">+ ${d.moreMembers} more members</a>`
+    : '';
+  const rowsHTML = d.rows.map(r => `
+    <div class="detail-row">
+      <span>${r.label}</span>
+      <span${r.highlight ? ' style="color:var(--success)"' : ''}>${r.value}</span>
+    </div>`).join('');
+  return `
+    <div class="detail-head">Scheme Details</div>
+    <img class="detail-cover" src="${d.cover}" alt="">
+    <div class="detail-sec">
+      <div class="detail-sec-title">Overview</div>
+      ${rowsHTML}
+      <div class="detail-prog"><div class="detail-prog-fill" style="width:${d.progress}%"></div></div>
+      <div style="font-size:10px;color:var(--fg-3);margin-top:4px">${d.progress}% planned</div>
+    </div>
+    <div class="detail-members-scroll">
+      <div class="detail-sec-title">Members (${d.memberCount})</div>
+      ${membersHTML}
+      ${moreLink}
+    </div>`;
+}
+
+// Chat row selection
+document.querySelectorAll('.chat-row').forEach(row => {
+  row.addEventListener('click', () => {
+    const id = row.dataset.chat;
+    const chat = CHATS[id];
+    if (!chat) return;
+    document.querySelectorAll('.chat-row').forEach(r => r.classList.remove('active'));
+    row.classList.add('active');
+    // Update header
+    document.querySelector('.chat-hav').src = chat.avatar;
+    document.querySelector('.chat-hname').textContent = chat.name;
+    document.querySelector('.chat-hmeta').textContent = chat.meta;
+    document.getElementById('chatInput').placeholder = chat.placeholder;
+    // Update messages
+    const msgs = document.getElementById('chatMsgs');
+    if (id === 'wedding') {
+      msgs.innerHTML = weddingHTML;
+    } else {
+      msgs.innerHTML = renderMessages(chat.messages);
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+    // Update detail panel
+    const detail = document.querySelector('.chat-detail');
+    if (id === 'wedding') {
+      detail.innerHTML = weddingDetailHTML;
+    } else {
+      detail.innerHTML = renderDetail(chat.detail);
+    }
+  });
+});
+
+// Send message
+const chatInput = document.getElementById('chatInput');
+const chatMsgs = document.getElementById('chatMsgs');
+
+function sendMsg() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  const el = document.createElement('div');
+  el.className = 'msg-group mine';
+  el.innerHTML = `
+    <div class="msg-av" style="background:linear-gradient(135deg,var(--violet-500),var(--violet-700))">TW</div>
+    <div class="msg-content">
+      <div class="msg-sender">You</div>
+      <div class="msg-bubble">${text.replace(/</g,'&lt;')}</div>
+      <div class="msg-time">Just now</div>
+    </div>`;
+  chatMsgs.appendChild(el);
+  chatInput.value = '';
+  chatMsgs.scrollTop = chatMsgs.scrollHeight;
+}
+
+document.getElementById('sendBtn').addEventListener('click', sendMsg);
+chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMsg(); });
+
+// Chat tabs
+document.querySelectorAll('.chat-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.chat-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+  });
+});
+
+// ── CALENDAR ──────────────────────────────────────────────
+const SCHEME_EVENTS = [
+  { year:2026, month:5,  day:2,  dayEnd:2,  name:'Hen Do — Lisbon',   meta:'Lisbon · 14 people',  pill:'pill-warning' },
+  { year:2026, month:6,  day:12, dayEnd:14, name:'The Big Wedding',   meta:'Como, Italy · 80 guests', pill:'pill-success' },
+  { year:2026, month:8,  day:5,  dayEnd:5,  name:'30th Birthday',     meta:'London · 22 people',  pill:'pill-violet' },
+];
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+let calYear = 2026, calMonth = 4; // April 2026 (month is 1-indexed)
+
+function daysInMonth(y, m) { return new Date(y, m, 0).getDate(); }
+function dayOfWeek(y, m, d) { // Mon=0 … Sun=6
+  const raw = new Date(y, m-1, d).getDay(); // Sun=0
+  return raw === 0 ? 6 : raw - 1;
+}
+
+function getEventForDate(y, m, d) {
+  return SCHEME_EVENTS.find(e => {
+    if (e.year !== y || e.month !== m) return false;
+    return d >= e.day && d <= e.dayEnd;
+  });
+}
+
+function daysUntil(y, m, d) {
+  const today = new Date(2026,3,23); // April 23 2026
+  const target = new Date(y, m-1, d);
+  const diff = Math.round((target - today) / 86400000);
+  if (diff === 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  if (diff < 0) return `${Math.abs(diff)} days ago`;
+  if (diff < 7) return `In ${diff} days`;
+  if (diff < 30) return `In ${Math.ceil(diff/7)} weeks`;
+  return `In ${Math.ceil(diff/30)} months`;
+}
+
+function renderCalendar() {
+  const totalDays = daysInMonth(calYear, calMonth);
+  const firstDow = dayOfWeek(calYear, calMonth, 1); // 0=Mon
+  const prevMonthDays = daysInMonth(calYear, calMonth === 1 ? 12 : calMonth - 1);
+
+  document.getElementById('calTitle').textContent = `${MONTHS[calMonth-1]} ${calYear}`;
+
+  let html = '';
+  // Leading cells from previous month
+  for (let i = firstDow - 1; i >= 0; i--) {
+    html += `<div class="cal-day other-month">${prevMonthDays - i}</div>`;
+  }
+  // Current month days
+  for (let d = 1; d <= totalDays; d++) {
+    const isToday = calYear===2026 && calMonth===4 && d===23;
+    const evt = getEventForDate(calYear, calMonth, d);
+    const isStart = evt && d === evt.day;
+    const isEnd = evt && d === evt.dayEnd;
+    const isInRange = evt && d > evt.day && d < evt.dayEnd;
+    let cls = 'cal-day';
+    if (isToday) cls += ' today';
+    if (evt) {
+      if (evt.day === evt.dayEnd) cls += ' has-event';
+      else if (isStart) cls += ' range-start';
+      else if (isEnd) cls += ' range-end';
+      else if (isInRange) cls += ' in-range';
+    }
+    html += `<div class="${cls}" title="${evt ? evt.name : ''}">${d}</div>`;
+  }
+  // Trailing cells
+  const totalCells = Math.ceil((firstDow + totalDays) / 7) * 7;
+  let trail = 1;
+  for (let i = firstDow + totalDays; i < totalCells; i++) {
+    html += `<div class="cal-day other-month">${trail++}</div>`;
+  }
+  document.getElementById('calDays').innerHTML = html;
+
+  // Upcoming list — show next 4 events from April 23 2026
+  const today = new Date(2026,3,23);
+  const future = SCHEME_EVENTS
+    .filter(e => new Date(e.year, e.month-1, e.dayEnd) >= today)
+    .sort((a,b) => new Date(a.year,a.month-1,a.day) - new Date(b.year,b.month-1,b.day))
+    .slice(0,4);
+  document.getElementById('upcomingList').innerHTML = future.map(e => `
+    <div class="upcoming-item">
+      <div class="upcoming-date-badge">
+        <div class="ub-month">${SHORT_MONTHS[e.month-1]}</div>
+        <div class="ub-day">${String(e.day).padStart(2,'0')}</div>
+      </div>
+      <div class="upcoming-info">
+        <div class="upcoming-name">${e.name}</div>
+        <div class="upcoming-meta">${e.meta}</div>
+        <div class="upcoming-countdown">${daysUntil(e.year,e.month,e.day)}</div>
+      </div>
+    </div>`).join('');
+}
+
+document.getElementById('calPrev').addEventListener('click', () => {
+  calMonth--; if (calMonth < 1) { calMonth = 12; calYear--; }
+  renderCalendar();
+});
+document.getElementById('calNext').addEventListener('click', () => {
+  calMonth++; if (calMonth > 12) { calMonth = 1; calYear++; }
+  renderCalendar();
+});
+renderCalendar();
+
+</script>
+
+<!-- ══════════════ DOWNLOAD APP MODAL ══════════════ -->
+<div class="dl-overlay" id="dlOverlay">
+  <div class="dl-modal" role="dialog" aria-modal="true" aria-label="Download Schemester app">
+    <button class="dl-close" id="dlClose" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+
+    <!-- Phone mockups -->
+    <div class="popup-phones-outer" aria-hidden="true">
+      <div class="popup-phones">
+
+        <!-- Phone 1 — Home screen -->
+        <div class="popup-mock">
+          <div class="pm-topbar"><span>9:41</span><span>●●●</span></div>
+          <div style="padding:0 12px 10px">
+            <div style="font-family:var(--font-display);font-size:22px;font-weight:500;letter-spacing:-0.02em">Good evening 👋</div>
+            <div style="font-size:12px;color:var(--fg-3);margin-top:2px">3 active Schemes</div>
+          </div>
+          <div class="pm-search">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            What's the plan?
+          </div>
+          <div class="pm-card" style="height:140px;background-image:url('assets/scene-venue.jpg')">
+            <div class="pm-card-overlay"><div class="pm-card-title">The Big Wedding</div><div class="pm-card-meta">Jun 12 – 14 · 80 guests</div><div class="pm-prog"><div class="pm-prog-fill" style="width:72%"></div></div></div>
+          </div>
+          <div class="pm-card" style="height:90px;background-image:url('assets/scene-warm.jpg')">
+            <div class="pm-card-overlay"><div class="pm-card-title">Hen Do — Lisbon</div><div class="pm-card-meta">May 2 · 14 people</div></div>
+          </div>
+          <div class="pm-tabbar">
+            <div class="pm-tab" style="color:var(--violet-500)"><div style="font-size:16px">⊞</div>Home</div>
+            <div class="pm-tab" style="color:var(--fg-3)"><div style="font-size:16px">◈</div>Schemes</div>
+            <div class="pm-tab" style="color:var(--fg-3)"><div style="font-size:16px">◯</div>Discover</div>
+            <div class="pm-tab" style="color:var(--fg-3)"><div style="font-size:16px">◉</div>Profile</div>
+          </div>
+        </div>
+
+        <!-- Phone 2 — The Big Wedding -->
+        <div class="popup-mock">
+          <div style="height:180px;position:relative;background-image:url('assets/italyvilla.jpg');background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:flex-end;padding:12px">
+            <div style="position:absolute;inset:0;background:var(--grad-protect)"></div>
+            <div style="position:relative;z-index:1">
+              <div style="font-size:10px;color:var(--fg-3);display:flex;justify-content:space-between;margin-bottom:6px"><span>9:41</span><span>●●●</span></div>
+              <div style="display:flex;gap:6px;margin-bottom:8px">
+                <span style="background:var(--success-bg);color:var(--success);font-size:9px;font-weight:700;padding:3px 8px;border-radius:50px;text-transform:uppercase">BOOKED</span>
+                <span style="background:var(--bg-3);font-size:9px;font-weight:700;padding:3px 8px;border-radius:50px;text-transform:uppercase">80 GUESTS</span>
+              </div>
+              <div style="font-family:var(--font-display);font-size:18px;font-weight:500">The Big Wedding</div>
+              <div style="font-size:11px;color:var(--fg-2);margin-top:2px">Jun 12 – 14 · Como, Italy</div>
+              <div style="height:3px;background:var(--bg-3);border-radius:50px;margin-top:8px"><div style="width:72%;height:100%;border-radius:inherit;background:var(--grad-progress)"></div></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;padding:12px">
+            <div style="flex:1;border-radius:10px;overflow:hidden;position:relative;height:90px;background-image:url('assets/scene-venue.jpg');background-size:cover">
+              <div style="position:absolute;inset:0;background:var(--grad-protect);padding:8px;display:flex;flex-direction:column;justify-content:flex-end"><div style="font-size:10px;font-weight:600">Venue</div><div style="font-size:9px;color:var(--fg-2)">Villa del Lago</div></div>
+            </div>
+            <div style="flex:1;border-radius:10px;overflow:hidden;position:relative;height:90px;background-image:url('assets/scene-cater.jpg');background-size:cover">
+              <div style="position:absolute;inset:0;background:var(--grad-protect);padding:8px;display:flex;flex-direction:column;justify-content:flex-end"><div style="font-size:10px;font-weight:600">Catering</div><span style="background:var(--success-bg);color:var(--success);font-size:8px;font-weight:700;padding:2px 6px;border-radius:50px;margin-top:2px;display:inline-flex">SOURCED</span></div>
+            </div>
+            <div style="flex:1;border-radius:10px;overflow:hidden;position:relative;height:90px;background-image:url('assets/scene-warm.jpg');background-size:cover">
+              <div style="position:absolute;inset:0;background:var(--grad-protect);padding:8px;display:flex;flex-direction:column;justify-content:flex-end"><div style="font-size:10px;font-weight:600">Outfits</div><div style="font-size:9px;color:var(--fg-2)">5 want a re-vote</div></div>
+            </div>
+          </div>
+          <div style="margin:0 12px;background:var(--violet-950);border:1px solid rgba(188,127,252,.18);border-radius:8px;padding:10px 12px;font-size:10px;color:var(--fg-2)">
+            <span style="color:var(--violet-400);margin-right:4px">✦</span>Catering + Venue overlap Friday. Want me to reshuffle?
+          </div>
+        </div>
+
+        <!-- Phone 3 — Dashboard -->
+        <div class="popup-mock">
+          <div class="pm-topbar"><span>9:41</span><span>●●●</span></div>
+          <div style="padding:0 12px 12px;font-family:var(--font-display);font-size:20px;font-weight:500">Dashboard</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 12px 0">
+            <div style="background:var(--bg-2);border-radius:8px;padding:10px"><div style="font-family:var(--font-mono);font-size:16px;font-weight:600">£1,240</div><div style="font-size:9px;color:var(--fg-3);margin-top:2px">Total saved</div></div>
+            <div style="background:var(--bg-2);border-radius:8px;padding:10px"><div style="font-family:var(--font-mono);font-size:16px;font-weight:600">12</div><div style="font-size:9px;color:var(--fg-3);margin-top:2px">Schemes done</div></div>
+            <div style="background:var(--bg-2);border-radius:8px;padding:10px"><div style="font-family:var(--font-mono);font-size:16px;font-weight:600">84%</div><div style="font-size:9px;color:var(--fg-3);margin-top:2px">On budget</div></div>
+            <div style="background:var(--bg-2);border-radius:8px;padding:10px"><div style="font-family:var(--font-mono);font-size:16px;font-weight:600">47</div><div style="font-size:9px;color:var(--fg-3);margin-top:2px">Friends planned</div></div>
+          </div>
+          <div style="padding:12px">
+            <div style="font-size:10px;color:var(--fg-3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Budget</div>
+            <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:var(--fg-2)">Venue</span><span>£4,200</span></div><div style="height:3px;background:var(--bg-3);border-radius:50px"><div style="width:84%;height:100%;border-radius:inherit;background:var(--grad-progress)"></div></div></div>
+            <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:var(--fg-2)">Catering</span><span>£2,800</span></div><div style="height:3px;background:var(--bg-3);border-radius:50px"><div style="width:56%;height:100%;border-radius:inherit;background:var(--grad-progress)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px"><span style="color:var(--fg-2)">Travel</span><span>£960</span></div><div style="height:3px;background:var(--bg-3);border-radius:50px"><div style="width:38%;height:100%;border-radius:inherit;background:var(--grad-progress)"></div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Copy + store links -->
+    <div class="dl-copy">
+      <div class="dl-brand">
+        <img src="assets/logo-white.png" alt="Schemester">
+        <span>Schemester</span>
+      </div>
+      <h2>Plan on the go.<br>Download the app.</h2>
+      <p>Manage your schemes, chat with your crew, and track budgets from your pocket. Available on iOS and Android.</p>
+
+      <div class="dl-stores">
+        <a class="dl-store-btn" href="#" aria-label="Download on the App Store">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="dl-store-info">
+            <span class="dl-store-sub">Download on the</span>
+            <span class="dl-store-name">App Store</span>
+          </div>
+        </a>
+        <a class="dl-store-btn" href="#" aria-label="Get it on Google Play">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.24.99.19l12.4-7.15-2.54-2.54L3.18 23.76zm-1.1-19.94A1.5 1.5 0 0 0 2 4.5v15a1.5 1.5 0 0 0 .08.68l.06.1 8.41-8.4v-.2L2.14 3.73l-.06.09zM20.49 10.7l-2.56-1.47-2.84 2.84 2.84 2.84 2.59-1.49c.74-.43.74-1.29-.03-1.72zM3.18.24l10.85 10.85-2.54 2.54L3.18.72A1.1 1.1 0 0 1 3.18.24z"/></svg>
+          <div class="dl-store-info">
+            <span class="dl-store-sub">Get it on</span>
+            <span class="dl-store-name">Google Play</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="dl-divider">or scan to download</div>
+
+      <div class="dl-qr-row">
+        <div class="dl-qr" aria-label="QR code">
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell w"></div><div class="dl-qr-cell"></div>
+          <div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div><div class="dl-qr-cell"></div>
+        </div>
+        <div class="dl-qr-text">
+          <strong>Point your camera here</strong>
+          Works on iOS and Android.<br>No app store search needed.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NOTIFICATIONS ────────────────────────────────────────
+const notifBtn = document.getElementById('notifBtn');
+const notifPanel = document.getElementById('notifPanel');
+const notifWrap = document.getElementById('notifWrap');
+
+notifBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  notifPanel.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+  if (!notifWrap.contains(e.target)) notifPanel.classList.remove('open');
+});
+document.querySelector('.notif-mark-read').addEventListener('click', () => {
+  document.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
+  document.querySelector('.notif-unread-dot') && document.querySelectorAll('.notif-unread-dot').forEach(d => d.remove());
+  notifBtn.querySelector('.notif-dot').style.display = 'none';
+});
+
+// ── DOWNLOAD APP MODAL ──────────────────────────────────
+const dlOverlay = document.getElementById('dlOverlay');
+document.getElementById('dlAppBtn').addEventListener('click', () => dlOverlay.classList.add('open'));
+document.getElementById('dlClose').addEventListener('click', () => dlOverlay.classList.remove('open'));
+dlOverlay.addEventListener('click', e => { if (e.target === dlOverlay) dlOverlay.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') dlOverlay.classList.remove('open'); });
+</script>
+
+</body>
+</html>
