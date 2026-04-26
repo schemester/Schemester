@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Schemes — Schemester</title>
-<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'dark';</script>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
 <link rel="icon" id="faviconLink" href="favicon-dark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg-0:#0e0e0e; --bg-1:#1a1a1a; --bg-2:#262626; --bg-3:#3a3a3a; --bg-4:#515150;
@@ -18,8 +18,8 @@
   --success:#3ddc97; --success-bg:#1a2e25;
   --warning:#ffb347; --warning-bg:#2e2415;
   --danger:#ff5c7a; --danger-bg:#2e1520;
-  --font-display:'Fraunces',Georgia,serif;
-  --font-sans:'Geist',-apple-system,sans-serif;
+  --font-display:'Inter',-apple-system,system-ui,sans-serif;
+  --font-sans:'Inter',-apple-system,system-ui,sans-serif;
   --font-mono:'JetBrains Mono',monospace;
   --r-sm:8px; --r-md:14px; --r-lg:22px; --r-xl:32px; --r-full:9999px;
   --sidebar-w:228px;
@@ -657,12 +657,14 @@ html[data-theme="light"] .dl-divider::before,html[data-theme="light"] .dl-divide
 html[data-theme="light"] .dl-qr{background:#fff}
 html[data-theme="light"] .dl-qr-cell{background:#111}
 
-/* ── LIGHT MODE VARIABLES ── */
+/* ── LIGHT MODE VARIABLES (Expo) ── */
 html[data-theme="light"] {
-  --bg-0:#f2f2f5; --bg-1:#ffffff; --bg-2:#ebebee; --bg-3:#d8d8e0; --bg-4:#b4b4c0;
-  --fg-1:#111111; --fg-2:#484848; --fg-3:#888888; --fg-4:#bbbbbb;
-  --violet-950:#f2ebff; --violet-900:#e6d5ff;
-  --success-bg:#cef5e2; --warning-bg:#fff3d0; --danger-bg:#ffe4ec;
+  --bg-0: #f0f0f3; --bg-1: #ffffff; --bg-2: #e8e8eb; --bg-3: #e0e1e6; --bg-4: #d9d9e0;
+  --fg-1: #1c2024; --fg-2: #60646c; --fg-3: #b0b4ba; --fg-4: #cccccc;
+  --violet-950: #f2ebff; --violet-900: #e6d5ff;
+  --success-bg: #cef5e2; --warning-bg: #fff3d0; --danger-bg: #ffe4ec;
+  --shadow-1: rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px;
+  --shadow-2: rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px;
 }
 html[data-theme="light"] .msg-group.mine .msg-bubble{color:#fff}
 html[data-theme="light"] .nav-item.active{background:var(--violet-900);color:var(--violet-700)}
@@ -677,6 +679,16 @@ html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rg
 html[data-theme="light"] .msg-bubble.ai{background:var(--violet-950);border-color:rgba(188,127,252,.3)}
 html[data-theme="light"] .sb-user{background:var(--bg-2);border-color:var(--bg-3)}
 html[data-theme="light"] .icon-btn{background:var(--bg-2)}
+html[data-theme="light"] .btn-primary{background:#000000;color:#ffffff;border-radius:var(--r-full)}
+html[data-theme="light"] .btn-primary:hover{background:#333333}
+html[data-theme="light"] .sidebar{background:#ffffff;border-right-color:#e0e1e6}
+html[data-theme="light"] .topbar{border-bottom-color:#e0e1e6}
+html[data-theme="light"] .topbar h1{font-weight:700}
+html[data-theme="light"] .scheme-card{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
+html[data-theme="light"] .panel{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
+html[data-theme="light"] .stat-card{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
+html[data-theme="light"] .send-btn{background:#000000;color:#ffffff}
+html[data-theme="light"] .send-btn:hover{background:#333333}
 </style>
 </head>
 <body>

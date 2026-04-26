@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Home — Schemester</title>
-<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'dark';</script>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
 <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -60,8 +60,8 @@
   --text-mute: var(--fg-3);
 
   /* Typography */
-  --font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
-  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Inter', -apple-system, system-ui, sans-serif;
+  --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Type scale */
@@ -243,9 +243,9 @@ html[data-theme="light"] .login-btn{border-color:var(--bg-3);box-shadow:0 2px 8p
 }
 .hero-title {
   font-family: var(--font-display);
-  font-weight: 500; line-height: 0.98;
-  letter-spacing: var(--tracking-display);
-  font-size: clamp(52px, 8vw, 92px);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-size: clamp(48px, 8vw, 84px);
   margin: 0 0 24px;
 }
 .hero-title i { font-style: italic; color: var(--violet-300); }
@@ -826,16 +826,23 @@ html[data-theme="light"] .dl-divider::before,html[data-theme="light"] .dl-divide
 .dl-qr-text{font-size:12px;color:var(--fg-3);line-height:1.5}
 .dl-qr-text strong{display:block;font-size:13px;color:var(--fg-1);margin-bottom:2px}
 
-/* ── LIGHT MODE ── */
+/* ── LIGHT MODE (Expo) ── */
 html[data-theme="light"] {
-  --bg-0:#f2f2f5; --bg-1:#ffffff; --bg-2:#ebebee; --bg-3:#d8d8e0; --bg-4:#b4b4c0;
-  --fg-1:#111111; --fg-2:#484848; --fg-3:#888888; --fg-4:#bbbbbb;
-  --violet-950:#f2ebff; --violet-900:#e6d5ff;
-  --canvas:var(--bg-0); --surface:var(--bg-1);
-  --success-bg:#cef5e2; --warning-bg:#fff3d0; --danger-bg:#ffe4ec;
+  --bg-0: #f0f0f3; --bg-1: #ffffff; --bg-2: #e8e8eb; --bg-3: #e0e1e6; --bg-4: #d9d9e0;
+  --fg-1: #1c2024; --fg-2: #60646c; --fg-3: #b0b4ba; --fg-4: #cccccc;
+  --violet-950: #f2ebff; --violet-900: #e6d5ff;
+  --canvas: var(--bg-0); --surface: var(--bg-1);
+  --success-bg: #cef5e2; --warning-bg: #fff3d0; --danger-bg: #ffe4ec;
+  --shadow-1: rgba(0,0,0,0.08) 0px 3px 6px, rgba(0,0,0,0.07) 0px 2px 4px;
+  --shadow-2: rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px;
+  --shadow-3: rgba(0,0,0,0.1) 0px 10px 20px, rgba(0,0,0,0.05) 0px 3px 6px;
+  --shadow-fab: rgba(188,127,252,0.25) 0px 8px 20px;
 }
-html[data-theme="light"] .nav{background:rgba(242,242,245,0.85)}
-html[data-theme="light"] .hero{background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(188,127,252,.12),transparent 60%)}
+html[data-theme="light"] .nav {
+  background: rgba(240,240,243,0.9);
+  border-bottom: 1px solid #e0e1e6;
+}
+html[data-theme="light"] .hero { background: none; }
 html[data-theme="light"] .mock{box-shadow:0 0 0 8px var(--bg-2),0 0 0 10px var(--bg-3),0 30px 60px rgba(0,0,0,.15)}
 html[data-theme="light"] .mock-home,html[data-theme="light"] .mock-scheme,html[data-theme="light"] .mock-dash{background:var(--bg-0)}
 /* modal phone group */
@@ -858,6 +865,21 @@ html[data-theme="light"] .feat:hover,
 html[data-theme="light"] .price-card:hover{
   box-shadow:0 2px 8px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.12);
 }
+html[data-theme="light"] .btn-primary {
+  background: #000000; color: #ffffff; border-radius: var(--radius-full);
+}
+html[data-theme="light"] .btn-primary:hover { background: #333333; }
+html[data-theme="light"] .search-btn { background: #000000; color: #ffffff; }
+html[data-theme="light"] .search-btn:hover { background: #333333; }
+html[data-theme="light"] .hero-stats { border-top-color: #e0e1e6; }
+html[data-theme="light"] .divider { background: #e0e1e6; }
+html[data-theme="light"] .hero-stat-val { color: #1c2024; }
+html[data-theme="light"] .section-title { font-weight: 700; }
+html[data-theme="light"] .eyebrow { background: #f0f0f3; color: #60646c; border: 1px solid #e0e1e6; }
+html[data-theme="light"] .footer { border-top-color: #e0e1e6; }
+html[data-theme="light"] .footer-bottom { border-top-color: #e0e1e6; }
+html[data-theme="light"] .auth-divider::before,
+html[data-theme="light"] .auth-divider::after { background: #e0e1e6; }
 html[data-theme="light"] .search-demo{background:var(--bg-1);border-color:var(--bg-3)}
 html[data-theme="light"] .quick-pills span{background:var(--bg-1)}
 html[data-theme="light"] .quick-pills span:hover{background:var(--bg-2)}
