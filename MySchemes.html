@@ -389,13 +389,16 @@ img.msg-av{display:block}
 .member-action-btn:hover{background:var(--violet-500);color:#fff}
 .member-action-btn.muted{color:var(--violet-400)}
 .member-action-btn.muted:hover{background:var(--violet-600);color:#fff}
-.members-footer{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
-.members-footer-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 8px;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--fg-2);font-size:11px;font-weight:500;cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),border-color var(--dur-fast)}
-.members-footer-btn:hover{background:var(--bg-2);color:var(--fg-1)}
-.members-footer-btn.danger:hover{background:rgba(239,68,68,.12);color:#f87171;border-color:rgba(239,68,68,.3)}
-html[data-theme="light"] .members-footer{border-top-color:var(--bg-3)}
-html[data-theme="light"] .members-footer-btn{border-color:var(--bg-3);color:var(--fg-2)}
-html[data-theme="light"] .members-footer-btn:hover{background:var(--bg-2)}
+.members-head-btn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--r-sm);border:none;background:var(--bg-2);color:var(--fg-3);cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
+.members-head-btn:hover{background:var(--violet-500);color:#fff}
+.members-head-btn.danger:hover{background:rgba(239,68,68,.18);color:#f87171}
+.members-search{padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;position:relative;display:flex;align-items:center}
+.members-search-icon{position:absolute;left:24px;color:var(--fg-4);pointer-events:none;display:flex}
+.members-search input{width:100%;background:var(--bg-2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-sm);padding:7px 10px 7px 30px;color:var(--fg-1);font-family:var(--font-sans);font-size:12px;outline:none}
+.members-search input::placeholder{color:var(--fg-4)}
+.members-search input:focus{border-color:rgba(188,127,252,.4)}
+html[data-theme="light"] .members-search{border-top-color:var(--bg-3)}
+html[data-theme="light"] .members-search input{border-color:var(--bg-3);background:var(--bg-0)}
 html[data-theme="light"] .detail-card{border-color:var(--bg-3);box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
 html[data-theme="light"] .detail-card-head{border-bottom-color:var(--bg-3)}
 
@@ -2269,15 +2272,21 @@ function renderDetail(d) {
     </div>
     <div class="detail-card detail-members-card">
       <div class="detail-card-head">
-        <span class="detail-card-title">Members</span>
-        <span class="detail-card-count">${d.memberCount}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="detail-card-title">Members</span>
+          <span class="detail-card-count">${d.memberCount}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <button class="members-head-btn" title="Add member">${ICON_ADD}</button>
+          <button class="members-head-btn danger" title="Remove member">${ICON_REMOVE}</button>
+        </div>
       </div>
-      <div class="detail-members-list">
+      <div class="detail-members-list" id="membersList">
         ${membersHTML}
       </div>
-      <div class="members-footer">
-        <button class="members-footer-btn">${ICON_ADD} Add member</button>
-        <button class="members-footer-btn danger">${ICON_REMOVE} Remove</button>
+      <div class="members-search">
+        <span class="members-search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" id="memberSearch" placeholder="Search members…">
       </div>
     </div>`;
 }
@@ -2289,6 +2298,16 @@ document.getElementById('chatDetail').innerHTML = renderDetail(CHATS.wedding.det
 document.getElementById('chatDetail').addEventListener('click', e => {
   const btn = e.target.closest('.member-action-btn[title="Mute"]');
   if (btn) btn.classList.toggle('muted');
+});
+
+// Member search
+document.getElementById('chatDetail').addEventListener('input', e => {
+  if (e.target.id !== 'memberSearch') return;
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('#membersList .member-row').forEach(row => {
+    const name = row.querySelector('.member-name').textContent.toLowerCase();
+    row.style.display = name.includes(q) ? '' : 'none';
+  });
 });
 
 // Chat row selection
