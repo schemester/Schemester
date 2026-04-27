@@ -48,9 +48,9 @@ button{font-family:var(--font-sans);cursor:pointer}
   display:flex;flex-direction:column;padding:18px 10px;overflow:hidden;
 }
 .sb-brand{display:flex;align-items:center;gap:9px;padding:0 8px 22px}
-.sb-brand img{height:22px}
+.sb-brand img{height:28px}
 html[data-theme="light"] .sb-brand img{filter:invert(1)}
-.sb-brand-name{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.sb-brand-name{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.02em}
 .nav-label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-4);padding:0 8px;margin:8px 0 3px}
 .nav-item{
   display:flex;align-items:center;gap:10px;
@@ -299,13 +299,17 @@ html[data-theme="light"] .upcoming-date-badge .ub-day{color:var(--violet-700)}
 
 /* Chat list */
 .chat-sidebar{display:flex;flex-direction:column;overflow:hidden;background:var(--bg-1);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.04)}
-.chat-search{padding:14px}
+.chat-search{padding:14px;position:relative;display:flex;align-items:center}
+.chat-search-icon{position:absolute;left:24px;color:var(--fg-4);pointer-events:none;display:flex}
 .chat-search input{
   width:100%;background:var(--bg-2);border:1px solid rgba(255,255,255,.06);
-  border-radius:var(--r-sm);padding:8px 12px;color:var(--fg-1);
+  border-radius:var(--r-lg);padding:9px 12px 9px 30px;color:var(--fg-1);
   font-family:var(--font-sans);font-size:13px;outline:none;
 }
 .chat-search input::placeholder{color:var(--fg-4)}
+.chat-search input:focus{border-color:rgba(188,127,252,.4)}
+.panel-view-more{display:block;width:100%;text-align:center;font-size:12px;font-weight:500;color:var(--violet-400);padding:10px 18px;border:none;background:none;cursor:pointer;transition:color var(--dur-fast)}
+.panel-view-more:hover{color:var(--violet-300)}
 .chat-tabs{display:flex;gap:4px;padding:0 14px 10px}
 .chat-tab{flex:1;padding:6px;border-radius:6px;border:none;background:none;color:var(--fg-3);font-size:12px;font-weight:600;cursor:pointer;transition:all var(--dur-base) var(--ease-out)}
 .chat-tab.active{background:var(--bg-2);color:var(--fg-1)}
@@ -1249,6 +1253,14 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
               <div class="act-time">Yesterday</div>
             </div>
           </div>
+          <div class="act-item">
+            <img class="act-av" src="https://i.pravatar.cc/52?img=12" alt="Alex B." style="object-fit:cover">
+            <div>
+              <div class="act-text"><strong>Alex B.</strong> booked flights for <span class="tag">Hen Do — Lisbon</span></div>
+              <div class="act-time">Yesterday</div>
+            </div>
+          </div>
+          <button class="panel-view-more">View all activity →</button>
         </div>
       </div><!-- /dash-aside -->
       </div><!-- /dash-layout -->
@@ -1659,7 +1671,10 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
     <div class="chat-layout">
       <!-- List -->
       <div class="chat-sidebar">
-        <div class="chat-search"><input type="text" placeholder="Search chats…"></div>
+        <div class="chat-search">
+          <span class="chat-search-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <input type="text" placeholder="Search chats…">
+        </div>
         <div class="chat-tabs">
           <button class="chat-tab active">Schemes</button>
           <button class="chat-tab">Direct</button>
@@ -2372,9 +2387,12 @@ document.querySelectorAll('.chat-tab').forEach(t => {
 
 // ── CALENDAR ──────────────────────────────────────────────
 const SCHEME_EVENTS = [
-  { year:2026, month:5,  day:2,  dayEnd:2,  name:'Hen Do — Lisbon',   meta:'Lisbon · 14 people',  pill:'pill-warning' },
-  { year:2026, month:6,  day:12, dayEnd:14, name:'The Big Wedding',   meta:'Como, Italy · 80 guests', pill:'pill-success' },
-  { year:2026, month:8,  day:5,  dayEnd:5,  name:'30th Birthday',     meta:'London · 22 people',  pill:'pill-violet' },
+  { year:2026, month:5,  day:2,  dayEnd:2,  name:'Hen Do — Lisbon',      meta:'Lisbon · 14 people',           pill:'pill-warning' },
+  { year:2026, month:6,  day:12, dayEnd:14, name:'The Big Wedding',       meta:'Como, Italy · 80 guests',      pill:'pill-success' },
+  { year:2026, month:8,  day:5,  dayEnd:5,  name:'30th Birthday',         meta:'London · 22 people',           pill:'pill-violet'  },
+  { year:2026, month:9,  day:18, dayEnd:20, name:'Barcelona Weekend',     meta:'Barcelona · 18 people',        pill:'pill-warning' },
+  { year:2026, month:12, day:29, dayEnd:31, name:"New Year's Ski Trip",   meta:'Verbier, Switzerland · 12',   pill:'pill-violet'  },
+  { year:2027, month:2,  day:13, dayEnd:15, name:'Weekend Reunion',       meta:'Edinburgh · 24 people',        pill:'pill-success' },
 ];
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const SHORT_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -2448,7 +2466,7 @@ function renderCalendar() {
   const future = SCHEME_EVENTS
     .filter(e => new Date(e.year, e.month-1, e.dayEnd) >= today)
     .sort((a,b) => new Date(a.year,a.month-1,a.day) - new Date(b.year,b.month-1,b.day))
-    .slice(0,4);
+    .slice(0,6);
   document.getElementById('upcomingList').innerHTML = future.map(e => `
     <div class="upcoming-item">
       <div class="upcoming-date-badge">
@@ -2460,7 +2478,7 @@ function renderCalendar() {
         <div class="upcoming-meta">${e.meta}</div>
         <div class="upcoming-countdown">${daysUntil(e.year,e.month,e.day)}</div>
       </div>
-    </div>`).join('');
+    </div>`).join('') + `<button class="panel-view-more">View all schemes →</button>`;
 }
 
 document.getElementById('calPrev').addEventListener('click', () => {
