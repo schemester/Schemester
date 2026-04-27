@@ -378,9 +378,24 @@ img.msg-av{display:block}
 .detail-members-list::-webkit-scrollbar{width:3px}
 .detail-members-list::-webkit-scrollbar-track{background:transparent}
 .detail-members-list::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:99px}
-.member-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.member-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;padding:3px 6px;margin-left:-6px;border-radius:var(--r-sm);transition:background var(--dur-fast) var(--ease-out)}
+.member-row:hover{background:var(--bg-2)}
 .member-name{font-size:12px}
-.member-role{font-size:11px;color:var(--fg-3);margin-left:auto}
+.member-role{font-size:11px;color:var(--fg-3);margin-left:auto;transition:opacity var(--dur-fast)}
+.member-row:hover .member-role{opacity:0;pointer-events:none}
+.member-actions{display:none;align-items:center;gap:3px;margin-left:auto;flex-shrink:0}
+.member-row:hover .member-actions{display:flex}
+.member-action-btn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--r-sm);border:none;background:var(--bg-3);color:var(--fg-3);cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
+.member-action-btn:hover{background:var(--violet-500);color:#fff}
+.member-action-btn.muted{color:var(--violet-400)}
+.member-action-btn.muted:hover{background:var(--violet-600);color:#fff}
+.members-footer{display:flex;gap:8px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+.members-footer-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 8px;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.08);background:transparent;color:var(--fg-2);font-size:11px;font-weight:500;cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out),border-color var(--dur-fast)}
+.members-footer-btn:hover{background:var(--bg-2);color:var(--fg-1)}
+.members-footer-btn.danger:hover{background:rgba(239,68,68,.12);color:#f87171;border-color:rgba(239,68,68,.3)}
+html[data-theme="light"] .members-footer{border-top-color:var(--bg-3)}
+html[data-theme="light"] .members-footer-btn{border-color:var(--bg-3);color:var(--fg-2)}
+html[data-theme="light"] .members-footer-btn:hover{background:var(--bg-2)}
 html[data-theme="light"] .detail-card{border-color:var(--bg-3);box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
 html[data-theme="light"] .detail-card-head{border-bottom-color:var(--bg-3)}
 
@@ -2221,11 +2236,21 @@ function renderMessages(msgs) {
 // Wedding messages are in the DOM — store them
 const weddingHTML = document.getElementById('chatMsgs').innerHTML;
 
+const ICON_MUTE = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+const ICON_DM = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+const ICON_ADD = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>`;
+const ICON_REMOVE = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="22" y1="11" x2="16" y2="11"/></svg>`;
+
 function renderDetail(d) {
   const membersHTML = d.members.map(m => `
     <div class="member-row">
       <img src="${m.av}" alt="${m.name}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">
-      <span class="member-name">${m.name}</span><span class="member-role">${m.role}</span>
+      <span class="member-name">${m.name}</span>
+      <span class="member-role">${m.role}</span>
+      <div class="member-actions">
+        <button class="member-action-btn" title="Mute">${ICON_MUTE}</button>
+        <button class="member-action-btn" title="Message privately">${ICON_DM}</button>
+      </div>
     </div>`).join('');
   const rowsHTML = d.rows.map(r => `
     <div class="detail-row">
@@ -2250,11 +2275,21 @@ function renderDetail(d) {
       <div class="detail-members-list">
         ${membersHTML}
       </div>
+      <div class="members-footer">
+        <button class="members-footer-btn">${ICON_ADD} Add member</button>
+        <button class="members-footer-btn danger">${ICON_REMOVE} Remove</button>
+      </div>
     </div>`;
 }
 
 // Render wedding detail on load
 document.getElementById('chatDetail').innerHTML = renderDetail(CHATS.wedding.detail);
+
+// Mute toggle
+document.getElementById('chatDetail').addEventListener('click', e => {
+  const btn = e.target.closest('.member-action-btn[title="Mute"]');
+  if (btn) btn.classList.toggle('muted');
+});
 
 // Chat row selection
 document.querySelectorAll('.chat-row').forEach(row => {
