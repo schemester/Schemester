@@ -392,7 +392,7 @@ img.msg-av{display:block}
 .members-head-btn{display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--r-sm);border:none;background:var(--bg-2);color:var(--fg-3);cursor:pointer;transition:background var(--dur-fast) var(--ease-out),color var(--dur-fast) var(--ease-out)}
 .members-head-btn:hover{background:var(--violet-500);color:#fff}
 .members-head-btn.danger:hover{background:rgba(239,68,68,.18);color:#f87171}
-.members-search{padding:10px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;position:relative;display:flex;align-items:center}
+.members-search{padding:14px 14px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0;position:relative;display:flex;align-items:center}
 .members-search-icon{position:absolute;left:24px;color:var(--fg-4);pointer-events:none;display:flex}
 .members-search input{width:100%;background:var(--bg-2);border:1px solid rgba(255,255,255,.06);border-radius:var(--r-lg);padding:9px 12px 9px 30px;color:var(--fg-1);font-family:var(--font-sans);font-size:13px;outline:none}
 .members-search input::placeholder{color:var(--fg-4)}
@@ -2277,10 +2277,7 @@ function renderDetail(d) {
     </div>
     <div class="detail-card detail-members-card">
       <div class="detail-card-head">
-        <div style="display:flex;align-items:center;gap:6px">
-          <span class="detail-card-title">Members</span>
-          <span class="detail-card-count">${d.memberCount}</span>
-        </div>
+        <span class="detail-card-title">${d.memberCount} Members</span>
         <div style="display:flex;align-items:center;gap:4px">
           <button class="members-head-btn" title="Add member">${ICON_ADD}</button>
           <button class="members-head-btn danger" title="Remove member">${ICON_REMOVE}</button>
