@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Help &amp; Support — Schemester</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+<link rel="icon" href="favicon-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-0:#0e0e0e;--bg-1:#1a1a1a;--bg-2:#262626;--bg-3:#3a3a3a;--fg-1:#ffffff;--fg-2:#b6b6b1;--fg-3:#737270;--fg-4:#515150;--violet-900:#2a1b42;--violet-500:#bc7ffc;--violet-400:#ca98ff;--violet-300:#d8b3ff;--success:#3ddc97;--font-display:'Inter',-apple-system,sans-serif;--font-sans:'Inter',-apple-system,sans-serif;--r-sm:8px;--r-md:14px;--r-lg:22px;--r-full:9999px;--dur-fast:120ms;--dur-base:160ms;--ease-out:cubic-bezier(.22,1,.36,1)}
+html[data-theme="light"]{--bg-0:#f0f0f3;--bg-1:#ffffff;--bg-2:#f5f5f8;--bg-3:#e0e1e6;--fg-1:#1c2024;--fg-2:#4a4b52;--fg-3:#8a8b96;--fg-4:#b0b1bb;--violet-900:#e6d5ff;--violet-500:#7c3aed;--violet-400:#6d28d9;--violet-300:#5b21b6}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--fg-1);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font-family:var(--font-sans);cursor:pointer}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:2px}
+.top-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--bg-1);border-bottom:1px solid var(--bg-3)}
+html[data-theme="light"] .top-nav{box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--fg-3);font-size:13px;font-weight:500;padding:6px 10px;border-radius:var(--r-sm);transition:background var(--dur-fast),color var(--dur-fast)}
+.back-btn:hover{background:var(--bg-2);color:var(--fg-1)}
+.nav-brand{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-brand img{height:22px}
+html[data-theme="light"] .nav-brand img{filter:invert(1)}
+.nav-brand span{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.page-wrap{max-width:700px;margin:0 auto;padding:32px 24px 64px}
+.page-title{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:6px}
+.page-sub{font-size:13px;color:var(--fg-3);margin-bottom:28px}
+.s-section{margin-bottom:28px}
+.s-section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-4);margin-bottom:10px;padding:0 2px}
+.s-card{background:var(--bg-1);border-radius:var(--r-lg);border:1px solid var(--bg-3);overflow:hidden}
+html[data-theme="light"] .s-card{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+
+/* Search */
+.help-search{position:relative;margin-bottom:28px}
+.help-search input{width:100%;background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-lg);padding:14px 18px 14px 46px;font-family:var(--font-sans);font-size:14px;color:var(--fg-1);outline:none}
+html[data-theme="light"] .help-search input{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.help-search input:focus{border-color:var(--violet-500)}
+.help-search input::placeholder{color:var(--fg-4)}
+.help-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--fg-4)}
+
+/* Quick links */
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.quick-card{background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-md);padding:18px 16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;cursor:pointer;transition:border-color var(--dur-fast),box-shadow var(--dur-fast)}
+html[data-theme="light"] .quick-card{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.quick-card:hover{border-color:var(--violet-500);box-shadow:0 0 0 1px var(--violet-500)}
+.quick-icon{width:36px;height:36px;border-radius:var(--r-sm);background:var(--violet-900);display:flex;align-items:center;justify-content:center;color:var(--violet-400)}
+.quick-label{font-size:13px;font-weight:600}
+.quick-desc{font-size:11.5px;color:var(--fg-3)}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--bg-3);cursor:pointer}
+.faq-item:last-child{border-bottom:none}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;font-size:13px;font-weight:500;gap:12px}
+.faq-q svg{flex-shrink:0;transition:transform var(--dur-base);color:var(--fg-4)}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{display:none;padding:0 18px 15px;font-size:13px;color:var(--fg-2);line-height:1.65}
+.faq-item.open .faq-a{display:block}
+
+/* Contact cards */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contact-card{background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-md);padding:18px;cursor:pointer;transition:border-color var(--dur-fast)}
+html[data-theme="light"] .contact-card{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.contact-card:hover{border-color:var(--violet-500)}
+.contact-icon{color:var(--violet-400);margin-bottom:10px}
+.contact-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.contact-desc{font-size:12px;color:var(--fg-3);line-height:1.5}
+.contact-cta{margin-top:12px;font-size:12px;font-weight:600;color:var(--violet-400)}
+
+/* Status */
+.status-banner{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.2);border-radius:var(--r-md);margin-bottom:28px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.status-text{font-size:13px;color:var(--fg-2)}<br>.status-text strong{color:var(--fg-1)}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </button>
+  <div class="nav-brand">
+    <img src="assets/logo-white.png" alt="Schemester">
+    <span>Schemester</span>
+  </div>
+</nav>
+
+<main class="page-wrap">
+  <div class="page-title">Help &amp; Support</div>
+  <div class="page-sub">Find answers, get in touch, or report an issue.</div>
+
+  <!-- Status -->
+  <div class="status-banner">
+    <div class="status-dot"></div>
+    <div class="status-text"><strong>All systems operational</strong> — No issues reported · Last checked 2 min ago</div>
+  </div>
+
+  <!-- Search -->
+  <div class="help-search">
+    <span class="help-search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <input type="text" placeholder="Search for help articles, guides, and more…">
+  </div>
+
+  <!-- Quick links -->
+  <div class="quick-grid">
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="quick-label">Getting Started</div>
+      <div class="quick-desc">Set up your first scheme in minutes</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+      <div class="quick-label">Payments &amp; Billing</div>
+      <div class="quick-desc">Split costs, track contributions</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="quick-label">Managing Members</div>
+      <div class="quick-desc">Invite, remove, and set roles</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+      <div class="quick-label">Schemester AI</div>
+      <div class="quick-desc">How the AI finds savings and ideas</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="quick-label">Privacy &amp; Security</div>
+      <div class="quick-desc">Control your data and account</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+      <div class="quick-label">Plans &amp; Upgrades</div>
+      <div class="quick-desc">Compare plans and billing</div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="s-section">
+    <div class="s-section-label">Frequently Asked Questions</div>
+    <div class="s-card" id="faqCard"></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="s-section">
+    <div class="s-section-label">Get in Touch</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="contact-title">Live Chat</div>
+        <div class="contact-desc">Chat with our support team in real time. Available Mon–Fri, 9am–6pm GMT.</div>
+        <div class="contact-cta">Start chat →</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="contact-title">Email Support</div>
+        <div class="contact-desc">Send us a message and we'll respond within 24 hours on business days.</div>
+        <div class="contact-cta">Send email →</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="contact-title">Community Forum</div>
+        <div class="contact-desc">Ask questions, share tips, and connect with other Schemester users.</div>
+        <div class="contact-cta">Visit forum →</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
+        <div class="contact-title">Video Tutorials</div>
+        <div class="contact-desc">Step-by-step guides on YouTube for all major features.</div>
+        <div class="contact-cta">Watch now →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bug report -->
+  <div class="s-section">
+    <div class="s-section-label">Report a Problem</div>
+    <div class="s-card">
+      <div style="padding:18px">
+        <p style="font-size:13px;color:var(--fg-2);margin-bottom:14px">Found a bug or something not working as expected? Let us know and we'll fix it.</p>
+        <textarea style="width:100%;background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);color:var(--fg-1);font-family:var(--font-sans);font-size:13px;padding:10px 12px;outline:none;resize:vertical;min-height:90px;line-height:1.5;margin-bottom:12px" placeholder="Describe the issue — what happened and what you expected to happen…"></textarea>
+        <button onclick="alert('Report sent! Thank you.')" style="background:var(--violet-500);border:none;border-radius:var(--r-sm);padding:9px 20px;font-size:13px;font-weight:600;color:#fff;cursor:pointer">Submit report</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.documentElement.dataset.theme = localStorage.getItem('schemeTheme') || 'light';
+const faqs = [
+  ['How do I create a new scheme?','Tap the + New Scheme button on the My Schemes page. Give it a name, set a date and location, add a budget, then invite your crew. Schemester AI will start finding savings automatically.'],
+  ['How does Schemester AI find savings?','Our AI monitors real-time pricing across hotels, flights, restaurants, and experiences. When it spots a deal that fits your budget and destination, it alerts you instantly within the scheme chat.'],
+  ['Can I split costs unevenly between members?','Yes. In any scheme, go to Budget → Contributions and set custom amounts per person. You can split equally, by income, or enter any custom amount for each member.'],
+  ['How do I pay other members?','Schemester supports payment via card, Apple Pay, Google Pay, and bank transfer. Go to Budget → Pay in any scheme. Payments are encrypted and processed securely.'],
+  ['What happens if someone doesn\'t pay?','Schemester sends automated reminders at intervals you set. You can also nudge them manually from the members panel. Organisers can see a full payment status view.'],
+  ['Can I use Schemester for private events?','All schemes are private by default. Only people you invite can see scheme details. You can also set a scheme to "secret" so it won\'t appear in search results.'],
+  ['How do I cancel or leave a scheme?','Open the scheme, tap Settings, then Leave Scheme. If you\'re the organiser, you can transfer ownership first or choose to archive the scheme for all members.'],
+  ['Is my payment information secure?','Yes. We use bank-grade 256-bit encryption and never store full card details on our servers. All payments are processed through our PCI-DSS compliant payment partner.'],
+];
+document.getElementById('faqCard').innerHTML = faqs.map(([q,a])=>`
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">${q}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    <div class="faq-a">${a}</div>
+  </div>`).join('');
+</script>
+</body>
+</html>

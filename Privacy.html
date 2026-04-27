@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — Schemester</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+<link rel="icon" href="favicon-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-0:#0e0e0e;--bg-1:#1a1a1a;--bg-2:#262626;--bg-3:#3a3a3a;--fg-1:#ffffff;--fg-2:#b6b6b1;--fg-3:#737270;--fg-4:#515150;--violet-900:#2a1b42;--violet-500:#bc7ffc;--violet-400:#ca98ff;--font-display:'Inter',-apple-system,sans-serif;--font-sans:'Inter',-apple-system,sans-serif;--r-sm:8px;--r-md:14px;--r-lg:22px;--r-full:9999px;--dur-fast:120ms}
+html[data-theme="light"]{--bg-0:#f0f0f3;--bg-1:#ffffff;--bg-2:#f5f5f8;--bg-3:#e0e1e6;--fg-1:#1c2024;--fg-2:#4a4b52;--fg-3:#8a8b96;--fg-4:#b0b1bb;--violet-900:#e6d5ff;--violet-500:#7c3aed;--violet-400:#6d28d9}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--fg-1);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font-family:var(--font-sans);cursor:pointer}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:2px}
+.top-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--bg-1);border-bottom:1px solid var(--bg-3)}
+html[data-theme="light"] .top-nav{box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--fg-3);font-size:13px;font-weight:500;padding:6px 10px;border-radius:var(--r-sm);transition:background var(--dur-fast),color var(--dur-fast)}
+.back-btn:hover{background:var(--bg-2);color:var(--fg-1)}
+.nav-brand{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-brand img{height:22px}
+html[data-theme="light"] .nav-brand img{filter:invert(1)}
+.nav-brand span{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.page-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+
+/* Prose */
+.doc-header{margin-bottom:40px}
+.doc-title{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
+.doc-meta{font-size:13px;color:var(--fg-3)}
+.doc-toc{background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-md);padding:18px 20px;margin-bottom:36px}
+html[data-theme="light"] .doc-toc{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.doc-toc-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-4);margin-bottom:10px}
+.doc-toc ol{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.doc-toc a{font-size:13px;color:var(--violet-400);text-decoration:none}
+.doc-toc a:hover{text-decoration:underline}
+.doc-section{margin-bottom:36px}
+.doc-section h2{font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bg-3)}
+.doc-section p{font-size:13.5px;color:var(--fg-2);line-height:1.75;margin-bottom:12px}
+.doc-section ul,.doc-section ol{padding-left:20px;margin-bottom:12px}
+.doc-section li{font-size:13.5px;color:var(--fg-2);line-height:1.75;margin-bottom:4px}
+.doc-section strong{color:var(--fg-1);font-weight:600}
+.doc-section a{color:var(--violet-400)}
+.highlight-box{background:var(--violet-900);border-radius:var(--r-md);padding:14px 16px;margin-bottom:14px;opacity:.9}
+.highlight-box p{color:var(--fg-1);margin-bottom:0}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </button>
+  <div class="nav-brand">
+    <img src="assets/logo-white.png" alt="Schemester">
+    <span>Schemester</span>
+  </div>
+</nav>
+
+<main class="page-wrap">
+  <div class="doc-header">
+    <div class="doc-title">Privacy Policy</div>
+    <div class="doc-meta">Schemester Ltd · Last updated: 1 April 2026 · Effective: 1 April 2026</div>
+  </div>
+
+  <div class="doc-toc">
+    <div class="doc-toc-title">Contents</div>
+    <ol>
+      <li><a href="#s1">Who we are</a></li>
+      <li><a href="#s2">What data we collect</a></li>
+      <li><a href="#s3">How we use your data</a></li>
+      <li><a href="#s4">Legal basis for processing</a></li>
+      <li><a href="#s5">Sharing your data</a></li>
+      <li><a href="#s6">Cookies and tracking</a></li>
+      <li><a href="#s7">Data retention</a></li>
+      <li><a href="#s8">Your rights</a></li>
+      <li><a href="#s9">International transfers</a></li>
+      <li><a href="#s10">Children's privacy</a></li>
+      <li><a href="#s11">Changes to this policy</a></li>
+      <li><a href="#s12">Contact us</a></li>
+    </ol>
+  </div>
+
+  <div class="doc-section" id="s1">
+    <h2>1. Who We Are</h2>
+    <p>Schemester Ltd ("Schemester", "we", "us", "our") is a company registered in England and Wales (Company No. 14872651) with its registered office at 1 Shoreditch High Street, London, E1 6JE, United Kingdom.</p>
+    <p>We operate the Schemester platform — a group event and scheme planning service — available via our website at <strong>schemester.com</strong> and our mobile applications. We are the data controller in respect of the personal data we collect from you.</p>
+  </div>
+
+  <div class="doc-section" id="s2">
+    <h2>2. What Data We Collect</h2>
+    <p>We collect data you provide directly, data generated through your use of our service, and data from third parties.</p>
+    <strong style="display:block;margin-bottom:6px">Account &amp; Profile Data</strong>
+    <ul>
+      <li>Name, email address, and password (hashed)</li>
+      <li>Phone number (optional, for SMS notifications)</li>
+      <li>Profile photo and bio</li>
+      <li>Social accounts you choose to connect</li>
+    </ul>
+    <strong style="display:block;margin:12px 0 6px">Scheme &amp; Activity Data</strong>
+    <ul>
+      <li>Schemes you create, join, or are invited to</li>
+      <li>Messages, polls, votes, and files shared within schemes</li>
+      <li>Budget contributions and payment records</li>
+      <li>Calendar events synced from schemes</li>
+    </ul>
+    <strong style="display:block;margin:12px 0 6px">Device &amp; Usage Data</strong>
+    <ul>
+      <li>IP address, browser type, and operating system</li>
+      <li>Pages visited, features used, and time spent</li>
+      <li>Push notification tokens</li>
+      <li>Crash reports and performance diagnostics</li>
+    </ul>
+    <strong style="display:block;margin:12px 0 6px">Payment Data</strong>
+    <p>Payment card details are processed directly by our PCI-DSS certified payment provider (Stripe). We store only the last 4 digits of your card and expiry date for display purposes. We never store full card numbers.</p>
+  </div>
+
+  <div class="doc-section" id="s3">
+    <h2>3. How We Use Your Data</h2>
+    <ul>
+      <li><strong>Providing the service</strong> — creating and managing your account, processing payments, enabling scheme collaboration</li>
+      <li><strong>AI suggestions</strong> — using scheme details to surface relevant deals, venues, and savings (anonymised where possible)</li>
+      <li><strong>Communications</strong> — sending transactional emails, payment confirmations, and scheme notifications</li>
+      <li><strong>Safety &amp; security</strong> — detecting fraud, abuse, and unauthorised access</li>
+      <li><strong>Product improvement</strong> — analysing usage patterns to improve features (using aggregated, anonymised data)</li>
+      <li><strong>Legal obligations</strong> — complying with financial regulations, tax law, and court orders</li>
+    </ul>
+    <div class="highlight-box">
+      <p>We do <strong>not</strong> sell your personal data to advertisers or third-party brokers. Ever.</p>
+    </div>
+  </div>
+
+  <div class="doc-section" id="s4">
+    <h2>4. Legal Basis for Processing</h2>
+    <p>Under UK GDPR and the Data Protection Act 2018, we process your personal data on the following legal bases:</p>
+    <ul>
+      <li><strong>Contract performance</strong> — processing necessary to provide the Schemester service you signed up for</li>
+      <li><strong>Legitimate interests</strong> — fraud prevention, product analytics, and security monitoring</li>
+      <li><strong>Legal obligation</strong> — retaining financial records as required by HMRC and applicable law</li>
+      <li><strong>Consent</strong> — marketing emails and optional cookies (you can withdraw consent at any time)</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="s5">
+    <h2>5. Sharing Your Data</h2>
+    <p>We share your data only in the following circumstances:</p>
+    <ul>
+      <li><strong>With other scheme members</strong> — your name, profile photo, and activity within a shared scheme are visible to other members of that scheme</li>
+      <li><strong>With service providers</strong> — we use carefully vetted sub-processors (e.g. Stripe for payments, AWS for hosting, Intercom for support) who are contractually bound to protect your data</li>
+      <li><strong>Legal requirements</strong> — if required by law, court order, or to protect the rights and safety of Schemester and our users</li>
+      <li><strong>Business transfers</strong> — in the event of a merger or acquisition, your data may be transferred to the successor entity subject to the same privacy protections</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="s6">
+    <h2>6. Cookies and Tracking</h2>
+    <p>We use cookies and similar technologies to keep you logged in, remember your preferences, and understand how the service is used. You can manage your cookie preferences at any time via Settings → Privacy → Cookie preferences.</p>
+    <ul>
+      <li><strong>Essential cookies</strong> — required for authentication and security. Cannot be disabled.</li>
+      <li><strong>Functional cookies</strong> — remember your theme, language, and layout preferences</li>
+      <li><strong>Analytics cookies</strong> — anonymised usage data to improve the product (opt-out available)</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="s7">
+    <h2>7. Data Retention</h2>
+    <p>We retain your personal data for as long as your account is active or as needed to provide the service. If you delete your account:</p>
+    <ul>
+      <li>Your profile and scheme data is deleted within <strong>30 days</strong></li>
+      <li>Messages in shared schemes are anonymised immediately</li>
+      <li>Financial records are retained for <strong>7 years</strong> as required by UK tax law</li>
+      <li>Backup copies are purged within <strong>90 days</strong></li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="s8">
+    <h2>8. Your Rights</h2>
+    <p>Under UK GDPR you have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong>Access</strong> — request a copy of all data we hold about you</li>
+      <li><strong>Rectification</strong> — correct inaccurate or incomplete data</li>
+      <li><strong>Erasure</strong> — request deletion of your data ("right to be forgotten")</li>
+      <li><strong>Restriction</strong> — limit how we use your data in certain circumstances</li>
+      <li><strong>Portability</strong> — receive your data in a structured, machine-readable format</li>
+      <li><strong>Objection</strong> — object to processing based on legitimate interests or for direct marketing</li>
+      <li><strong>Automated decisions</strong> — request human review of any automated decision that significantly affects you</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:privacy@schemester.com">privacy@schemester.com</a> or use the Data Export / Delete Account tools in Settings. We will respond within 30 days. You also have the right to lodge a complaint with the Information Commissioner's Office (ICO) at <strong>ico.org.uk</strong>.</p>
+  </div>
+
+  <div class="doc-section" id="s9">
+    <h2>9. International Transfers</h2>
+    <p>Your data is primarily stored on servers in the European Economic Area (EEA). Some of our sub-processors may process data outside the EEA. Where this occurs, we ensure appropriate safeguards are in place — such as Standard Contractual Clauses approved by the European Commission — to ensure your data receives equivalent protection.</p>
+  </div>
+
+  <div class="doc-section" id="s10">
+    <h2>10. Children's Privacy</h2>
+    <p>Schemester is not directed at children under the age of 16. We do not knowingly collect personal data from anyone under 16. If you believe a child has provided us with personal data, please contact us immediately and we will delete it.</p>
+  </div>
+
+  <div class="doc-section" id="s11">
+    <h2>11. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make material changes, we will notify you by email and display a banner within the app at least 14 days before the changes take effect. The "Last updated" date at the top of this page will always reflect the most recent revision. Continued use of Schemester after the effective date constitutes acceptance of the updated policy.</p>
+  </div>
+
+  <div class="doc-section" id="s12">
+    <h2>12. Contact Us</h2>
+    <p>For any privacy-related queries, requests, or complaints:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:privacy@schemester.com">privacy@schemester.com</a></li>
+      <li><strong>Post:</strong> Data Protection Officer, Schemester Ltd, 1 Shoreditch High Street, London, E1 6JE</li>
+      <li><strong>Response time:</strong> We aim to respond to all requests within 5 working days</li>
+    </ul>
+  </div>
+</main>
+
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+</body>
+</html>

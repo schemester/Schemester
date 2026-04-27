@@ -84,7 +84,7 @@ html[data-theme="light"] .sb-brand img{filter:invert(1)}
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;
 }
-.topbar h1{font-family:var(--font-display);font-size:20px;font-weight:500;letter-spacing:-.02em}
+.topbar h1{font-family:var(--font-display);font-size:15px;font-weight:500;letter-spacing:-.02em}
 .topbar p{font-size:12px;color:var(--fg-3);margin-top:1px}
 .topbar-right{display:flex;gap:8px;align-items:center}
 .icon-btn{
@@ -342,7 +342,8 @@ html[data-theme="light"] .chat-search input{border-color:var(--bg-3);background:
 .msg-group{display:flex;gap:9px}
 .msg-group.mine{flex-direction:row-reverse}
 .msg-av{width:30px;height:30px;border-radius:var(--r-full);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;align-self:flex-end;object-fit:cover}
-.msg-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400);object-fit:contain;padding:5px}
+.msg-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400)}
+.msg-av.ai img{width:100%;height:100%;object-fit:contain;padding:5px}
 img.msg-av{display:block}
 .msg-content{display:flex;flex-direction:column;gap:3px;max-width:62%}
 .msg-sender{font-size:11px;color:var(--fg-3);font-weight:600;margin-bottom:1px}
@@ -705,7 +706,7 @@ html[data-theme="light"] .chat-sidebar{border-color:var(--bg-3);box-shadow:rgba(
 html[data-theme="light"] .chat-main{border-color:var(--bg-3);box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
 html[data-theme="light"] .donut-wrap svg text[fill="white"]{fill:var(--fg-1)}
 html[data-theme="light"] .act-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
-html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4);filter:invert(1)}
+html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
 html[data-theme="light"] .msg-bubble.ai{background:var(--violet-950);border-color:rgba(188,127,252,.3)}
 html[data-theme="light"] .sb-user{background:var(--bg-2);border-color:var(--bg-3)}
 html[data-theme="light"] .icon-btn{background:var(--bg-2)}
@@ -884,15 +885,11 @@ html[data-theme="light"] .ai-logo-av{filter:invert(1)}
               </div>
             </div>
             <div class="pm-section">
-              <div class="pm-item">
+              <div class="pm-item" onclick="location.href='Profile.html'" style="cursor:pointer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
                 My Profile
               </div>
-              <div class="pm-item">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                Schemester Profile
-              </div>
-              <div class="pm-item">
+              <div class="pm-item" onclick="location.href='Settings.html'" style="cursor:pointer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                 Settings
               </div>
@@ -907,15 +904,15 @@ html[data-theme="light"] .ai-logo-av{filter:invert(1)}
               </div>
             </div>
             <div class="pm-section">
-              <div class="pm-item">
+              <div class="pm-item" onclick="location.href='Help.html'" style="cursor:pointer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 Help &amp; Support
               </div>
-              <div class="pm-item">
+              <div class="pm-item" onclick="location.href='Privacy.html'" style="cursor:pointer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 Privacy Policy
               </div>
-              <div class="pm-item">
+              <div class="pm-item" onclick="location.href='Terms.html'" style="cursor:pointer">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 Terms of Service
               </div>
@@ -1767,7 +1764,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(1)}
             </div>
           </div>
           <div class="msg-group">
-            <img class="msg-av ai" src="assets/logo-white.png" alt="Schemester AI">
+            <div class="msg-av ai"><img class="ai-logo-av" src="assets/logo-white.png" alt="Schemester AI"></div>
             <div class="msg-content">
               <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
               <div class="msg-bubble ai">Catering and venue setup both need Friday access — I've spotted a conflict. Want me to reshuffle the setup window to Saturday morning? It would free up all of Friday for arrivals.</div>
@@ -1783,7 +1780,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(1)}
             </div>
           </div>
           <div class="msg-group">
-            <img class="msg-av ai" src="assets/logo-white.png" alt="Schemester AI">
+            <div class="msg-av ai"><img class="ai-logo-av" src="assets/logo-white.png" alt="Schemester AI"></div>
             <div class="msg-content">
               <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
               <div class="msg-bubble ai">Done ✓ Setup rescheduled to Saturday 8–11 AM. I've notified the catering team and updated the Scheme timeline. I also found a £340 saving on the catering package — want me to book it?</div>
@@ -2238,7 +2235,7 @@ function renderMessages(msgs) {
     if (m.date) return `<div class="date-sep">${m.date}</div>`;
     if (m.ai) return `
       <div class="msg-group">
-        <img class="msg-av ai" src="${logo}" alt="Schemester AI">
+        <div class="msg-av ai"><img class="ai-logo-av" src="${logo}" alt="Schemester AI"></div>
         <div class="msg-content">
           <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
           <div class="msg-bubble ai">${m.text}</div>

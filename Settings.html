@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings — Schemester</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+<link rel="icon" href="favicon-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0e0e0e;--bg-1:#1a1a1a;--bg-2:#262626;--bg-3:#3a3a3a;--bg-4:#515150;
+  --fg-1:#ffffff;--fg-2:#b6b6b1;--fg-3:#737270;--fg-4:#515150;
+  --violet-950:#15111b;--violet-900:#2a1b42;--violet-700:#6c4c80;
+  --violet-500:#bc7ffc;--violet-400:#ca98ff;--violet-300:#d8b3ff;
+  --success:#3ddc97;--danger:#ff5c7a;--warning:#ffb347;
+  --font-display:'Inter',-apple-system,sans-serif;
+  --font-sans:'Inter',-apple-system,sans-serif;
+  --r-sm:8px;--r-md:14px;--r-lg:22px;--r-full:9999px;
+  --dur-fast:120ms;--dur-base:160ms;--ease-out:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="light"]{
+  --bg-0:#f0f0f3;--bg-1:#ffffff;--bg-2:#f5f5f8;--bg-3:#e0e1e6;--bg-4:#c8c9d0;
+  --fg-1:#1c2024;--fg-2:#4a4b52;--fg-3:#8a8b96;--fg-4:#b0b1bb;
+  --violet-950:#f3eeff;--violet-900:#e6d5ff;--violet-700:#9b59f0;
+  --violet-500:#7c3aed;--violet-400:#6d28d9;--violet-300:#5b21b6;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--fg-1);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font-sans);cursor:pointer}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:2px}
+
+/* NAV */
+.top-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--bg-1);border-bottom:1px solid var(--bg-3)}
+html[data-theme="light"] .top-nav{box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--fg-3);font-size:13px;font-weight:500;padding:6px 10px;border-radius:var(--r-sm);transition:background var(--dur-fast),color var(--dur-fast)}
+.back-btn:hover{background:var(--bg-2);color:var(--fg-1)}
+.nav-brand{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-brand img{height:22px}
+html[data-theme="light"] .nav-brand img{filter:invert(1)}
+.nav-brand span{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+
+/* LAYOUT */
+.page-wrap{max-width:700px;margin:0 auto;padding:32px 24px 64px}
+.page-title{font-family:var(--font-display);font-size:24px;font-weight:700;letter-spacing:-.03em;margin-bottom:6px}
+.page-sub{font-size:13px;color:var(--fg-3);margin-bottom:32px}
+
+/* SECTION */
+.s-section{margin-bottom:28px}
+.s-section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg-4);margin-bottom:10px;padding:0 2px}
+.s-card{background:var(--bg-1);border-radius:var(--r-lg);border:1px solid var(--bg-3);overflow:hidden}
+html[data-theme="light"] .s-card{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+
+/* ROW */
+.s-row{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--bg-3)}
+.s-row:last-child{border-bottom:none}
+.s-row-icon{width:32px;height:32px;border-radius:var(--r-sm);background:var(--bg-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--fg-3)}
+.s-row-body{flex:1;min-width:0}
+.s-row-label{font-size:13px;font-weight:500;color:var(--fg-1)}
+.s-row-desc{font-size:11.5px;color:var(--fg-3);margin-top:1px}
+.s-row-right{margin-left:auto;flex-shrink:0;display:flex;align-items:center;gap:8px}
+.s-row-value{font-size:12.5px;color:var(--fg-3)}
+.s-chevron{color:var(--fg-4)}
+
+/* TOGGLE */
+.s-toggle{width:40px;height:22px;border-radius:50px;background:var(--bg-3);position:relative;cursor:pointer;transition:background var(--dur-base) var(--ease-out);border:none;flex-shrink:0}
+.s-toggle.on{background:var(--violet-500)}
+.s-toggle::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform var(--dur-base) var(--ease-out)}
+.s-toggle.on::after{transform:translateX(18px)}
+
+/* SELECT */
+.s-select{background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);color:var(--fg-1);font-family:var(--font-sans);font-size:12.5px;padding:5px 10px;outline:none;cursor:pointer}
+
+/* INPUT */
+.s-input{background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);color:var(--fg-1);font-family:var(--font-sans);font-size:12.5px;padding:6px 10px;outline:none;width:180px}
+.s-input:focus{border-color:var(--violet-500)}
+
+/* DANGER */
+.s-row.danger .s-row-label{color:var(--danger)}
+.s-row.danger .s-row-icon{background:rgba(255,92,122,.1);color:var(--danger)}
+
+/* AVATAR */
+.s-avatar{width:64px;height:64px;border-radius:50%;background:var(--violet-900);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--violet-300);flex-shrink:0;position:relative;cursor:pointer}
+.s-avatar-edit{position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--violet-500);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.s-avatar-row{display:flex;align-items:center;gap:16px;padding:20px 18px;border-bottom:1px solid var(--bg-3)}
+.s-avatar-info{flex:1}
+.s-avatar-name{font-size:15px;font-weight:600}
+.s-avatar-handle{font-size:12px;color:var(--fg-3);margin-top:2px}
+
+/* COLOUR SWATCHES */
+.s-swatches{display:flex;gap:8px}
+.s-swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;transition:transform var(--dur-fast)}
+.s-swatch:hover{transform:scale(1.15)}
+.s-swatch.active{box-shadow:0 0 0 2px var(--bg-1),0 0 0 4px currentColor}
+
+/* BADGE */
+.s-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--r-full);background:var(--violet-900);color:var(--violet-300);letter-spacing:.03em}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </button>
+  <div class="nav-brand">
+    <img src="assets/logo-white.png" alt="Schemester">
+    <span>Schemester</span>
+  </div>
+</nav>
+
+<main class="page-wrap">
+  <div class="page-title">Settings</div>
+  <div class="page-sub">Manage your account, preferences, and privacy.</div>
+
+  <!-- Account -->
+  <div class="s-section">
+    <div class="s-section-label">Account</div>
+    <div class="s-card">
+      <div class="s-avatar-row">
+        <div class="s-avatar">TW<span class="s-avatar-edit"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span></div>
+        <div class="s-avatar-info">
+          <div class="s-avatar-name">Travis Wilcox</div>
+          <div class="s-avatar-handle">@traviswilcox · Crew Plan</div>
+        </div>
+        <button style="background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);padding:7px 14px;font-size:12px;font-weight:500;color:var(--fg-2);cursor:pointer">Change photo</button>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Display name</div></div>
+        <div class="s-row-right"><input class="s-input" value="Travis Wilcox"></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Email address</div><div class="s-row-desc">schemester@outlook.com</div></div>
+        <div class="s-row-right"><span class="s-badge">Verified</span></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l.94-.94a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Phone number</div><div class="s-row-desc">+44 7700 900000</div></div>
+        <div class="s-row-right"><div class="s-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Password</div><div class="s-row-desc">Last changed 3 months ago</div></div>
+        <div class="s-row-right"><div class="s-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Subscription plan</div><div class="s-row-desc">Crew Plan · Renews 12 Jun 2026</div></div>
+        <div class="s-row-right"><button style="background:var(--violet-500);border:none;border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:600;color:#fff;cursor:pointer">Manage</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="s-section">
+    <div class="s-section-label">Notifications</div>
+    <div class="s-card" id="notifCard"></div>
+  </div>
+
+  <!-- Appearance -->
+  <div class="s-section">
+    <div class="s-section-label">Appearance</div>
+    <div class="s-card">
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Theme</div><div class="s-row-desc">Light or dark display</div></div>
+        <div class="s-row-right">
+          <button class="s-toggle" id="themeToggle"></button>
+          <span class="s-row-value" id="themeLabel">Light</span>
+        </div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Accent colour</div><div class="s-row-desc">Highlight colour throughout the app</div></div>
+        <div class="s-row-right">
+          <div class="s-swatches">
+            <div class="s-swatch active" style="background:#bc7ffc;color:#bc7ffc" title="Violet"></div>
+            <div class="s-swatch" style="background:#38bdf8;color:#38bdf8" title="Sky"></div>
+            <div class="s-swatch" style="background:#3ddc97;color:#3ddc97" title="Emerald"></div>
+            <div class="s-swatch" style="background:#fb923c;color:#fb923c" title="Amber"></div>
+            <div class="s-swatch" style="background:#f472b6;color:#f472b6" title="Pink"></div>
+          </div>
+        </div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Font size</div><div class="s-row-desc">Default text size across the app</div></div>
+        <div class="s-row-right"><select class="s-select"><option>Small</option><option selected>Medium</option><option>Large</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Compact mode</div><div class="s-row-desc">Reduce padding for more content on screen</div></div>
+        <div class="s-row-right"><button class="s-toggle" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Show scheme thumbnails</div><div class="s-row-desc">Display cover images on scheme cards</div></div>
+        <div class="s-row-right"><button class="s-toggle on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy & Security -->
+  <div class="s-section">
+    <div class="s-section-label">Privacy &amp; Security</div>
+    <div class="s-card" id="privacyCard"></div>
+  </div>
+
+  <!-- Scheme Preferences -->
+  <div class="s-section">
+    <div class="s-section-label">Scheme Preferences</div>
+    <div class="s-card">
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Default currency</div><div class="s-row-desc">Used for new scheme budgets</div></div>
+        <div class="s-row-right"><select class="s-select"><option selected>GBP (£)</option><option>USD ($)</option><option>EUR (€)</option><option>AED (د.إ)</option><option>AUD ($)</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Default scheme privacy</div><div class="s-row-desc">Who can see new schemes by default</div></div>
+        <div class="s-row-right"><select class="s-select"><option>Private</option><option selected>Invite only</option><option>Crew visible</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">AI suggestions</div><div class="s-row-desc">Let Schemester AI suggest savings and ideas</div></div>
+        <div class="s-row-right"><button class="s-toggle on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Budget warning threshold</div><div class="s-row-desc">Alert when spending reaches this % of budget</div></div>
+        <div class="s-row-right"><select class="s-select"><option>70%</option><option selected>80%</option><option>90%</option><option>95%</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Auto-add scheme dates to calendar</div><div class="s-row-desc">Sync scheme events to your device calendar</div></div>
+        <div class="s-row-right"><button class="s-toggle on" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Auto-accept from connections</div><div class="s-row-desc">Automatically join schemes from people you know</div></div>
+        <div class="s-row-right"><button class="s-toggle" onclick="this.classList.toggle('on')"></button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language & Region -->
+  <div class="s-section">
+    <div class="s-section-label">Language &amp; Region</div>
+    <div class="s-card">
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Language</div></div>
+        <div class="s-row-right"><select class="s-select"><option selected>English (UK)</option><option>English (US)</option><option>French</option><option>Spanish</option><option>German</option><option>Arabic</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Time zone</div></div>
+        <div class="s-row-right"><select class="s-select"><option selected>GMT+0 London</option><option>GMT+1 Paris</option><option>GMT+4 Dubai</option><option>GMT-5 New York</option></select></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Date format</div></div>
+        <div class="s-row-right"><select class="s-select"><option selected>DD/MM/YYYY</option><option>MM/DD/YYYY</option><option>YYYY-MM-DD</option></select></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connected Accounts -->
+  <div class="s-section">
+    <div class="s-section-label">Connected Accounts</div>
+    <div class="s-card">
+      <div class="s-row">
+        <div class="s-row-icon" style="background:#fff"><svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Google</div><div class="s-row-desc">Connected as travis@gmail.com</div></div>
+        <div class="s-row-right"><button style="background:none;border:1px solid var(--bg-3);border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:500;color:var(--danger);cursor:pointer">Disconnect</button></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon" style="background:#000"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Apple</div><div class="s-row-desc">Not connected</div></div>
+        <div class="s-row-right"><button style="background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:500;color:var(--fg-2);cursor:pointer">Connect</button></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon" style="background:#1db954"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Spotify</div><div class="s-row-desc">Not connected</div></div>
+        <div class="s-row-right"><button style="background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);padding:5px 12px;font-size:12px;font-weight:500;color:var(--fg-2);cursor:pointer">Connect</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data & Storage -->
+  <div class="s-section">
+    <div class="s-section-label">Data &amp; Storage</div>
+    <div class="s-card">
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Storage used</div><div class="s-row-desc">Photos, files, and cached data</div></div>
+        <div class="s-row-right"><span class="s-row-value">128 MB of 2 GB</span></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Export my data</div><div class="s-row-desc">Download a copy of all your scheme data</div></div>
+        <div class="s-row-right"><div class="s-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+      <div class="s-row">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Clear cache</div><div class="s-row-desc">Frees up temporary files</div></div>
+        <div class="s-row-right"><button style="background:var(--bg-2);border:1px solid var(--bg-3);border-radius:var(--r-sm);padding:5px 12px;font-size:12px;color:var(--fg-2);cursor:pointer">Clear</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Danger Zone -->
+  <div class="s-section">
+    <div class="s-section-label">Danger Zone</div>
+    <div class="s-card">
+      <div class="s-row danger">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Deactivate account</div><div class="s-row-desc" style="color:var(--fg-3)">Temporarily hide your profile and schemes</div></div>
+        <div class="s-row-right"><div class="s-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+      <div class="s-row danger">
+        <div class="s-row-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></div>
+        <div class="s-row-body"><div class="s-row-label">Delete account</div><div class="s-row-desc" style="color:var(--fg-3)">Permanently remove your account and all data</div></div>
+        <div class="s-row-right"><div class="s-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.documentElement.dataset.theme = localStorage.getItem('schemeTheme') || 'light';
+
+// Build notification rows
+const notifs = [
+  ['Push notifications','Alerts on your device','on'],
+  ['Email notifications','Updates sent to your email','on'],
+  ['SMS alerts','Text messages for payment reminders','off'],
+  ['Scheme invitations','When someone adds you to a scheme','on'],
+  ['Payment reminders','Upcoming and overdue contributions','on'],
+  ['Price drop alerts','When AI finds a saving opportunity','on'],
+  ['New member activity','When members join or leave schemes','off'],
+  ['Weekly digest','Summary of your schemes every Sunday','on'],
+];
+document.getElementById('notifCard').innerHTML = notifs.map(([label,desc,state])=>`
+  <div class="s-row">
+    <div class="s-row-body"><div class="s-row-label">${label}</div><div class="s-row-desc">${desc}</div></div>
+    <div class="s-row-right"><button class="s-toggle ${state==='on'?'on':''}" onclick="this.classList.toggle('on')"></button></div>
+  </div>`).join('');
+
+// Build privacy rows
+const privacy = [
+  ['Profile visibility','Who can find and view your profile','Everyone'],
+  ['Activity status','Show when you were last active','on'],
+  ['Read receipts','Let others see when you read messages','on'],
+  ['Two-factor authentication','Extra security on login','off'],
+  ['Location sharing','Share location within active schemes','on'],
+  ['Data sharing with partners','Improve personalised suggestions','off'],
+];
+document.getElementById('privacyCard').innerHTML = privacy.map(([label,desc,state])=>{
+  if(state==='on'||state==='off') return `
+    <div class="s-row">
+      <div class="s-row-body"><div class="s-row-label">${label}</div><div class="s-row-desc">${desc}</div></div>
+      <div class="s-row-right"><button class="s-toggle ${state==='on'?'on':''}" onclick="this.classList.toggle('on')"></button></div>
+    </div>`;
+  return `
+    <div class="s-row">
+      <div class="s-row-body"><div class="s-row-label">${label}</div><div class="s-row-desc">${desc}</div></div>
+      <div class="s-row-right"><select class="s-select"><option>Everyone</option><option>Connections</option><option>Only me</option></select></div>
+    </div>`;
+}).join('');
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const themeLabel = document.getElementById('themeLabel');
+function applyTheme(t){ document.documentElement.dataset.theme=t; localStorage.setItem('schemeTheme',t); themeLabel.textContent=t==='light'?'Light':'Dark'; if(t==='light')themeToggle.classList.add('on'); else themeToggle.classList.remove('on'); }
+applyTheme(localStorage.getItem('schemeTheme')||'light');
+themeToggle.addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='light'?'dark':'light'));
+</script>
+</body>
+</html>

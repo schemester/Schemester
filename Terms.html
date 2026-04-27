@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terms of Service — Schemester</title>
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+<link rel="icon" href="favicon-dark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-0:#0e0e0e;--bg-1:#1a1a1a;--bg-2:#262626;--bg-3:#3a3a3a;--fg-1:#ffffff;--fg-2:#b6b6b1;--fg-3:#737270;--fg-4:#515150;--violet-900:#2a1b42;--violet-500:#bc7ffc;--violet-400:#ca98ff;--font-display:'Inter',-apple-system,sans-serif;--font-sans:'Inter',-apple-system,sans-serif;--r-sm:8px;--r-md:14px;--r-lg:22px;--dur-fast:120ms}
+html[data-theme="light"]{--bg-0:#f0f0f3;--bg-1:#ffffff;--bg-2:#f5f5f8;--bg-3:#e0e1e6;--fg-1:#1c2024;--fg-2:#4a4b52;--fg-3:#8a8b96;--fg-4:#b0b1bb;--violet-900:#e6d5ff;--violet-500:#7c3aed;--violet-400:#6d28d9}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:var(--bg-0);color:var(--fg-1);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font-family:var(--font-sans);cursor:pointer}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--bg-3);border-radius:2px}
+.top-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--bg-1);border-bottom:1px solid var(--bg-3)}
+html[data-theme="light"] .top-nav{box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.back-btn{display:flex;align-items:center;gap:6px;background:none;border:none;color:var(--fg-3);font-size:13px;font-weight:500;padding:6px 10px;border-radius:var(--r-sm);transition:background var(--dur-fast),color var(--dur-fast)}
+.back-btn:hover{background:var(--bg-2);color:var(--fg-1)}
+.nav-brand{display:flex;align-items:center;gap:8px;margin-left:auto}
+.nav-brand img{height:22px}
+html[data-theme="light"] .nav-brand img{filter:invert(1)}
+.nav-brand span{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:-.02em}
+.page-wrap{max-width:720px;margin:0 auto;padding:40px 24px 80px}
+.doc-header{margin-bottom:40px}
+.doc-title{font-family:var(--font-display);font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:8px}
+.doc-meta{font-size:13px;color:var(--fg-3)}
+.doc-toc{background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-md);padding:18px 20px;margin-bottom:36px}
+html[data-theme="light"] .doc-toc{box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.doc-toc-title{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--fg-4);margin-bottom:10px}
+.doc-toc ol{padding-left:18px;display:flex;flex-direction:column;gap:5px}
+.doc-toc a{font-size:13px;color:var(--violet-400);text-decoration:none}
+.doc-toc a:hover{text-decoration:underline}
+.doc-section{margin-bottom:36px}
+.doc-section h2{font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--bg-3)}
+.doc-section p{font-size:13.5px;color:var(--fg-2);line-height:1.75;margin-bottom:12px}
+.doc-section ul,.doc-section ol{padding-left:20px;margin-bottom:12px}
+.doc-section li{font-size:13.5px;color:var(--fg-2);line-height:1.75;margin-bottom:4px}
+.doc-section strong{color:var(--fg-1);font-weight:600}
+.doc-section a{color:var(--violet-400)}
+.info-box{background:var(--bg-1);border:1px solid var(--bg-3);border-radius:var(--r-md);padding:14px 16px;margin-bottom:14px}
+html[data-theme="light"] .info-box{box-shadow:0 2px 4px rgba(0,0,0,.04)}
+.info-box p{margin-bottom:0}
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </button>
+  <div class="nav-brand">
+    <img src="assets/logo-white.png" alt="Schemester">
+    <span>Schemester</span>
+  </div>
+</nav>
+
+<main class="page-wrap">
+  <div class="doc-header">
+    <div class="doc-title">Terms of Service</div>
+    <div class="doc-meta">Schemester Ltd · Last updated: 1 April 2026 · Effective: 1 April 2026</div>
+  </div>
+
+  <div class="doc-toc">
+    <div class="doc-toc-title">Contents</div>
+    <ol>
+      <li><a href="#t1">Acceptance of terms</a></li>
+      <li><a href="#t2">Eligibility</a></li>
+      <li><a href="#t3">Account registration</a></li>
+      <li><a href="#t4">Description of service</a></li>
+      <li><a href="#t5">Plans, billing and payments</a></li>
+      <li><a href="#t6">User content</a></li>
+      <li><a href="#t7">Acceptable use</a></li>
+      <li><a href="#t8">AI features</a></li>
+      <li><a href="#t9">Intellectual property</a></li>
+      <li><a href="#t10">Termination</a></li>
+      <li><a href="#t11">Disclaimers</a></li>
+      <li><a href="#t12">Limitation of liability</a></li>
+      <li><a href="#t13">Governing law</a></li>
+      <li><a href="#t14">Changes to terms</a></li>
+      <li><a href="#t15">Contact</a></li>
+    </ol>
+  </div>
+
+  <div class="doc-section" id="t1">
+    <h2>1. Acceptance of Terms</h2>
+    <p>By creating an account or using the Schemester platform (the "Service"), you agree to be bound by these Terms of Service ("Terms") and our <a href="Privacy.html">Privacy Policy</a>. If you do not agree to these Terms, you may not access or use the Service.</p>
+    <p>These Terms constitute a legally binding agreement between you and Schemester Ltd ("Schemester", "we", "us"). If you are accepting these Terms on behalf of an organisation, you represent that you have authority to bind that organisation.</p>
+  </div>
+
+  <div class="doc-section" id="t2">
+    <h2>2. Eligibility</h2>
+    <p>You must be at least <strong>16 years of age</strong> to create an account and use the Service. By using Schemester, you represent and warrant that you meet this age requirement and that all information you provide is accurate and truthful.</p>
+    <p>Schemester is available worldwide, though certain features (particularly payment processing) may be restricted in certain jurisdictions.</p>
+  </div>
+
+  <div class="doc-section" id="t3">
+    <h2>3. Account Registration</h2>
+    <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You must:</p>
+    <ul>
+      <li>Provide accurate, current, and complete registration information</li>
+      <li>Maintain and promptly update your account information</li>
+      <li>Keep your password secure and not share it with others</li>
+      <li>Notify us immediately at <a href="mailto:security@schemester.com">security@schemester.com</a> of any unauthorised account access</li>
+      <li>Not create multiple accounts or impersonate any person or entity</li>
+    </ul>
+    <p>We reserve the right to suspend or terminate accounts that violate these obligations.</p>
+  </div>
+
+  <div class="doc-section" id="t4">
+    <h2>4. Description of Service</h2>
+    <p>Schemester is a collaborative planning platform that enables groups to organise events and experiences ("Schemes"), including managing budgets, splitting costs, communicating, and coordinating logistics. The Service includes:</p>
+    <ul>
+      <li>Scheme creation, management, and member collaboration tools</li>
+      <li>Group chat, polls, and file sharing within schemes</li>
+      <li>Budget tracking, contribution collection, and payment splitting</li>
+      <li>AI-powered savings suggestions and recommendations ("Schemester AI")</li>
+      <li>Discover features for finding venues, activities, and experiences</li>
+    </ul>
+    <p>We reserve the right to modify, suspend, or discontinue any part of the Service at any time with reasonable notice.</p>
+  </div>
+
+  <div class="doc-section" id="t5">
+    <h2>5. Plans, Billing, and Payments</h2>
+    <p>Schemester offers both free and paid subscription plans. Paid plans are billed on a monthly or annual basis as selected at purchase.</p>
+    <strong style="display:block;margin-bottom:6px">Subscriptions</strong>
+    <ul>
+      <li>Subscriptions auto-renew unless cancelled at least 24 hours before the renewal date</li>
+      <li>You can manage or cancel your subscription at any time in Settings → Subscription</li>
+      <li>No refunds are provided for partial billing periods, except where required by law</li>
+    </ul>
+    <strong style="display:block;margin:12px 0 6px">Scheme Payments</strong>
+    <ul>
+      <li>When you contribute to a scheme, payments are processed by Stripe on behalf of the scheme organiser</li>
+      <li>Schemester charges a platform fee of <strong>1.5% + 20p</strong> per scheme contribution transaction</li>
+      <li>Refunds on scheme contributions are subject to the organiser's refund policy</li>
+      <li>You are responsible for any applicable taxes on payments made through the Service</li>
+    </ul>
+    <div class="info-box">
+      <p style="font-size:13px;color:var(--fg-2)">All prices are displayed inclusive of VAT where applicable for UK users. Prices may vary for users in other regions.</p>
+    </div>
+  </div>
+
+  <div class="doc-section" id="t6">
+    <h2>6. User Content</h2>
+    <p>You retain ownership of content you submit to the Service ("User Content"), including messages, photos, files, and scheme details. By posting User Content, you grant Schemester a non-exclusive, royalty-free, worldwide licence to host, store, display, and transmit that content solely for the purpose of providing the Service.</p>
+    <p>You are solely responsible for your User Content and represent that:</p>
+    <ul>
+      <li>You own or have the right to post the content</li>
+      <li>The content does not violate any third-party rights, applicable laws, or these Terms</li>
+      <li>The content is not defamatory, offensive, fraudulent, or harmful</li>
+    </ul>
+    <p>We may remove User Content that violates these Terms without notice.</p>
+  </div>
+
+  <div class="doc-section" id="t7">
+    <h2>7. Acceptable Use</h2>
+    <p>You agree not to use the Service to:</p>
+    <ul>
+      <li>Violate any applicable law, regulation, or third-party right</li>
+      <li>Harass, abuse, threaten, or harm any person</li>
+      <li>Distribute spam, malware, or unsolicited commercial messages</li>
+      <li>Impersonate Schemester, its employees, or other users</li>
+      <li>Attempt to gain unauthorised access to any system or data</li>
+      <li>Reverse engineer, decompile, or extract source code from the Service</li>
+      <li>Use automated tools (bots, scrapers) to access the Service without written permission</li>
+      <li>Facilitate or conduct fraudulent financial transactions</li>
+      <li>Post content that is unlawful, obscene, or facilitates illegal activity</li>
+    </ul>
+    <p>We reserve the right to investigate violations and take appropriate action, including account suspension and referral to law enforcement.</p>
+  </div>
+
+  <div class="doc-section" id="t8">
+    <h2>8. AI Features</h2>
+    <p>Schemester AI provides automated suggestions, pricing information, and recommendations to assist your planning. You acknowledge that:</p>
+    <ul>
+      <li>AI suggestions are informational and not professional advice (financial, legal, or otherwise)</li>
+      <li>Pricing information is sourced from third-party providers and may change without notice</li>
+      <li>You are responsible for verifying any recommendation before acting on it</li>
+      <li>Schemester is not liable for outcomes resulting from following AI suggestions</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="t9">
+    <h2>9. Intellectual Property</h2>
+    <p>The Schemester platform, including its logo, design, code, and proprietary features, is owned by Schemester Ltd and protected by copyright, trademark, and other intellectual property laws. You may not use our branding, trademarks, or proprietary content without our prior written consent.</p>
+    <p>Nothing in these Terms transfers any intellectual property rights to you beyond the limited licence to use the Service as described herein.</p>
+  </div>
+
+  <div class="doc-section" id="t10">
+    <h2>10. Termination</h2>
+    <p>You may close your account at any time via Settings → Danger Zone → Delete Account. We may suspend or terminate your account at our discretion if we determine you have violated these Terms, with or without notice.</p>
+    <p>Upon termination, your right to access the Service ceases immediately. Sections relating to intellectual property, limitation of liability, and governing law survive termination.</p>
+  </div>
+
+  <div class="doc-section" id="t11">
+    <h2>11. Disclaimers</h2>
+    <p>The Service is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranties of any kind, express or implied. To the fullest extent permitted by law, Schemester disclaims all implied warranties including merchantability, fitness for a particular purpose, and non-infringement.</p>
+    <p>We do not guarantee that the Service will be uninterrupted, error-free, or free of viruses. We are not responsible for the actions of third-party vendors, payment processors, or other users on the platform.</p>
+  </div>
+
+  <div class="doc-section" id="t12">
+    <h2>12. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law, Schemester shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill, arising from your use of or inability to use the Service.</p>
+    <p>Our total aggregate liability to you for any claim arising out of or related to these Terms or the Service shall not exceed the greater of <strong>£100</strong> or the total fees you paid to Schemester in the 12 months preceding the claim.</p>
+    <p>Nothing in these Terms limits liability for death, personal injury caused by negligence, fraud, or any other liability that cannot be limited under English law.</p>
+  </div>
+
+  <div class="doc-section" id="t13">
+    <h2>13. Governing Law and Disputes</h2>
+    <p>These Terms are governed by the laws of <strong>England and Wales</strong>. Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of England and Wales, unless you are a consumer in another jurisdiction where local mandatory laws apply.</p>
+    <p>We encourage you to contact us first at <a href="mailto:legal@schemester.com">legal@schemester.com</a> to resolve any dispute informally before pursuing formal legal proceedings.</p>
+  </div>
+
+  <div class="doc-section" id="t14">
+    <h2>14. Changes to These Terms</h2>
+    <p>We may update these Terms from time to time. We will notify you of material changes by email and through an in-app notice at least <strong>14 days</strong> before the changes take effect. Continued use of the Service after the effective date constitutes acceptance of the updated Terms.</p>
+    <p>If you do not agree to updated Terms, you may close your account before they take effect.</p>
+  </div>
+
+  <div class="doc-section" id="t15">
+    <h2>15. Contact</h2>
+    <p>If you have any questions about these Terms, please contact us:</p>
+    <ul>
+      <li><strong>Email:</strong> <a href="mailto:legal@schemester.com">legal@schemester.com</a></li>
+      <li><strong>Post:</strong> Legal Team, Schemester Ltd, 1 Shoreditch High Street, London, E1 6JE</li>
+    </ul>
+  </div>
+</main>
+
+<script>document.documentElement.dataset.theme=localStorage.getItem('schemeTheme')||'light';</script>
+</body>
+</html>
