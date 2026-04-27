@@ -342,7 +342,7 @@ html[data-theme="light"] .chat-search input{border-color:var(--bg-3);background:
 .msg-group{display:flex;gap:9px}
 .msg-group.mine{flex-direction:row-reverse}
 .msg-av{width:30px;height:30px;border-radius:var(--r-full);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;align-self:flex-end;object-fit:cover}
-.msg-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400);object-fit:contain;padding:5px;filter:invert(1)}
+.msg-av.ai{background:var(--violet-950);border:1px solid rgba(188,127,252,.3);color:var(--violet-400);object-fit:contain;padding:5px}
 img.msg-av{display:block}
 .msg-content{display:flex;flex-direction:column;gap:3px;max-width:62%}
 .msg-sender{font-size:11px;color:var(--fg-3);font-weight:600;margin-bottom:1px}
@@ -705,7 +705,7 @@ html[data-theme="light"] .chat-sidebar{border-color:var(--bg-3);box-shadow:rgba(
 html[data-theme="light"] .chat-main{border-color:var(--bg-3);box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
 html[data-theme="light"] .donut-wrap svg text[fill="white"]{fill:var(--fg-1)}
 html[data-theme="light"] .act-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
-html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4);filter:none}
+html[data-theme="light"] .msg-av.ai{background:var(--violet-900);border-color:rgba(188,127,252,.4)}
 html[data-theme="light"] .msg-bubble.ai{background:var(--violet-950);border-color:rgba(188,127,252,.3)}
 html[data-theme="light"] .sb-user{background:var(--bg-2);border-color:var(--bg-3)}
 html[data-theme="light"] .icon-btn{background:var(--bg-2)}
@@ -1767,7 +1767,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
             </div>
           </div>
           <div class="msg-group">
-            <img class="msg-av ai" src="assets/logo-black-transparent.png" alt="Schemester AI">
+            <img class="msg-av ai" src="assets/logo-white.png" alt="Schemester AI">
             <div class="msg-content">
               <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
               <div class="msg-bubble ai">Catering and venue setup both need Friday access — I've spotted a conflict. Want me to reshuffle the setup window to Saturday morning? It would free up all of Friday for arrivals.</div>
@@ -1783,7 +1783,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
             </div>
           </div>
           <div class="msg-group">
-            <img class="msg-av ai" src="assets/logo-black-transparent.png" alt="Schemester AI">
+            <img class="msg-av ai" src="assets/logo-white.png" alt="Schemester AI">
             <div class="msg-content">
               <div class="msg-sender" style="color:var(--violet-400)">Schemester AI</div>
               <div class="msg-bubble ai">Done ✓ Setup rescheduled to Saturday 8–11 AM. I've notified the catering team and updated the Scheme timeline. I also found a £340 saving on the catering package — want me to book it?</div>
@@ -2233,7 +2233,7 @@ const CHATS = {
 };
 
 function renderMessages(msgs) {
-  const logo = 'assets/logo-black-transparent.png';
+  const logo = 'assets/logo-white.png';
   return msgs.map(m => {
     if (m.date) return `<div class="date-sep">${m.date}</div>`;
     if (m.ai) return `
