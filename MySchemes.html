@@ -96,7 +96,8 @@ html[data-theme="light"] .sb-brand img{filter:invert(1)}
 }
 .icon-btn:hover{background:var(--bg-3);color:var(--fg-1);box-shadow:0 0 0 1px rgba(255,255,255,.1) inset,0 6px 20px rgba(0,0,0,.55)}
 html[data-theme="light"] .icon-btn{border-color:var(--bg-3);box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.notif-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--violet-500);border:2px solid var(--bg-1)}
+.notif-dot{position:absolute;top:5px;right:5px;width:10px;height:10px;border-radius:50%;background:var(--violet-500);border:2px solid var(--bg-1)}
+img.notif-av{object-fit:cover}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--r-md);border:none;font-size:13px;font-weight:600;cursor:pointer;transition:background var(--dur-base) var(--ease-out)}
 .btn-primary{background:var(--violet-500);color:#1a0d2e}
 .btn-primary:hover{background:var(--violet-400)}
@@ -783,7 +784,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
             </div>
             <div class="notif-list">
               <div class="notif-item unread">
-                <div class="notif-av ai">✦</div>
+                <div class="notif-av ai" style="padding:6px"><img src="assets/logo-white.png" class="ai-logo-av" alt="Schemester AI"></div>
                 <div class="notif-body">
                   <div class="notif-text"><strong>AI saving found</strong> — Schemester AI found a £340 saving on catering for <span class="ntag">The Big Wedding</span></div>
                   <div class="notif-time">18 min ago</div>
@@ -791,7 +792,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
                 <div class="notif-unread-dot"></div>
               </div>
               <div class="notif-item unread">
-                <div class="notif-av" style="background:linear-gradient(135deg,#d48a66,#a5583a)">SA</div>
+                <img class="notif-av" src="https://i.pravatar.cc/52?img=1" alt="Sarah A.">
                 <div class="notif-body">
                   <div class="notif-text"><strong>Sarah A.</strong> confirmed her deposit for <span class="ntag">The Big Wedding</span></div>
                   <div class="notif-time">2 min ago</div>
@@ -807,7 +808,7 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
                 <div class="notif-unread-dot"></div>
               </div>
               <div class="notif-item">
-                <div class="notif-av" style="background:linear-gradient(135deg,#9e7a9e,#5e3a6a)">PR</div>
+                <img class="notif-av" src="https://i.pravatar.cc/52?img=16" alt="Priya R.">
                 <div class="notif-body">
                   <div class="notif-text"><strong>Priya R.</strong> voted on the hotel poll for <span class="ntag">Hen Do — Lisbon</span></div>
                   <div class="notif-time">1 hr ago</div>
@@ -821,14 +822,14 @@ html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue
                 </div>
               </div>
               <div class="notif-item">
-                <div class="notif-av" style="background:linear-gradient(135deg,#7a9e8a,#445e55)">JM</div>
+                <img class="notif-av" src="https://i.pravatar.cc/52?img=3" alt="James M.">
                 <div class="notif-body">
                   <div class="notif-text"><strong>James M.</strong> added 3 outfit options to <span class="ntag">The Big Wedding</span></div>
                   <div class="notif-time">3 hrs ago</div>
                 </div>
               </div>
               <div class="notif-item">
-                <div class="notif-av ai">✦</div>
+                <div class="notif-av ai" style="padding:6px"><img src="assets/logo-white.png" class="ai-logo-av" alt="Schemester AI"></div>
                 <div class="notif-body">
                   <div class="notif-text"><strong>Price drop alert</strong> — Flights to Lisbon dropped by £42. Book now for <span class="ntag">Hen Do — Lisbon</span></div>
                   <div class="notif-time">Yesterday</div>
