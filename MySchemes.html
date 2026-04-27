@@ -689,6 +689,9 @@ html[data-theme="light"] .panel{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0
 html[data-theme="light"] .stat-card{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
 html[data-theme="light"] .send-btn{background:#000000;color:#ffffff}
 html[data-theme="light"] .send-btn:hover{background:#333333}
+html[data-theme="light"] .cal-panel{box-shadow:rgba(0,0,0,0.08) 0px 3px 6px,rgba(0,0,0,0.07) 0px 2px 4px}
+.ai-logo-av{width:100%;height:100%;object-fit:contain}
+html[data-theme="light"] .ai-logo-av{filter:invert(0.8) sepia(1) saturate(2) hue-rotate(230deg)}
 </style>
 </head>
 <body>
@@ -718,7 +721,7 @@ html[data-theme="light"] .send-btn:hover{background:#333333}
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     Discover
   </button>
-  <button class="nav-item">
+  <button class="nav-item" data-view="budget">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
     Budget
   </button>
@@ -1130,37 +1133,6 @@ html[data-theme="light"] .send-btn:hover{background:#333333}
         </div>
       </div>
 
-      <!-- Spending chart -->
-      <div class="panel">
-        <div class="panel-head">
-          <span class="panel-title">Spending over time</span>
-          <span style="font-size:11px;color:var(--fg-3)">Last 6 months</span>
-        </div>
-        <div class="chart-wrap">
-          <svg width="100%" height="110" viewBox="0 0 500 110" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#bc7ffc" stop-opacity=".28"/>
-                <stop offset="100%" stop-color="#bc7ffc" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <line x1="0" y1="0" x2="500" y2="0" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <line x1="0" y1="36" x2="500" y2="36" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <line x1="0" y1="72" x2="500" y2="72" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-            <path d="M40,90 L120,68 L210,44 L295,57 L385,18 L470,4 L470,110 L40,110Z" fill="url(#cg)"/>
-            <polyline points="40,90 120,68 210,44 295,57 385,18 470,4" fill="none" stroke="#bc7ffc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="40" cy="90" r="3.5" fill="#bc7ffc"/>
-            <circle cx="120" cy="68" r="3.5" fill="#bc7ffc"/>
-            <circle cx="210" cy="44" r="3.5" fill="#bc7ffc"/>
-            <circle cx="295" cy="57" r="3.5" fill="#bc7ffc"/>
-            <circle cx="385" cy="18" r="3.5" fill="#bc7ffc"/>
-            <circle cx="470" cy="4" r="4" fill="#d8b3ff"/>
-          </svg>
-          <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:10px;color:var(--fg-3)">
-            <span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
-          </div>
-        </div>
-      </div>
       </div><!-- /dash-main -->
 
       <!-- Right aside: scheme chart, calendar, upcoming, activity -->
@@ -1218,35 +1190,35 @@ html[data-theme="light"] .send-btn:hover{background:#333333}
         <div class="panel">
           <div class="panel-head"><span class="panel-title">Recent activity</span></div>
           <div class="act-item">
-            <div class="act-av" style="background:linear-gradient(135deg,#d48a66,#a5583a)">SA</div>
+            <img class="act-av" src="https://i.pravatar.cc/52?img=16" alt="Sarah A." style="object-fit:cover">
             <div>
               <div class="act-text"><strong>Sarah A.</strong> paid her deposit for <span class="tag">The Big Wedding</span></div>
               <div class="act-time">2 min ago</div>
             </div>
           </div>
           <div class="act-item">
-            <div class="act-av ai">✦</div>
+            <div class="act-av ai" style="padding:5px"><img src="assets/logo-white.png" class="ai-logo-av" alt="Schemester AI"></div>
             <div>
               <div class="act-text"><strong>Schemester AI</strong> found a £340 saving on catering for <span class="tag">The Big Wedding</span></div>
               <div class="act-time">18 min ago</div>
             </div>
           </div>
           <div class="act-item">
-            <div class="act-av" style="background:linear-gradient(135deg,#9e7a9e,#5e3a6a)">PR</div>
+            <img class="act-av" src="https://i.pravatar.cc/52?img=20" alt="Priya R." style="object-fit:cover">
             <div>
               <div class="act-text"><strong>Priya R.</strong> voted on the hotel for <span class="tag">Hen Do — Lisbon</span></div>
               <div class="act-time">1 hr ago</div>
             </div>
           </div>
           <div class="act-item">
-            <div class="act-av" style="background:linear-gradient(135deg,#7a9e8a,#445e55)">JM</div>
+            <img class="act-av" src="https://i.pravatar.cc/52?img=3" alt="James M." style="object-fit:cover">
             <div>
               <div class="act-text"><strong>James M.</strong> added an outfit option to <span class="tag">The Big Wedding</span></div>
               <div class="act-time">3 hrs ago</div>
             </div>
           </div>
           <div class="act-item">
-            <div class="act-av ai">✦</div>
+            <div class="act-av ai" style="padding:5px"><img src="assets/logo-white.png" class="ai-logo-av" alt="Schemester AI"></div>
             <div>
               <div class="act-text"><strong>Schemester AI</strong> set a price-drop alert on flights for <span class="tag">Hen Do — Lisbon</span></div>
               <div class="act-time">Yesterday</div>
@@ -1850,6 +1822,109 @@ html[data-theme="light"] .send-btn:hover{background:#333333}
             <span class="member-name">Noah S.</span><span class="member-role">Guest</span>
           </div>
           <a href="#" style="font-size:12px;color:var(--violet-400);font-weight:600;display:block;margin-top:6px">+ 70 more members</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── BUDGET ─── -->
+  <div class="view" id="view-budget">
+    <div class="topbar">
+      <div>
+        <h1>Budget</h1>
+        <p>Across 3 active schemes</p>
+      </div>
+    </div>
+    <div class="dash-scroll">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stat-val">£16,400</div>
+          <div class="stat-lbl">Total budget</div>
+          <div class="stat-delta up">Across all schemes</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 5-6"/></svg></div>
+          <div class="stat-val">£9,280</div>
+          <div class="stat-lbl">Spent to date</div>
+          <div class="stat-delta warn">56% of total budget</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="stat-val">£1,240</div>
+          <div class="stat-lbl">Total saved</div>
+          <div class="stat-delta up">↑ £340 this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <div class="stat-val">84%</div>
+          <div class="stat-lbl">On budget</div>
+          <div class="stat-delta warn">⚠ Wedding over by £200</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:16px">
+        <!-- Spending chart -->
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Spending over time</span>
+            <span style="font-size:11px;color:var(--fg-3)">Last 6 months</span>
+          </div>
+          <div class="chart-wrap">
+            <svg width="100%" height="160" viewBox="0 0 500 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#bc7ffc" stop-opacity=".28"/>
+                  <stop offset="100%" stop-color="#bc7ffc" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="0" x2="500" y2="0" stroke="rgba(128,128,128,.1)" stroke-width="1"/>
+              <line x1="0" y1="53" x2="500" y2="53" stroke="rgba(128,128,128,.1)" stroke-width="1"/>
+              <line x1="0" y1="106" x2="500" y2="106" stroke="rgba(128,128,128,.1)" stroke-width="1"/>
+              <path d="M40,140 L120,108 L210,74 L295,87 L385,28 L470,6 L470,160 L40,160Z" fill="url(#cg2)"/>
+              <polyline points="40,140 120,108 210,74 295,87 385,28 470,6" fill="none" stroke="#bc7ffc" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="40" cy="140" r="5" style="fill:var(--bg-1)" stroke="#bc7ffc" stroke-width="2.5"/>
+              <circle cx="120" cy="108" r="5" style="fill:var(--bg-1)" stroke="#bc7ffc" stroke-width="2.5"/>
+              <circle cx="210" cy="74" r="5" style="fill:var(--bg-1)" stroke="#bc7ffc" stroke-width="2.5"/>
+              <circle cx="295" cy="87" r="5" style="fill:var(--bg-1)" stroke="#bc7ffc" stroke-width="2.5"/>
+              <circle cx="385" cy="28" r="5" style="fill:var(--bg-1)" stroke="#bc7ffc" stroke-width="2.5"/>
+              <circle cx="470" cy="6" r="6" style="fill:var(--bg-1)" stroke="#d8b3ff" stroke-width="2.5"/>
+            </svg>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:10px;color:var(--fg-3)">
+              <span>Nov</span><span>Dec</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Per-scheme breakdown -->
+        <div class="panel">
+          <div class="panel-head"><span class="panel-title">By scheme</span></div>
+          <div style="padding:14px 18px;display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:5px">
+                <span>Hen Do — Lisbon</span>
+                <span style="color:var(--fg-3);font-size:12px">£1,440 / £3,200</span>
+              </div>
+              <div class="sc-prog"><div class="sc-prog-fill" style="width:45%;background:#fb923c"></div></div>
+              <div style="font-size:11px;color:var(--fg-3);margin-top:4px">45% spent · £1,760 remaining</div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:5px">
+                <span>The Big Wedding</span>
+                <span style="color:var(--fg-3);font-size:12px">£8,928 / £12,400</span>
+              </div>
+              <div class="sc-prog"><div class="sc-prog-fill" style="width:72%;background:#bc7ffc"></div></div>
+              <div style="font-size:11px;color:var(--warning);margin-top:4px">⚠ Outfits £200 over budget</div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:5px">
+                <span>30th Birthday</span>
+                <span style="color:var(--fg-3);font-size:12px">£160 / £800</span>
+              </div>
+              <div class="sc-prog"><div class="sc-prog-fill" style="width:20%;background:#38bdf8"></div></div>
+              <div style="font-size:11px;color:var(--fg-3);margin-top:4px">20% spent · £640 remaining</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
